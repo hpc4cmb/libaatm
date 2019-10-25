@@ -8,4 +8,23 @@ The git version of that source is recorded in the VERSION text file in this curr
 
 ## Installation
 
-This library uses a cmake build system...
+This library uses a cmake build system.  You should make a build directory:
+
+    %>  mkdir build
+    %>  cd build
+
+And then run cmake with the options you wish (like the install location):
+
+    %>  cmake -DCMAKE_INSTALL_PREFIX=/path/to/install ..
+
+Next build with:
+
+    %>  make -j 4
+
+Run tests with:
+
+    %>  make test
+
+And install the package with:
+
+    %>  make install
