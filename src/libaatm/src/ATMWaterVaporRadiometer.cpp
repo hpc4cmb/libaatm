@@ -34,7 +34,7 @@
 
 ATM_NAMESPACE_BEGIN
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels)
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels)
 {
 
   spilloverTemperature_ = Temperature(-999.0, "K");
@@ -42,7 +42,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
   Percent sg(50, "%"); // IF DOUBLE SIDE BAND, Default Sideband Gain is 50%
 
-  for(unsigned int i = 0; i < IdChannels.size(); i++) {
+  for(size_t i = 0; i < IdChannels.size(); i++) {
 
     skyCoupling_.push_back(1.0);
     signalGain_.push_back(sg);
@@ -51,7 +51,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<double> &skyCoupling)
 {
 
@@ -61,17 +61,17 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   /*    if(IdChannels.size()!=skyCoupling.size()){throw Error();} */
 
   if(IdChannels.size() < skyCoupling.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       skyCoupling_.push_back(skyCoupling[i]);
     }
   } else {
     if(IdChannels.size() == skyCoupling.size()) {
       skyCoupling_ = skyCoupling;
     } else {
-      for(unsigned int i = 0; i < skyCoupling.size(); i++) {
+      for(size_t i = 0; i < skyCoupling.size(); i++) {
         skyCoupling_.push_back(skyCoupling[i]);
       }
-      for(unsigned int i = skyCoupling.size(); i < IdChannels.size(); i++) {
+      for(size_t i = skyCoupling.size(); i < IdChannels.size(); i++) {
         skyCoupling_.push_back(skyCoupling[skyCoupling.size() - 1]);
       }
     }
@@ -79,7 +79,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<Percent> &signalGain)
 {
 
@@ -87,17 +87,17 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   IdChannels_ = IdChannels;
 
   if(IdChannels.size() < signalGain.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       signalGain_.push_back(signalGain[i]);
     }
   } else {
     if(IdChannels.size() == signalGain.size()) {
       signalGain_ = signalGain;
     } else {
-      for(unsigned int i = 0; i < signalGain.size(); i++) {
+      for(size_t i = 0; i < signalGain.size(); i++) {
         signalGain_.push_back(signalGain[i]);
       }
-      for(unsigned int i = signalGain.size(); i < IdChannels.size(); i++) {
+      for(size_t i = signalGain.size(); i < IdChannels.size(); i++) {
         signalGain_.push_back(signalGain[signalGain.size() - 1]);
       }
     }
@@ -105,7 +105,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<double> &skyCoupling,
                                            const std::vector<Percent> &signalGain)
 {
@@ -114,34 +114,34 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   IdChannels_ = IdChannels;
 
   if(IdChannels.size() < skyCoupling.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       skyCoupling_.push_back(skyCoupling[i]);
     }
   } else {
     if(IdChannels.size() == skyCoupling.size()) {
       skyCoupling_ = skyCoupling;
     } else {
-      for(unsigned int i = 0; i < skyCoupling.size(); i++) {
+      for(size_t i = 0; i < skyCoupling.size(); i++) {
         skyCoupling_.push_back(skyCoupling[i]);
       }
-      for(unsigned int i = skyCoupling.size(); i < IdChannels.size(); i++) {
+      for(size_t i = skyCoupling.size(); i < IdChannels.size(); i++) {
         skyCoupling_.push_back(skyCoupling[skyCoupling.size() - 1]);
       }
     }
   }
 
   if(IdChannels.size() < signalGain.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       signalGain_.push_back(signalGain[i]);
     }
   } else {
     if(IdChannels.size() == signalGain.size()) {
       signalGain_ = signalGain;
     } else {
-      for(unsigned int i = 0; i < signalGain.size(); i++) {
+      for(size_t i = 0; i < signalGain.size(); i++) {
         signalGain_.push_back(signalGain[i]);
       }
-      for(unsigned int i = signalGain.size(); i < IdChannels.size(); i++) {
+      for(size_t i = signalGain.size(); i < IdChannels.size(); i++) {
         signalGain_.push_back(signalGain[signalGain.size() - 1]);
       }
     }
@@ -149,7 +149,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const Temperature &spilloverTemperature)
 {
 
@@ -158,7 +158,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
   Percent sg(50, "%"); // IF DOUBLE SIDE BAND, Default Sideband Gain is 50%
 
-  for(unsigned int i = 0; i < IdChannels.size(); i++) {
+  for(size_t i = 0; i < IdChannels.size(); i++) {
 
     skyCoupling_.push_back(1.0);
     signalGain_.push_back(sg);
@@ -167,7 +167,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<double> &skyCoupling,
                                            const Temperature &spilloverTemperature)
 {
@@ -176,17 +176,17 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   IdChannels_ = IdChannels;
 
   if(IdChannels.size() < skyCoupling.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       skyCoupling_.push_back(skyCoupling[i]);
     }
   } else {
     if(IdChannels.size() == skyCoupling.size()) {
       skyCoupling_ = skyCoupling;
     } else {
-      for(unsigned int i = 0; i < skyCoupling.size(); i++) {
+      for(size_t i = 0; i < skyCoupling.size(); i++) {
         skyCoupling_.push_back(skyCoupling[i]);
       }
-      for(unsigned int i = skyCoupling.size(); i < IdChannels.size(); i++) {
+      for(size_t i = skyCoupling.size(); i < IdChannels.size(); i++) {
         skyCoupling_.push_back(skyCoupling[skyCoupling.size() - 1]);
       }
     }
@@ -194,7 +194,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<Percent> &signalGain,
                                            const Temperature &spilloverTemperature)
 {
@@ -203,17 +203,17 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   IdChannels_ = IdChannels;
 
   if(IdChannels.size() < signalGain.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       signalGain_.push_back(signalGain[i]);
     }
   } else {
     if(IdChannels.size() == signalGain.size()) {
       signalGain_ = signalGain;
     } else {
-      for(unsigned int i = 0; i < signalGain.size(); i++) {
+      for(size_t i = 0; i < signalGain.size(); i++) {
         signalGain_.push_back(signalGain[i]);
       }
-      for(unsigned int i = signalGain.size(); i < IdChannels.size(); i++) {
+      for(size_t i = signalGain.size(); i < IdChannels.size(); i++) {
         signalGain_.push_back(signalGain[signalGain.size() - 1]);
       }
     }
@@ -221,7 +221,7 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
 
 }
 
-WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdChannels,
+WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<size_t> &IdChannels,
                                            const std::vector<double> &skyCoupling,
                                            const std::vector<Percent> &signalGain,
                                            const Temperature &spilloverTemperature)
@@ -231,34 +231,34 @@ WaterVaporRadiometer::WaterVaporRadiometer(const std::vector<unsigned int> &IdCh
   IdChannels_ = IdChannels;
 
   if(IdChannels.size() < skyCoupling.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       skyCoupling_.push_back(skyCoupling[i]);
     }
   } else {
     if(IdChannels.size() == skyCoupling.size()) {
       skyCoupling_ = skyCoupling;
     } else {
-      for(unsigned int i = 0; i < skyCoupling.size(); i++) {
+      for(size_t i = 0; i < skyCoupling.size(); i++) {
         skyCoupling_.push_back(skyCoupling[i]);
       }
-      for(unsigned int i = skyCoupling.size(); i < IdChannels.size(); i++) {
+      for(size_t i = skyCoupling.size(); i < IdChannels.size(); i++) {
         skyCoupling_.push_back(skyCoupling[skyCoupling.size() - 1]);
       }
     }
   }
 
   if(IdChannels.size() < signalGain.size()) {
-    for(unsigned int i = 0; i < IdChannels.size(); i++) {
+    for(size_t i = 0; i < IdChannels.size(); i++) {
       signalGain_.push_back(signalGain[i]);
     }
   } else {
     if(IdChannels.size() == signalGain.size()) {
       signalGain_ = signalGain;
     } else {
-      for(unsigned int i = 0; i < signalGain.size(); i++) {
+      for(size_t i = 0; i < signalGain.size(); i++) {
         signalGain_.push_back(signalGain[i]);
       }
-      for(unsigned int i = signalGain.size(); i < IdChannels.size(); i++) {
+      for(size_t i = signalGain.size(); i < IdChannels.size(); i++) {
         signalGain_.push_back(signalGain[signalGain.size() - 1]);
       }
     }

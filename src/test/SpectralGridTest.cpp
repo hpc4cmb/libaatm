@@ -40,19 +40,19 @@ using namespace atm;
    *         - Creates a pointer called "sgPtr1" of objects belonging to the class <a href="classatm_1_1SpectralGrid.html">SpectralGrid</a>
    *         - Initializes that pointer with a first object created with the <a href="classatm_1_1SpectralGrid.html#a1">this</a> constructor.
    *         - The pointer has then one element . On this element, several things are checked using the following operators of the class:
-   *           <a href="classatm_1_1SpectralGrid.html#z14_6">getRefFreq(unsigned int spwId)</a>,
-   *           <a href="classatm_1_1SpectralGrid.html#z14_8">getChanSep(unsigned int spwId)</a>,
+   *           <a href="classatm_1_1SpectralGrid.html#z14_6">getRefFreq(size_t spwId)</a>,
+   *           <a href="classatm_1_1SpectralGrid.html#z14_8">getChanSep(size_t spwId)</a>,
    *           <a href="classatm_1_1SpectralGrid.html#z14_0">getNumSpectralWindow()</a>, and
-   *           <a href="classatm_1_1SpectralGrid.html#z14_2">getNumChan(unsigned int spwId)</a>.
+   *           <a href="classatm_1_1SpectralGrid.html#z14_2">getNumChan(size_t spwId)</a>.
    *         - An rrror message is expected when trying getNumChan(1) because there is no spectral window number 1.
-   *         - Finally, the operators <a href="classatm_1_1SpectralGrid.html#z14_22">isRegular(unsigned int spwId)</a>,
-   *           and <a href="classatm_1_1SpectralGrid.html#z14_25">getAssocSpwId(unsigned int spwId)</a> are tested.
+   *         - Finally, the operators <a href="classatm_1_1SpectralGrid.html#z14_22">isRegular(size_t spwId)</a>,
+   *           and <a href="classatm_1_1SpectralGrid.html#z14_25">getAssocSpwId(size_t spwId)</a> are tested.
    *
    * The ouput of this test should be as follows:
    *
    * <b>
    * SpectralGridTest: Test 1: <br>
-   * SpectralGridTest: Create a pointer with first element construted with SpectralGrid(usigned int numChan, unsigned int refChan, Frequency refFreq, Frequency chanSep):<br>
+   * SpectralGridTest: Create a pointer with first element construted with SpectralGrid(usigned int numChan, size_t refChan, Frequency refFreq, Frequency chanSep):<br>
    * SpectralGridTest: Number of channels retrieved:  64 (Value entered to constructor:64)<br>
    * SpectralGridTest: Reference frequency retrieved: 9e+10 Hz;  SpectralGridTest:  Input:90 GHz<br>
    * SpectralGridTest: Reference frequency retrieved: 90GHz  SpectralGridTest: Input:90 GHz<br>
@@ -70,7 +70,7 @@ using namespace atm;
    *
    * Test 2 starts from the pointer created in Test 1:
    *       - A new spectral window is added with 128 channels, channel number 32 as the reference channel, reference frequency at 215 GHz, and regular channel separation of 0.02 GHz.
-   *       This new spectral window is added using <a href="classatm_1_1SpectralGrid.html#a11">add(unsigned int numChan, unsigned int refChan, Frequency refFreq, Frequency chanSep)</a>
+   *       This new spectral window is added using <a href="classatm_1_1SpectralGrid.html#a11">add(size_t numChan, size_t refChan, Frequency refFreq, Frequency chanSep)</a>
    *       - The next step is to verify that nothing has change for spectral window number 0 from Test 1.
    *       - Finally, spectral window number 1 is tested similarly to spectral window #0.
    *       - It is also checked that spectral windows with numbers > 1 do not exist.
@@ -79,7 +79,7 @@ using namespace atm;
    *
    * <b>
    * SpectralGridTest: Test 2<br>
-   * SpectralGridTest: New spectral window using add(unsigned int numChan, unsigned int refChan, Frequency refFreq, Frequency chanSep):<br>
+   * SpectralGridTest: New spectral window using add(size_t numChan, size_t refChan, Frequency refFreq, Frequency chanSep):<br>
    * SpectralGridTest: A new spectral window has been appended and got the identifier number:1<br>
    * SpectralGridTest: Number of spectral windows: 2<br>
    * SpectralGridTest: Number of channels retrieved for spwId 0: 64<br>
@@ -101,8 +101,8 @@ int main()
 {
 
 
-  unsigned int     numChan         = 64;
-  unsigned int     refChan         = 32;
+  size_t     numChan         = 64;
+  size_t     refChan         = 32;
 
   Frequency myRefFreq(90.0,"GHz");
   Frequency myChanSep(0.01,"GHz");
@@ -110,7 +110,7 @@ int main()
   SpectralGrid* sgPtr1;
 
   cout << " SpectralGridTest: Test 1:" <<endl;
-  cout << " SpectralGridTest: Create a pointer with first element construted with SpectralGrid(usigned int numChan, unsigned int refChan, Frequency refFreq, Frequency chanSep):" << endl;
+  cout << " SpectralGridTest: Create a pointer with first element construted with SpectralGrid(usigned int numChan, size_t refChan, Frequency refFreq, Frequency chanSep):" << endl;
   sgPtr1 = new SpectralGrid(numChan, refChan, myRefFreq, myChanSep);
   cout << " SpectralGridTest: Number of channels retrieved:  " << sgPtr1->getNumChan() << " (Value entered to constructor:" << numChan << ")" << endl;
   cout << " SpectralGridTest: Reference frequency retrieved: "
@@ -149,12 +149,12 @@ int main()
 
 
   cout << " SpectralGridTest: Test 2" << endl;
-   cout << " SpectralGridTest: New spectral window using add(unsigned int numChan, unsigned int refChan, Frequency refFreq, Frequency chanSep):" << endl;
-  unsigned int numChan1         = 128;
-  unsigned int refChan1         = 32;
+   cout << " SpectralGridTest: New spectral window using add(size_t numChan, size_t refChan, Frequency refFreq, Frequency chanSep):" << endl;
+  size_t numChan1         = 128;
+  size_t refChan1         = 32;
   Frequency myNewRefFreq(215.0,"GHz");
   Frequency myNewChanSep(0.02,"GHz");
-  unsigned int spwId = sgPtr1->add( numChan1, refChan1, myNewRefFreq, myNewChanSep);
+  size_t spwId = sgPtr1->add( numChan1, refChan1, myNewRefFreq, myNewChanSep);
   cout << " SpectralGridTest: A new spectral window has been appended and got the identifier number:" << spwId << endl;
   cout << " SpectralGridTest: Number of spectral windows: "
        << sgPtr1->getNumSpectralWindow() << endl;
@@ -187,7 +187,7 @@ int main()
   if(sgPtr1->getSideband(spwId).size()==0)
     cout << " SpectralGridTest: As expected this spectral window with spwid="<<spwId
 	 << " has no sideband specification" << endl;
-  unsigned int id=10;
+  size_t id=10;
   if(sgPtr1->getSideband(id).size()==0)
     cout << " SpectralGridTest: Spectral window with id="<<id
 	 << " does not exist!" << endl;
@@ -200,14 +200,16 @@ int main()
 
 
   cout << " SpectralGridTest: Channel frequency and number for the first spectral window: " << endl;
-  double chFreq[sgPtr1->getNumChan()];           // one dynamic alloc
+  size_t nch = sgPtr1->getNumChan();
+  double * chFreq = new double[nch];           // one dynamic alloc
   vector<double> chanFreq;
-  chanFreq.reserve(sgPtr1->getNumChan());        // a more versatil dynamic alloc (allowing eg resizing)
+  chanFreq.reserve(nch);        // a more versatil dynamic alloc (allowing eg resizing)
 
-  for(int i=0; i<(int)sgPtr1->getNumChan(); i++){
-    chanFreq[i] = sgPtr1->getChanFreq(i).get();
+  for(size_t i=0; i<nch; i++){
+    Frequency freq = sgPtr1->getChanFreq(i);
+    chanFreq[i] = freq.get();
     chFreq[i] = chanFreq[i];
-    cout << "SpectralGridTest: " << i << " channel: " << i-(int)refChan+1 << " freq: " << chanFreq[i] << endl;
+    cout << "SpectralGridTest: " << i << " channel: " << i - refChan + 1 << " freq: " << chanFreq[i] << endl;
   }
   cout << endl;
 
@@ -219,7 +221,7 @@ int main()
 
   SpectralGrid* sgPtr2;
   cout << " SpectralGridTest: Test 2:" <<endl;
-  cout << " SpectralGridTest: Build using SpectralGrid( unsigned int numChan, unsigned int refChan, double* chFreq, string units):" << endl;
+  cout << " SpectralGridTest: Build using SpectralGrid( size_t numChan, size_t refChan, double* chFreq, string units):" << endl;
   sgPtr2 = new SpectralGrid( numChan, refChan, chFreq, "Hz");
   cout << " SpectralGridTest: Number of channels retrieved: " << sgPtr2->getNumChan()      << "    Input:  " << numChan << endl;
   cout << " SpectralGridTest: Reference frequency retrieved:" << sgPtr2->getRefFreq().get()      << "Hz  Initial: none" << endl;
@@ -232,8 +234,9 @@ int main()
   }else{
     cout << " SpectralGridTest: the first spectral window with id 0 is not regularily sampled" << endl;
   }
-  chFreq[sgPtr2->getNumChan()/4]=chFreq[sgPtr2->getNumChan()/4]+1.;
-  cout << " SpectralGridTest: Add a second irregular spectral window using add( unsigned int numChan, unsigned int refChan, double* chFreq, string units):" << endl;
+  size_t nch2 = sgPtr2->getNumChan();
+  chFreq[nch2 / 4] = chFreq[nch2 / 4] + 1.;
+  cout << " SpectralGridTest: Add a second irregular spectral window using add( size_t numChan, size_t refChan, double* chFreq, string units):" << endl;
   sgPtr2->add( numChan, refChan, chFreq, "Hz");
   if(sgPtr2->isRegular()){
     cout << " SpectralGridTest: the first spectral window with id 0 is regularily sampled as expected" << endl;
@@ -253,7 +256,7 @@ int main()
   SpectralGrid* sgPtr3;
 
   cout << " SpectralGridTest: Test 3:" << endl;
-  cout << " SpectralGridTest: Build using SpectralGrid( unsigned int numChan, double refFreq, double* chFreq, string freqUnits):" << endl;
+  cout << " SpectralGridTest: Build using SpectralGrid( size_t numChan, double refFreq, double* chFreq, string freqUnits):" << endl;
   sgPtr3 = new SpectralGrid( numChan, refFreq, chFreq, "Hz");
   cout << " SpectralGridTest: Number of channels retrieved: " << sgPtr3->getNumChan() << " Input: " << numChan << endl;
   cout << " SpectralGridTest: Reference frequency retrieved:" << sgPtr3->getRefFreq().get()      << "Hz  Initial:" << refFreq << "Hz" << endl;
@@ -272,6 +275,7 @@ int main()
   cout << " SpectralGridTest: Frequency range: from "<< sgPtr3->getMinFreq().get() <<" to "<< sgPtr3->getMaxFreq().get() <<"Hz"<< endl;
   cout << " SpectralGridTest: Frequency range: from "<< sgPtr3->getMinFreq().get("GHz") <<" to "<< sgPtr3->getMaxFreq().get("GHz") <<"GHz"<< endl;
 
+  delete[] chFreq;
   delete sgPtr3;
 
   cout << endl;
@@ -291,7 +295,7 @@ int main()
 
   cout   << " SpectralGridTest: Number of spectral windows:            " << sgPtr1->getNumSpectralWindow() << " Expected: 2" << endl;
 
-  for(unsigned int spwId=0; spwId<sgPtr1->getNumSpectralWindow(); spwId++){
+  for(size_t spwId=0; spwId<sgPtr1->getNumSpectralWindow(); spwId++){
     cout << " SpectralGridTest: Sideband:                              " << sgPtr1->getSideband(spwId) << endl;
     cout << " SpectralGridTest: LO frequency:                          " << sgPtr1->getLoFrequency(spwId) << "Hz " <<  endl;
     cout << " SpectralGridTest: Number of channels retrieved:          " << sgPtr1->getNumChan(spwId) << " for spwId " <<  spwId<<": "
@@ -320,13 +324,13 @@ int main()
     if(sgPtr1->getAssocSpwId(spwId).size()==0){
       cout << " SpectralGridTest: the spectral window with id "<< spwId <<" has no associated spectral window" << endl;
     }else{
-      for(unsigned int n=0; n<sgPtr1->getAssocSpwId(spwId).size(); n++){
-	unsigned int assocSpwId = sgPtr1->getAssocSpwId(spwId)[n];
+      for(size_t n=0; n<sgPtr1->getAssocSpwId(spwId).size(); n++){
+	size_t assocSpwId = sgPtr1->getAssocSpwId(spwId)[n];
 	cout << " SpectralGridTest: the spectral window with id "<< spwId
 	     << " has the associated spec. win. with id " <<  assocSpwId
 	     << " (" <<  sgPtr1->getAssocNature(spwId)[n] << ")" << endl;
 
-	for(unsigned int i=0; i<sgPtr1->getNumChan(spwId); i++){
+	for(size_t i=0; i<sgPtr1->getNumChan(spwId); i++){
 	  cout << " SpectralGridTest: chan index:" << i << " "
 	       <<  sgPtr1->getSideband(spwId) <<" "<<sgPtr1->getChanFreq(spwId,i).get("GHz")<<"GHz  "
 	       <<  sgPtr1->getAssocNature(spwId)[n] <<" "<<sgPtr1->getChanFreq(assocSpwId,i).get("GHz")<<"GHz"<<endl;

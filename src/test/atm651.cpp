@@ -56,7 +56,7 @@ int main()
 {
   // Initialize the Atmospheric model
 
-  unsigned int      atmType = 3;       // 1=tropical (ALMA site), 2=midlatSummer, 3=midlatWinter
+  size_t      atmType = 3;       // 1=tropical (ALMA site), 2=midlatSummer, 3=midlatWinter
   atm::Temperature  T(269. ,"K" );     // Ground temperature
   atm::Pressure     P(55450. ,"Pa");   // Ground Pressure
   atm::Humidity     H(7.,"%" );       // Ground Relative Humidity (indication)
@@ -94,12 +94,12 @@ int main()
   //double bandWidthAstro = 2.*1.e9;
   double chanWidthAstro = 0.002*1e9; // 2Mhz
 
-  unsigned int numChanAstro=1500;
-  unsigned int refChanAstro=numChanAstro/2+1;
+  size_t numChanAstro=1500;
+  size_t refChanAstro=numChanAstro/2+1;
 
 
-  atm::SpectralGrid * spGrid_p = new atm::SpectralGrid(numChanAstro,   // unsigned int numChan
-                                                                       refChanAstro,   // unsigned int refChan
+  atm::SpectralGrid * spGrid_p = new atm::SpectralGrid(numChanAstro,   // size_t numChan
+                                                                       refChanAstro,   // size_t refChan
                                                                        atm::Frequency(refFreqAstro), // Frequency refFreq
                                                                        atm::Frequency(chanWidthAstro));
 
@@ -108,7 +108,7 @@ int main()
     // Print description of spectral windows
     //
   cout<<"-----------------------------------------------"<<endl;
-  for(unsigned int j=0; j<spGrid_p->getNumSpectralWindow(); j++){
+  for(size_t j=0; j<spGrid_p->getNumSpectralWindow(); j++){
     cout << "Spectral Window " << j
          << " Reference Frequency: " <<  spGrid_p->getRefFreq(j).get("GHz") << " GHz, "
          << " Reference Channel: " <<  spGrid_p->getRefChan(j)
@@ -119,7 +119,7 @@ int main()
          << " "<<spGrid_p->getChanFreq(j,numChanAstro-1).get()
          <<endl;
 
-    //         for (unsigned int i=0;i<spGrid_p->getNumChan(j);i++)
+    //         for (size_t i=0;i<spGrid_p->getNumChan(j);i++)
     //           cout<<spGrid_p->getChanFreq(j,i).get("GHz")<<" ";
     //         cout<<endl;
 
@@ -150,7 +150,7 @@ int main()
   string filename="atm651.dat";
   ofstream resultFile(filename.c_str());
   int spwid=0;
-  for (unsigned int i=0; i<numChanAstro; i++) {
+  for (size_t i=0; i<numChanAstro; i++) {
     double dryOpa = skyStatus.getDryOpacity(spwid,i).get();
     double wetOpa = skyStatus.getWetOpacity(spwid,i).get();
     resultFile<<spGrid_p->getChanFreq(spwid,i).get()<<" "<<exp(-wetOpa-dryOpa)<<" "<<exp(-wetOpa)<<" "<<exp(-dryOpa)<<endl;

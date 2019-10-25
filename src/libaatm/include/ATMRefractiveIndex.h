@@ -63,28 +63,28 @@ ATM_NAMESPACE_BEGIN
  *       -# Specific Phase Dispersion Coefficient (\f$rad\cdot m^2\f$) = Real part of the result of the <b>getSpecificRefractivity</b> operator.
  *
  *    - <b>species \f$(g)\f$ codes: <b>
- *       -# \f$^{16}O^{16}O\f$  
- *       -# \f$^{16}O^{16}O vib\f$ 
- *       -# \f$^{16}O^{18}O\f$  
- *       -# \f$^{16}O^{17}O\f$  
- *       -# \f$CO \f$    
- *       -# \f$N_2O\f$  
- *       -# \f$NO_2\f$   
- *       -# \f$SO_2\f$   
+ *       -# \f$^{16}O^{16}O\f$
+ *       -# \f$^{16}O^{16}O vib\f$
+ *       -# \f$^{16}O^{18}O\f$
+ *       -# \f$^{16}O^{17}O\f$
+ *       -# \f$CO \f$
+ *       -# \f$N_2O\f$
+ *       -# \f$NO_2\f$
+ *       -# \f$SO_2\f$
  *       -# \f$CNTH2O \f$
- *       -# \f$CNTDRY \f$      
- *       -# \f$HH^{16}O \f$     
+ *       -# \f$CNTDRY \f$
+ *       -# \f$HH^{16}O \f$
  *       -# \f$HH^{16}O v2 \f$
- *       -# \f$HH^{18}O \f$     
- *       -# \f$HH^{17}O  \f$  
- *       -# \f$HDO\f$   
- *       -# \f$^{16}O^{16}O^{16}O\f$     
- *       -# \f$^{16}O^{16}O^{16}O v2\f$ 
+ *       -# \f$HH^{18}O \f$
+ *       -# \f$HH^{17}O  \f$
+ *       -# \f$HDO\f$
+ *       -# \f$^{16}O^{16}O^{16}O\f$
+ *       -# \f$^{16}O^{16}O^{16}O v2\f$
  *       -# \f$^{16}O^{16}O^{16}O v1\f$
- *       -# \f$^{16}O^{16}O^{16}O v3 \f$ 
- *       -# \f$^{16}O^{16}O^{18}O   \f$  
- *       -# \f$^{16}O^{16}O^{17}O   \f$  
- *       -# \f$^{16}O^{18}O^{16}O  \f$       
+ *       -# \f$^{16}O^{16}O^{16}O v3 \f$
+ *       -# \f$^{16}O^{16}O^{18}O   \f$
+ *       -# \f$^{16}O^{16}O^{17}O   \f$
+ *       -# \f$^{16}O^{18}O^{16}O  \f$
  *       -# \f$^{16}O^{17}O^{16}O \f$
  */
 class RefractiveIndex
@@ -103,32 +103,32 @@ public:
   //@{
 
 
-  
+
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=O_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa,
       and <b>frequency</b> in GHz. */
   std::complex<double> getRefractivity_o2(double temperature,double pressure, double wvpressure,double frequency);
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=O_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, 
-      <b>frequency</b> in GHz, <b>width</b> (channel width around <b>frequency</b>) in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa,
+      <b>frequency</b> in GHz, <b>width</b> (channel width around <b>frequency</b>) in GHz,
       and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
   std::complex<double> getRefractivity_o2(double temperature,double pressure,double wvpressure,
-				     double frequency,double width,unsigned int n);
-  
+				     double frequency,double width,size_t n);
+
 
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=H_2O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa,
       and <b>frequency</b> in GHz. */
   std::complex<double> getRefractivity_h2o(double temperature, double pressure, double wvpressure, double frequency);
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=H_2O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, 
-      <b>frequency</b> in GHz, <b>width</b> (channel width around <b>frequency</b>) in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa,
+      <b>frequency</b> in GHz, <b>width</b> (channel width around <b>frequency</b>) in GHz,
       and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
   std::complex<double> getRefractivity_h2o(double temperature,double pressure,double wvpressure,
-				      double frequency,double width,unsigned int n);
+				      double frequency,double width,size_t n);
 
 
 
@@ -141,25 +141,25 @@ public:
   std::complex<double> getSpecificRefractivity_o3(double temperature,double pressure,double frequency);
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$g=O_3\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>) */
   std::complex<double> getSpecificRefractivity_o3(double temperature,double pressure,double frequency,
-					     double width,unsigned int n);
+					     double width,size_t n);
 
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=O_3\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$O_3\f$ m\f$^{-3}\f$ */
   inline std::complex<double> getRefractivity_o3(double temperature, double pressure, double frequency, double numberdensity)
     {return getSpecificRefractivity_o3(temperature, pressure, frequency) * numberdensity;}
 
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$g=O_3\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$O_3\f$ m\f$^{-3}\f$ */
   std::complex<double> getRefractivity_o3(double temperature,double pressure,double frequency,
-				     double width,unsigned int n,double numberdensity)
+				     double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_o3(temperature, pressure, frequency, width, n) * numberdensity;}
 
 
@@ -170,27 +170,27 @@ public:
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=1; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=1; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  inline std::complex<double> getSpecificRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=1; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  inline std::complex<double> getSpecificRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=1; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
 
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o(temperature, pressure, wvpressure, frequency)* numberdensity;}
 
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o(temperature, pressure, wvpressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -199,34 +199,34 @@ public:
   /************************** 16o16o_vib (species 2) ***********************************************************/
 
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the first vibrationally excited state 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the first vibrationally excited state
       of \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=2; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=2; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the first vibrationally excited state 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the first vibrationally excited state
       of \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  inline std::complex<double> getSpecificRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=2; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  inline std::complex<double> getSpecificRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=2; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
 
 
-   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for the first vibrationally excited state 
+   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for the first vibrationally excited state
        of \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of vibrationally excited \f$^{16}O^{16}O\f$ m\f$^{-3}\f$. */
  inline std::complex<double> getRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o_vib(temperature, pressure, wvpressure, frequency)* numberdensity;}
 
-  /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for the first vibrationally excited state 
+  /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for the first vibrationally excited state
       of \f$^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of vibrationally excited \f$^{16}O^{16}O\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_16o16o_vib(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o_vib(temperature, pressure, wvpressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -238,94 +238,94 @@ public:
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{18}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
  inline std::complex<double> getSpecificRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=3; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=3; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  inline std::complex<double> getSpecificRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=3; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  inline std::complex<double> getSpecificRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=3; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
 
 
    /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{18}O\f$ m\f$^{-3}\f$. */
  inline std::complex<double> getRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o18o(temperature, pressure, wvpressure, frequency)* numberdensity;}
- 
+
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{18}O\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_16o18o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o18o(temperature, pressure, wvpressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
 
-  
+
   /************************** 16o17o (species 4) ***************************************************************/
 
 
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{17}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=4; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
- 
+    {size_t species=4; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
- inline std::complex<double> getSpecificRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=4; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+ inline std::complex<double> getSpecificRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=4; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
 
 
    /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{17}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o17o(temperature, pressure, wvpressure, frequency)* numberdensity;}
 
  /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{17}O\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o17o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o17o(temperature, pressure, wvpressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
 
 
- 
+
   /************************** co (species 5) *******************************************************************/
 
 
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$CO\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_co(double temperature,double pressure,double frequency)
-    {unsigned int species=5; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=5; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$CO\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_co(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=5; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
-  
+  std::complex<double> getSpecificRefractivity_co(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=5; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
+
 
     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$CO\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$CO\f$ m\f$^{-3}\f$. */
  inline std::complex<double> getRefractivity_co(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_co(temperature, pressure, frequency)* numberdensity;}
-  
+
   /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$CO\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$CO\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_co(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_co(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_co(temperature, pressure, frequency, width, n)* numberdensity;}
-  
+
   /*************************************************************************************************************/
 
 
@@ -336,28 +336,28 @@ public:
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$N_2O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_n2o(double temperature,double pressure,double frequency)
-    {unsigned int species=6; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=6; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$N_2O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
- std::complex<double> getSpecificRefractivity_n2o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=6; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
-  
+ std::complex<double> getSpecificRefractivity_n2o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=6; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
+
     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$N_2O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$N_2O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_n2o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_no2(temperature, pressure, frequency)* numberdensity;}
-  
+
    /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$N_2O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$N_2O\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_n2o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_n2o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_no2(temperature, pressure, frequency, width, n)* numberdensity;}
-  
+
   /*************************************************************************************************************/
 
 
@@ -368,29 +368,29 @@ public:
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$NO_2\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_no2(double temperature,double pressure,double frequency)
-    {unsigned int species=7; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=7; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$NO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
- std::complex<double> getSpecificRefractivity_no2(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=7; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
-  
+ std::complex<double> getSpecificRefractivity_no2(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=7; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
+
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$NO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$NO_2\f$ m\f$^{-3}\f$. */
  inline std::complex<double> getRefractivity_no2(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_no2(temperature, pressure, frequency)* numberdensity;}
-  
+
     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$NO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$NO_2\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_no2(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_no2(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_no2(temperature, pressure, frequency, width, n)* numberdensity;}
-  
+
   /*************************************************************************************************************/
 
 
@@ -400,46 +400,46 @@ public:
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$SO_2\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_so2(double temperature,double pressure,double frequency)
-    {unsigned int species=8; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=8; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$SO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_so2(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=8; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
-  
+  std::complex<double> getSpecificRefractivity_so2(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=8; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
+
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$SO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$SO_2\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_so2(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_so2(temperature, pressure, frequency)* numberdensity;}
-  
+
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$SO_2\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$SO_2\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_so2(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_so2(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_so2(temperature, pressure, frequency, width, n)* numberdensity;}
-  
+
   /*************************************************************************************************************/
 
- 
+
 
   /************************** cnth2o (species 9) ***************************************************************/
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of
       the "wet" collision induced (\f$O_2-H_2O\f$ and \f$N_2-H_2O\f$) processes (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_cnth2o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=9; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=9; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of
       the "wet" collision induced (\f$O_2-H_2O\f$ and \f$N_2-H_2O\f$) processes (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_cnth2o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=9; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_cnth2o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=9; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
   /*************************************************************************************************************/
 
@@ -448,18 +448,18 @@ public:
   /************************** cntdry (species 10) **************************************************************/
 
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of
       the "dry" collision induced (\f$O_2-O_2\f$, \f$N_2-N_2\f$ and \f$N_2-O_2\f$) processes (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_cntdry(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=10; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=10; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
-  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of 
+  /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ corresponding to the contribution of
       the "dry" collision induced (\f$O_2-O_2\f$, \f$N_2-N_2\f$ and \f$N_2-O_2\f$) processes (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */  
-  std::complex<double> getSpecificRefractivity_cntdry(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=10; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
+  std::complex<double> getSpecificRefractivity_cntdry(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=10; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
   /*************************************************************************************************************/
 
@@ -467,17 +467,17 @@ public:
 
   /************************** hh16o (species 11) ***************************************************************/
 
- 
+
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{16}\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_hh16o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=11; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=11; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{16}\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_hh16o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=11; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_hh16o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=11; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
   /*************************************************************************************************************/
 
@@ -487,13 +487,13 @@ public:
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the v2 vibrational state of \f$H_2^{16}\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_hh16o_v2(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=12; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=12; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for the v2 vibrational state of \f$H_2^{16}\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_hh16o_v2(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=12; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_hh16o_v2(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=12; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
   /*************************************************************************************************************/
 
@@ -503,15 +503,15 @@ public:
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{18}\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_hh18o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=13; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=13; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{18}\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_hh18o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=13; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_hh18o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=13; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
-  
+
   /*************************************************************************************************************/
 
 
@@ -520,15 +520,15 @@ public:
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{17}\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_hh17o(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=14; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=14; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$H_2^{17}\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_hh17o(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=14; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_hh17o(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=14; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
-  
+
   /*************************************************************************************************************/
 
 
@@ -537,15 +537,15 @@ public:
   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$HDO\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_hdo(double temperature,double pressure,double wvpressure,double frequency)
-    {unsigned int species=15; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
+    {size_t species=15; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency);}
 
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$HDO\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>wvpressure</b> (water vapor partial pressure) in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
- std::complex<double> getSpecificRefractivity_hdo(double temperature,double pressure,double wvpressure,double frequency,double width,unsigned int n)
-    {unsigned int species=15; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
+ std::complex<double> getSpecificRefractivity_hdo(double temperature,double pressure,double wvpressure,double frequency,double width,size_t n)
+    {size_t species=15; return mkSpecificRefractivity(species, temperature, pressure, wvpressure, frequency, width, n);}
 
-  
+
   /*************************************************************************************************************/
 
 
@@ -556,64 +556,64 @@ public:
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o16o(double temperature,double pressure,double frequency)
-    {unsigned int species=16; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=16; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
      /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
- std::complex<double> getSpecificRefractivity_16o16o16o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=16; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
-  
+ std::complex<double> getSpecificRefractivity_16o16o16o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=16; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
+
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$O_3\f$ m\f$^{-3}\f$. */
  inline std::complex<double> getRefractivity_16o16o16o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o16o(temperature, pressure, frequency)* numberdensity;}
-  
-  
+
+
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$O_3\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o16o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o16o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o16o(temperature, pressure, frequency, width, n)* numberdensity;}
-  
+
   /*************************************************************************************************************/
 
- 
+
 
   /************************** 16o16o16o v2 (species 17) *********************************************************/
-  
+
 
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for vibrationally excited (v2 state)
        \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency)
-    {unsigned int species=17; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
-  
+    {size_t species=17; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+
      /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for vibrationally excited (v2 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=17; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
-  
+  std::complex<double> getSpecificRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=17; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v2 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$  \f$v=2\f$    m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v2(temperature, pressure, frequency)* numberdensity;}
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v2 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$  \f$v=2\f$   m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o16o_v2(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v2(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -621,41 +621,41 @@ public:
 
 
   /************************** 16o16o16o v1 (species 18) *********************************************************/
-  
+
 
    /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for vibrationally excited (v1 state)
        \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency)
-    {unsigned int species=18; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+    {size_t species=18; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
      /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for vibrationally excited (v1 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=18; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=18; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v1 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$  \f$v=1\f$   m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v1(temperature, pressure, frequency)* numberdensity;}
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v1 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$ \f$v=1\f$  m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o16o_v1(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v1(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
 
 
-  
+
   /************************** 16o16o16o v3 (species 19) *********************************************************/
 
 
@@ -663,28 +663,28 @@ public:
        \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency)
-    {unsigned int species=19; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+    {size_t species=19; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
      /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for vibrationally excited (v3 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=19; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=19; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v3 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$ \f$v=3\f$  m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v3(temperature, pressure, frequency)* numberdensity;}
 
      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for vibrationally excited (v3 state)
 	 \f$^{16}O^{16}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{16}O\f$ \f$v=3\f$  m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o16o_v3(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o16o_v3(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -694,33 +694,33 @@ public:
   /************************** 16o16o18o    (species 20) *********************************************************/
 
 
-   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
        \f$^{16}O^{16}O^{18}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o18o(double temperature,double pressure,double frequency)
-      {unsigned int species=20; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+      {size_t species=20; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
-     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
 	 \f$^{16}O^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o16o18o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=20; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o16o18o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=20; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{18}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o18o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o18o(temperature, pressure, frequency)* numberdensity;}
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{16}O^{18}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{18}O\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o18o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o18o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o18o(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -729,33 +729,33 @@ public:
 
   /************************** 16o16o17o    (species 21) *********************************************************/
 
-   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
        \f$^{16}O^{16}O^{17}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o16o17o(double temperature,double pressure,double frequency)
-      {unsigned int species=21; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+      {size_t species=21; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
-     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
 	 \f$^{16}O^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o16o17o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=21; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o16o17o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=21; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{17}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o16o17o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o16o17o(temperature, pressure, frequency)* numberdensity;}
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{16}O^{17}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{16}O^{17}O\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o16o17o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o16o17o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o16o17o(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -764,32 +764,32 @@ public:
 
   /************************** 16o18o16o    (species 22) *********************************************************/
 
-   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
        \f$^{16}O^{18}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o18o16o(double temperature,double pressure,double frequency)
-      {unsigned int species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+      {size_t species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
-     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
 	 \f$^{16}O^{18}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o18o16o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o18o16o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{18}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{18}O^{16}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o18o16o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o18o16o(temperature, pressure, frequency)* numberdensity;}
 
-      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{18}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{18}O^{16}O\f$ m\f$^{-3}\f$. */
- std::complex<double> getRefractivity_16o18o16o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+ std::complex<double> getRefractivity_16o18o16o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o18o16o(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
@@ -798,47 +798,47 @@ public:
 
   /************************** 16o17o16o    (species 23) *********************************************************/
 
-   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
        \f$^{16}O^{17}O^{16}O\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz. */
   inline std::complex<double> getSpecificRefractivity_16o17o16o(double temperature,double pressure,double frequency)
-      {unsigned int species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
+      {size_t species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
-     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+     /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
 	 \f$^{16}O^{17}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       <b>width</b> (channel width around <b>frequency</b>) in GHz, and <b>n</b> (number of frequency points for averaging within <b>width</b>). */
-  std::complex<double> getSpecificRefractivity_16o17o16o(double temperature,double pressure,double frequency,double width,unsigned int n)
-    {unsigned int species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
+  std::complex<double> getSpecificRefractivity_16o17o16o(double temperature,double pressure,double frequency,double width,size_t n)
+    {size_t species=22; return mkSpecificRefractivity(species, temperature, pressure, frequency, width, n);}
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{17}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$^{16}O^{17}O^{16}O\f$ m\f$^{-3}\f$. */
   inline std::complex<double> getRefractivity_16o17o16o(double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity_16o17o16o(temperature, pressure, frequency)* numberdensity;}
 
-      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+      /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$^{16}O^{17}O^{16}O\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
-      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>), 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
+      <b>width</b> (channel width around <b>frequency</b>) in GHz, <b>n</b> (number of frequency points for averaging within <b>width</b>),
       and <b>numberdensity</b> in molecules of \f$^{16}O^{17}O^{16}O\f$ m\f$^{-3}\f$. */
-  std::complex<double> getRefractivity_16o17o16o(double temperature,double pressure,double frequency,double width,unsigned int n,double numberdensity)
+  std::complex<double> getRefractivity_16o17o16o(double temperature,double pressure,double frequency,double width,size_t n,double numberdensity)
     {return getSpecificRefractivity_16o17o16o(temperature, pressure, frequency, width, n)* numberdensity;}
 
   /*************************************************************************************************************/
 
-     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for 
+     /** It returns \f$(2\pi\nu/c)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{-1},m^{-1})\f$ for
 	 \f$species\f$ (see \ref definitions) <br>
-      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz, 
+      The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, <b>frequency</b> in GHz,
       and <b>numberdensity</b> in molecules of \f$species\f$ m\f$^{-3}\f$.  */
-  std::complex<double> getRefractivity(unsigned int species,double temperature,double pressure,double frequency,double numberdensity)
+  std::complex<double> getRefractivity(size_t species,double temperature,double pressure,double frequency,double numberdensity)
     {return getSpecificRefractivity(species, temperature, pressure, frequency)* numberdensity;}
 
-   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for 
+   /** It returns \f$(2\pi\nu/c\rho_g)\cdot(N_{rg}+iN_{ig})\f$ with units \f$(rad\cdot m^{2},m^{2})\f$ for
        \f$species\f$ (see \ref definitions) <br>
       The parameters are <b>temperature</b> in K, <b>pressure</b> in hPa, and <b>frequency</b> in GHz.   */
-  std::complex<double> getSpecificRefractivity(unsigned int species,double temperature,double pressure,double frequency)
+  std::complex<double> getSpecificRefractivity(size_t species,double temperature,double pressure,double frequency)
     {return mkSpecificRefractivity(species, temperature, pressure, frequency);}
 
 
@@ -847,23 +847,23 @@ public:
 
 private:
 
-  std::complex<double> mkSpecificRefractivity(unsigned int species,    // species --> 1 to 23
-					 double temperature,                 
+  std::complex<double> mkSpecificRefractivity(size_t species,    // species --> 1 to 23
+					 double temperature,
 					 double pressure,
 					 double wvpressure,
 					 double frequency);
 
-  std::complex<double> mkSpecificRefractivity(unsigned int species, double temperature, double pressure, double frequency){return mkSpecificRefractivity(species, temperature, pressure, double(0.0), frequency);}
+  std::complex<double> mkSpecificRefractivity(size_t species, double temperature, double pressure, double frequency){return mkSpecificRefractivity(species, temperature, pressure, double(0.0), frequency);}
 
-  std::complex<double> mkSpecificRefractivity(unsigned int species,    // species --> 1 to 23
-					 double temperature,                 
+  std::complex<double> mkSpecificRefractivity(size_t species,    // species --> 1 to 23
+					 double temperature,
 					 double pressure,
 					 double wvpressure,
 					 double frequency,
                                          double width,
-                                         unsigned int n);
+                                         size_t n);
 
-  std::complex<double> mkSpecificRefractivity(unsigned int species, double temperature, double pressure, double frequency, double width, unsigned int n){return mkSpecificRefractivity(species, temperature, pressure, double(0.0), frequency, width, n);}
+  std::complex<double> mkSpecificRefractivity(size_t species, double temperature, double pressure, double frequency, double width, size_t n){return mkSpecificRefractivity(species, temperature, pressure, double(0.0), frequency, width, n);}
 
   std::complex<double> mkSpecificRefractivity_16o16o(double temperature,          /// 1
                                                 double pressure,
@@ -946,7 +946,7 @@ private:
                                                    double pressure,
                                                    double frequency);
 
-  unsigned int vpIndex(double nu);
+  size_t vpIndex(double nu);
   double linebroadening(double frequency,
                         double temperature,
                         double pressure,

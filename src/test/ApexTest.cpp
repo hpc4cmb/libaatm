@@ -58,7 +58,7 @@ int main()
   double airmwvr;
   double opacitycomparison;
   double coupling_astroband;
-  unsigned int jj;
+  size_t jj;
   Frequency rff;
   Frequency if1;
   Frequency chansep;
@@ -69,7 +69,7 @@ int main()
   cout << " ApexTest: STEP 1: CREATES REFERENCE ATMOSPHERIC PROFILE CORRESTONDING TO THE FOLLOWING BASIC PARAMETERS:" << endl;
 
   //  Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1; // TROPICAL
+  size_t atmType = 1; // TROPICAL
   Temperature      T( 269.37,"K" );     // Ground temperature
   Pressure         P( 553.04,"mb");     // Ground Pressure
   Humidity         H(   4.27,"%" );     // Ground Relative Humidity (indication)
@@ -88,9 +88,9 @@ int main()
 
   cout << " ApexTest: STEP 2: CREATES SpectralGrid and RefractiveIndexProfile objects" << endl;
 
-  vector<unsigned int> WVR_signalId;
+  vector<size_t> WVR_signalId;
 
-  unsigned int numchan3=25;  unsigned int refchan3=13;
+  size_t numchan3=25;  size_t refchan3=13;
   Frequency reffreq3(182.01,"GHz"); Frequency chansep3(  0.02,"GHz"); Frequency intfreq3(  1.30,"GHz");
   SidebandSide sidebandside3=LSB; SidebandType sidebandtype3=DSB;
   SpectralGrid apex_SpectralGrid(numchan3, refchan3, reffreq3, chansep3, intfreq3, sidebandside3, sidebandtype3);
@@ -103,13 +103,13 @@ int main()
 
 
 
-  unsigned int numchan4=25;  unsigned int refchan4=13;
+  size_t numchan4=25;  size_t refchan4=13;
   Frequency reffreq4(179.11,"GHz"); Frequency chansep4(  0.04,"GHz"); Frequency intfreq4(  4.20,"GHz");
   SidebandSide sidebandside4=LSB; SidebandType sidebandtype4=DSB;
   WVR_signalId.push_back(apex_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 2nd pair (WVR channel 2)
   apex_RefractiveIndexProfile.addNewSpectralWindow(numchan4, refchan4, reffreq4, chansep4, intfreq4, sidebandside4, sidebandtype4);
 
-  unsigned int numchan5=25; unsigned int refchan5=13;
+  size_t numchan5=25; size_t refchan5=13;
   Frequency reffreq5(176.81,"GHz"); Frequency chansep5(  0.04,"GHz"); Frequency intfreq5(  6.50,"GHz");
   SidebandSide sidebandside5=LSB; SidebandType sidebandtype5=DSB;
   WVR_signalId.push_back(apex_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 3rd pair (WVR channel 3)
@@ -117,7 +117,7 @@ int main()
 
 
 
-  for(unsigned int j=0; j<apex_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<apex_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     cout << " ApexTest: Spectral Window " << j
 	 << " Central Frequency: " <<  apex_RefractiveIndexProfile.getRefFreq(j).get("GHz") << " GHz, "
 	 << " Freq. Resolution: " <<  apex_RefractiveIndexProfile.getChanSep(j).get("MHz") << " MHz, "
@@ -126,7 +126,7 @@ int main()
   cout << " " << endl;
 
   cout << " ApexTest: Spectral windows associations:    " << endl;
-  for(unsigned int j=0; j<apex_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<apex_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     if(apex_RefractiveIndexProfile.getAssocSpwId(j).size()==1){
       cout << " ApexTest: Spectral Window " << j << " associated to spectral window: "
 	   <<  apex_RefractiveIndexProfile.getAssocSpwId(j)[0] << " (double band)" << endl;
@@ -144,7 +144,7 @@ int main()
 
   vector<double> skycouplingastro; // Sky couplings the astro channel taken as WWR
   vector<Percent> signalgainastro; // Signal Side Band Gain of the astro channel taken as WWR
-  for(unsigned int i=0; i<1; i++){
+  for(size_t i=0; i<1; i++){
     skycouplingastro.push_back(0.95);
     signalgainastro.push_back(Percent(95.0,"%"));    // 50%
   }
@@ -158,7 +158,7 @@ int main()
 
 
 
-  for(unsigned int i=0; i<WVR_signalId.size(); i++){
+  for(size_t i=0; i<WVR_signalId.size(); i++){
     skycoupling183.push_back(skyCoupling_1stGuess);
     signalgain183.push_back(Percent(50.0,"%"));
   }
@@ -179,10 +179,10 @@ int main()
   cout << " ApexTest:  " << endl;
 
   cout << " ApexTest: WaterVaporRadiometer characteristics: " << endl;
-  unsigned int Ids;
+  size_t Ids;
   cout << " ApexTest: apex_SkyStatus.getWaterVaporRadiometer().getIdChannels().size()=" << apex_SkyStatus.getWaterVaporRadiometer().getIdChannels().size() << endl;
 
-  for(unsigned int i=0; i<apex_SkyStatus.getWaterVaporRadiometer().getIdChannels().size(); i++){
+  for(size_t i=0; i<apex_SkyStatus.getWaterVaporRadiometer().getIdChannels().size(); i++){
     cout << " ApexTest: i=" << i << endl;
     Ids=apex_SkyStatus.getWaterVaporRadiometer().getIdChannels()[i];
     cout << " ApexTest: WVR Channel " << i << " SpectralGrid Id of Signal sideband: " <<
@@ -211,16 +211,20 @@ int main()
 
   Angle aaa;
   FILE*  fp;
+  #ifdef HAVE_WINDOWS
+  fp = fopen("APEX\\apex_radiometer_data_MJD53965_skydip.dat", "r");
+  #else
   fp = fopen("APEX/apex_radiometer_data_MJD53965_skydip.dat", "r");
+  #endif
   if (fp != 0) {
     cout << " ApexTest: file open" << endl;
     char  aRow[STRLEN+1];
     char* token;
     vector<Temperature> v_tsky;
-    unsigned int numWVRChannels = 0;
+    size_t numWVRChannels = 0;
     char * fgrow = fgets( aRow, STRLEN, fp );
-    unsigned int inilen=strlen(aRow);
-    unsigned int lacum=0;
+    size_t inilen=strlen(aRow);
+    size_t lacum=0;
 
     token = strtok(aRow,","); lacum=lacum+strlen(token)+1;
     time_mjd.push_back(atof(token));
@@ -261,7 +265,7 @@ int main()
 	token = 0; token = strtok(token,","); lacum=lacum+strlen(token)+1; astrowater.push_back(Length(atof(token),"mm"));
 	token = 0; token = strtok(token,","); lacum=lacum+strlen(token)+1; wvrwater.push_back(Length(atof(token),"mm"));
 
-	for(unsigned int j=0; j<numWVRChannels-1; j++){
+	for(size_t j=0; j<numWVRChannels-1; j++){
 	  token = 0; token = strtok(token,","); v_tsky[j]=Temperature(atof(token)+0.0,"K");
 	  // cout "factnu" << endl; //  	  factnu=0.04799274551* v_tsky[j]=
 
@@ -279,8 +283,8 @@ int main()
   cout << " ApexTest: Elevation of last measurement: " << RadiometerData[RadiometerData.size()-1].getElevation().get("deg") << " deg" << endl;
   cout << " " << endl;
 
-  unsigned int FirstMeasurementAnalyzed=0;
-  unsigned int NumberofMeasurementsAnalyzed=24;  // 22;
+  size_t FirstMeasurementAnalyzed=0;
+  size_t NumberofMeasurementsAnalyzed=24;  // 22;
 
 
   cout << " " << endl;
@@ -292,7 +296,7 @@ int main()
 
   // apex_SkyStatus.setWaterVaporRadiometer(wvr183ghz);
 
-  for(unsigned int i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
+  for(size_t i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
 
 
 
@@ -322,7 +326,7 @@ int main()
     }
 
 
-    vector<unsigned int> WVRASTRO_signalId;
+    vector<size_t> WVRASTRO_signalId;
     WVRASTRO_signalId.push_back(apex_SkyStatus.getNumSpectralWindow()-2);
     WaterVaporRadiometer wvr_astro(WVRASTRO_signalId,skycouplingastro,signalgainastro,groundtemp[i]);
     Angle astroelevation(RadiometerData[i].getElevation().get("rad")-(7.8/180.0)*3.1415927,"rad");
@@ -335,7 +339,7 @@ int main()
 
 
     apex_SkyStatus.setWaterVaporRadiometer(wvr_astro);
-    unsigned int measurementNumber=0;
+    size_t measurementNumber=0;
     apex_SkyStatus.WaterVaporRetrieval_fromWVR(astroRadiometerData,measurementNumber);
 
 

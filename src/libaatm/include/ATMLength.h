@@ -82,6 +82,8 @@ public:
   inline Length operator*(int scf) { return Length(valueIS_ * (double) scf); }
   /** Operator "multiplication of a length by an unsigned int" */
   inline Length operator*(unsigned int scf) { return Length(valueIS_ * (double) scf); }
+  /** Operator "multiplication of a length by an size_t" */
+  inline Length operator*(size_t scf) { return Length(valueIS_ * (double) scf); }
   /** Operator "division of a length by a double" */
   inline Length operator/(double scf) { return Length(valueIS_ / scf); }
   /** Operator "division of a length by a float" */
@@ -90,6 +92,8 @@ public:
   inline Length operator/(int scf) { return Length(valueIS_ / (double) scf); }
   /** Operator "division of a length by an unsigned int" */
   inline Length operator/(unsigned int scf) { return Length(valueIS_ / (double) scf); }
+  /** Operator "division of a length by an size_t" */
+  inline Length operator/(size_t scf) { return Length(valueIS_ / (double) scf); }
   /** Operator "comparator < for two lengths" */
   inline bool operator<(const Length &rhs) const { return (valueIS_ < rhs.get()); }
   /** Operator "comparator > for two lengths" */

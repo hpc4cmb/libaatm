@@ -79,10 +79,10 @@ class AtmProfile
 {
 public:
   /** A constructor of an empty profile with n layers, that can be filled up later. */
-  AtmProfile(unsigned int n);
+  AtmProfile(size_t n);
 
-  /** A long constructor of the atmospheric profile from the basic set of parameters described above. 
-      Please note that this constructor assumes that the &altitude of the antenna is the SAME of the 
+  /** A long constructor of the atmospheric profile from the basic set of parameters described above.
+      Please note that this constructor assumes that the &altitude of the antenna is the SAME of the
       weather station that provides: &groundPressure, &groundTemperature, and &relativeHumidity */
   AtmProfile(const Length &altitude,
              const Pressure &groundPressure,
@@ -93,10 +93,10 @@ public:
              const Pressure &pressureStep,
              double pressureStepFactor,
              const Length &topAtmProfile,
-             unsigned int atmType); //Atmospheretype atmType);
+             size_t atmType); //Atmospheretype atmType);
 
-  
-  /** A long constructor of the atmospheric profile from the basic set of parameters described above which, 
+
+  /** A long constructor of the atmospheric profile from the basic set of parameters described above which,
       in addition, includes user-defined temperature profile  */
   AtmProfile(const Length &altitude,
              const Pressure &groundPressure,
@@ -107,12 +107,12 @@ public:
              const Pressure &pressureStep,
              double pressureStepFactor,
              const Length &topAtmProfile,
-             unsigned int atmType,
+             size_t atmType,
 	     const vector<Length> &v_layerBoundaries,
-	     const vector<Temperature> &v_layerTemperature); 
+	     const vector<Temperature> &v_layerTemperature);
 
 
-  
+
   /** A long constructor of the atmospheric profile from the basic set of parameters described above. */
   /*
    AtmProfile(Length altitude, Pressure    groundPressure,
@@ -132,7 +132,7 @@ public:
              double tropoLapseRate,
              const Humidity &relativeHumidity,
              const Length &wvScaleHeight,
-             unsigned int atmType); //Atmospheretype atmType);
+             size_t atmType); //Atmospheretype atmType);
 
   /*AtmProfile(const Length &altitude,
              const Pressure &groundPressure,
@@ -142,7 +142,7 @@ public:
 	     const vector<Pressure> &v_layerTopPressure,
 	     const vector<Temperature> &v_layerTopTemperature,
 	     const vector<Humidity> &v_layerTopHumidity); */
-  
+
   /** The user provides his own atmospheric profile (basic one: four vectors for layer thickness in m,
    average pressure in each layer in mb, average temperature in each layer in K, and average water
    vapor density in each layer in kg/m**3). QUESTION: SHOULD O3, CO, N2O, NO2, SO2 PROFILES BE FILLED UP
@@ -243,8 +243,8 @@ public:
   string getAtmosphereType() const;
 
   /** Accessor to the type of atmosphere specified by the number**/
-  static string getAtmosphereType(unsigned int typeAtm);
- 
+  static string getAtmosphereType(size_t typeAtm);
+
   /** Accessor to the current Ground Temperature used in the object */
   Temperature getGroundTemperature() const { return groundTemperature_; }
 
@@ -281,14 +281,14 @@ public:
   /** Alternative accessor to the ground altitude of site (length units) */
   Length getGroundAltitude() const { return altitude_; }
 
-   /** setter for the ground altitude of site (length units). Careful! It will remove or add layers if necessary. 
+   /** setter for the ground altitude of site (length units). Careful! It will remove or add layers if necessary.
        Ground values of T/P/h would change as well */
   void setAltitude(const Length &groundaltitude);
 
-  /** Alternative setter for the ground altitude of site (length units). Careful! It will remove or add layers if necessary. 
+  /** Alternative setter for the ground altitude of site (length units). Careful! It will remove or add layers if necessary.
        Ground values of T/P/h would change as well */
   // void setGroundAltitude(const Length &groundaltitude);
- 
+
   /** Accessor to the altitude of the tropopause (length units) */
   Length getTropopauseAltitude() const { return tropoAltitude_; }
 
@@ -296,7 +296,7 @@ public:
   Length getTopAtmProfile() const { return topAtmProfile_; }
 
   /** Accessor to the number of layers of the atmospheric profile */
-  unsigned int getNumLayer() const { return numLayer_; }
+  size_t getNumLayer() const { return numLayer_; }
 
   /** Method to access the Temperature Profile  */
   vector<Temperature> getTemperatureProfile() const;
@@ -305,22 +305,22 @@ public:
    * Method to access the average Temperature in layer i (thickness of layers in ThicknessProfile)
    * @exception AtmException if the layer is not valid.
    **/
-  Temperature getLayerTemperature(unsigned int i) const;
+  Temperature getLayerTemperature(size_t i) const;
 
   /**
    * Method to access the Temperature at bottom of layer i (thickness of layers in ThicknessProfile)
    * @exception AtmException if the layer is not valid.
    **/
-  Temperature getLayerBottomTemperature(unsigned int i) const;
+  Temperature getLayerBottomTemperature(size_t i) const;
 
   /**
    * Method to access the Temperature at top of layer i (thickness of layers in ThicknessProfile)
    * @exception AtmException if the layer is not valid.
    **/
-  Temperature getLayerTopTemperature(unsigned int i) const;
-  
+  Temperature getLayerTopTemperature(size_t i) const;
+
   /** Setter for the average Temperature in layer i (allows to touch one layer each time once a profile has been defined) */
-  void setLayerTemperature(unsigned int i, const Temperature &layerTemperature);
+  void setLayerTemperature(size_t i, const Temperature &layerTemperature);
 
   /** Method to retrieve the layer thickness from site altitude upwards.
    *  Use Altitude to + ThicknessProfile to know the vertical grid. */
@@ -330,56 +330,56 @@ public:
    * Method to access the layer thickness of layer i
    * @exception AtmException if the layer is not valid.
    */
-  Length getLayerThickness(unsigned int i) const;
+  Length getLayerThickness(size_t i) const;
 
   /** Setter for the thickness of layer i (allows to touch one layer each time once a profile has been defined). We do
    *  not advise to use this one unless you change P and T accordingly */
-  void setLayerThickness(unsigned int i, const Length &layerThickness);
-  //void setLayerThickness(const Length &layerThickness, unsigned int i) { setLayerThickness(i, layerThickness); }
+  void setLayerThickness(size_t i, const Length &layerThickness);
+  //void setLayerThickness(const Length &layerThickness, size_t i) { setLayerThickness(i, layerThickness); }
 
   /**
    * Method to access the Bottom Height of layer i above the Ground
    * @exception AtmException if the layer is not valid.
    */
-  Length getLayerBottomHeightAboveGround(unsigned int i) const;
+  Length getLayerBottomHeightAboveGround(size_t i) const;
 
   /**
    * Method to access the Bottom Height of layer i above the Sea Level
    * @exception AtmException if the layer is not valid.
    */
-  Length getLayerBottomHeightAboveSeaLevel(unsigned int i) const;
-  
-  
+  Length getLayerBottomHeightAboveSeaLevel(size_t i) const;
+
+
   /**
    * Method to access the Top Height of layer i above the Ground
    * @exception AtmException if the layer is not valid.
    */
-  Length getLayerTopHeightAboveGround(unsigned int i) const;
-  
+  Length getLayerTopHeightAboveGround(size_t i) const;
+
   /**
    * Method to access the Top Height of layer i above the Sea Level
    * @exception AtmException if the layer is not valid.
    */
-  Length getLayerTopHeightAboveSeaLevel(unsigned int i) const;
+  Length getLayerTopHeightAboveSeaLevel(size_t i) const;
 
-  
+
   /** Function to retrieve Average Water vapor density in a given layer in kg/m**3
    *  (thickness of layers in ThicknessProfile)
    * @exception AtmException if the layer is not valid.
    */
-  MassDensity getLayerWaterVaporMassDensity(unsigned int i) const;
-  MassDensity getLayerBottomWaterVaporMassDensity(unsigned int i) const;
-  MassDensity getLayerTopWaterVaporMassDensity(unsigned int i) const;
-  NumberDensity getLayerWaterVaporNumberDensity(unsigned int i) const;
-  NumberDensity getLayerBottomWaterVaporNumberDensity(unsigned int i) const;
-  NumberDensity getLayerTopWaterVaporNumberDensity(unsigned int i) const;
+  MassDensity getLayerWaterVaporMassDensity(size_t i) const;
+  MassDensity getLayerBottomWaterVaporMassDensity(size_t i) const;
+  MassDensity getLayerTopWaterVaporMassDensity(size_t i) const;
+  NumberDensity getLayerWaterVaporNumberDensity(size_t i) const;
+  NumberDensity getLayerBottomWaterVaporNumberDensity(size_t i) const;
+  NumberDensity getLayerTopWaterVaporNumberDensity(size_t i) const;
 
   /** Setter for the average Water vapor density in layer i in kg/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerWaterVaporMassDensity(unsigned int i, const MassDensity &layerWaterVapor);
-  //void setLayerWaterVaporMassDensity(const MassDensity &layerWaterVapor, unsigned int i) { setLayerWaterVaporMassDensity(i, layerWaterVapor); }
-  void setLayerWaterVaporNumberDensity(unsigned int i, const NumberDensity &layerWaterVapor);
-  //void setLayerWaterVapor(const NumberDensity &layerWaterVapor, unsigned int i) { setLayerWaterVapor(i, layerWaterVapor); }
+  void setLayerWaterVaporMassDensity(size_t i, const MassDensity &layerWaterVapor);
+  //void setLayerWaterVaporMassDensity(const MassDensity &layerWaterVapor, size_t i) { setLayerWaterVaporMassDensity(i, layerWaterVapor); }
+  void setLayerWaterVaporNumberDensity(size_t i, const NumberDensity &layerWaterVapor);
+  //void setLayerWaterVapor(const NumberDensity &layerWaterVapor, size_t i) { setLayerWaterVapor(i, layerWaterVapor); }
 
   /** Method to get the Pressure Profile */
   vector<Pressure> getPressureProfile() const;
@@ -387,62 +387,62 @@ public:
   /** Method to access the average Pressure in layer i
    * @exception AtmException if the layer is not valid.
    */
-  Pressure getLayerPressure(unsigned int i) const;
+  Pressure getLayerPressure(size_t i) const;
 
   /** Method to access the Pressure at bottom of layer i
    * @exception AtmException if the layer is not valid.
    */
-  Pressure getLayerBottomPressure(unsigned int i) const;
+  Pressure getLayerBottomPressure(size_t i) const;
 
   /** Method to access the Pressure at top of layer i
    * @exception AtmException if the layer is not valid.
    */
-  Pressure getLayerTopPressure(unsigned int i) const;
+  Pressure getLayerTopPressure(size_t i) const;
 
   /** Setter for the average Pressure in layer i (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerPressure(unsigned int i, const Pressure &layerPressure) { v_layerPressure_[i] = layerPressure.get("mb"); }
-  //void setLayerPressure(const Pressure &layerPressure, unsigned int i) { setLayerPressure(i, layerPressure); }
+  void setLayerPressure(size_t i, const Pressure &layerPressure) { v_layerPressure_[i] = layerPressure.get("mb"); }
+  //void setLayerPressure(const Pressure &layerPressure, size_t i) { setLayerPressure(i, layerPressure); }
 
   /** Function to retrieve CO density in a given layer (thickness of layers
    *  in ThicknessProfile)  */
-  NumberDensity getLayerCO(unsigned int i) const { return NumberDensity(v_layerCO_[i], "m**-3"); }
+  NumberDensity getLayerCO(size_t i) const { return NumberDensity(v_layerCO_[i], "m**-3"); }
   /** Setter for the average number density of CO in layer i in molecules/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerCO(unsigned int i, const NumberDensity &layerCO) { v_layerCO_[i] = layerCO.get("m**-3"); }
-  //void setLayerCO(const NumberDensity &layerCO, unsigned int i) { setLayerCO(i, layerCO); }
+  void setLayerCO(size_t i, const NumberDensity &layerCO) { v_layerCO_[i] = layerCO.get("m**-3"); }
+  //void setLayerCO(const NumberDensity &layerCO, size_t i) { setLayerCO(i, layerCO); }
 
   /** Function to retrieve O3 density in a given layer (thickness of layers
    *  in ThicknessProfile) */
-  NumberDensity getLayerO3(unsigned int i) const { return NumberDensity(v_layerO3_[i], "m**-3"); }
+  NumberDensity getLayerO3(size_t i) const { return NumberDensity(v_layerO3_[i], "m**-3"); }
   /** Setter for the average number density of O3 in layer i in molecules/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerO3(unsigned int i, const NumberDensity &layerO3) { v_layerO3_[i] = layerO3.get("m**-3"); }
-  //void setLayerO3(const NumberDensity &layerO3, unsigned int i) { setLayerO3(i, layerO3); }
+  void setLayerO3(size_t i, const NumberDensity &layerO3) { v_layerO3_[i] = layerO3.get("m**-3"); }
+  //void setLayerO3(const NumberDensity &layerO3, size_t i) { setLayerO3(i, layerO3); }
 
   /** Function to retrieve N2O density in a given layer (thickness of layers
    *  in ThicknessProfile)   */
-  NumberDensity getLayerN2O(unsigned int i) const { return NumberDensity(v_layerN2O_[i], "m**-3"); }
+  NumberDensity getLayerN2O(size_t i) const { return NumberDensity(v_layerN2O_[i], "m**-3"); }
   /** Setter for the average number density of N2O in layer i in molecules/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerN2O(unsigned int i, const NumberDensity &layerN2O) { v_layerN2O_[i] = layerN2O.get("m**-3"); }
-  //void setLayerN2O(const NumberDensity &layerN2O, unsigned int i) { setLayerN2O(i, layerN2O); }
+  void setLayerN2O(size_t i, const NumberDensity &layerN2O) { v_layerN2O_[i] = layerN2O.get("m**-3"); }
+  //void setLayerN2O(const NumberDensity &layerN2O, size_t i) { setLayerN2O(i, layerN2O); }
 
   /** Function to retrieve NO2 density in a given layer (thickness of layers
    *  in ThicknessProfile)   */
-  NumberDensity getLayerNO2(unsigned int i) const { return NumberDensity(v_layerNO2_[i], "m**-3"); }
+  NumberDensity getLayerNO2(size_t i) const { return NumberDensity(v_layerNO2_[i], "m**-3"); }
   /** Setter for the average number density of NO2 in layer i in molecules/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerNO2(unsigned int i, const NumberDensity &layerNO2) { v_layerNO2_[i] = layerNO2.get("m**-3"); }
-  //void setLayerNO2(const NumberDensity &layerNO2, unsigned int i) { setLayerNO2(i, layerNO2); }
+  void setLayerNO2(size_t i, const NumberDensity &layerNO2) { v_layerNO2_[i] = layerNO2.get("m**-3"); }
+  //void setLayerNO2(const NumberDensity &layerNO2, size_t i) { setLayerNO2(i, layerNO2); }
 
   /** Function to retrieve SO2 density in a given layer (thickness of layers
    *  in ThicknessProfile)   */
-  NumberDensity getLayerSO2(unsigned int i) const { return NumberDensity(v_layerSO2_[i], "m**-3"); }
+  NumberDensity getLayerSO2(size_t i) const { return NumberDensity(v_layerSO2_[i], "m**-3"); }
   /** Setter for the average number density of SO2 in layer i in molecules/m**3 (allows to touch one layer each
    *  time once a profile has been defined) */
-  void setLayerSO2(unsigned int i, const NumberDensity &layerSO2) { v_layerSO2_[i] = layerSO2.get("m**-3"); }
-  //void setLayerSO2(const NumberDensity &layerSO2, unsigned int i) { setLayerSO2(i, layerSO2); }
+  void setLayerSO2(size_t i, const NumberDensity &layerSO2) { v_layerSO2_[i] = layerSO2.get("m**-3"); }
+  //void setLayerSO2(const NumberDensity &layerSO2, size_t i) { setLayerSO2(i, layerSO2); }
 
   void setBasicAtmosphericParameterThresholds(const Length &altitudeThreshold,
 					     const Pressure &groundPressureThreshold,
@@ -450,7 +450,7 @@ public:
 					     double tropoLapseRateThreshold,
 					     const Humidity &relativeHumidityThreshold,
 					     const Length &wvScaleHeightThreshold);
-  
+
 
   /** Method to get the zenith column  of water vapor. It is computed by
    *  simply integrating the H2O profile:
@@ -474,13 +474,13 @@ public:
   //@}
 
 protected:
-  unsigned int typeAtm_; //!< 1: tropical, 2: midlatSummer, 3: midlatWinter, 4: subarcticSummer, 5: subarcticWinter
+  size_t typeAtm_; //!< 1: tropical, 2: midlatSummer, 3: midlatWinter, 4: subarcticSummer, 5: subarcticWinter
   Temperature groundTemperature_; //!< Ambient temperature at the site (K)
   double tropoLapseRate_; //!< tropospheric lapse rate in K/km
   Temperature tropoTemperature_; //!< Temperature at the tropopause
-  unsigned int tropoLayer_; //!< Layer where tropopause starts
+  size_t tropoLayer_; //!< Layer where tropopause starts
   Length tropoAltitude_; //!< Altitude where tropopause starts
-  Pressure groundPressure_; //!< Ground pressure at the site 
+  Pressure groundPressure_; //!< Ground pressure at the site
   Humidity relativeHumidity_; /** Relative humidity at the site (%)
    used only to make an estimate
    of the water vapor column, first guess) */
@@ -494,7 +494,7 @@ protected:
 
   Length altitude_; //!< Altitude of the site (km)
   Length topAtmProfile_; //!< Top of atmospheric profile (km)
-  unsigned int numLayer_; //!< Total number of layers in the output	atmospheric profiles
+  size_t numLayer_; //!< Total number of layers in the output	atmospheric profiles
   double fractionLast_;  //!< Fraction of last layer needed for some calculations
   bool newBasicParam_;
   vector<double> v_layerThickness_; //!< Thickness of layer (m)
@@ -519,7 +519,7 @@ protected:
   Humidity relativeHumidityThreshold_;
   Length wvScaleHeightThreshold_;
 
-  unsigned int ier_;
+  size_t ier_;
 
   /** Default constructor (required if copy constructor in derived classes) */
   AtmProfile() {}
@@ -527,7 +527,7 @@ protected:
   /*
    * \fn Method to build the profile,
    */
-  unsigned int mkAtmProfile(); /** returns error code: <0 unsuccessful           */
+  size_t mkAtmProfile(); /** returns error code: <0 unsuccessful           */
 
   /** Method to update an atmospheric profile based on one or more new basic parameter(s)
    * @param altitude          the new altitude, a Length
@@ -550,7 +550,7 @@ protected:
 private:
   MassDensity rwat(const Temperature &t, const Humidity &rh, const Pressure &p) const;
   Humidity rwat_inv(const Temperature &tt, const MassDensity &dd, const Pressure &pp) const;
-  vector<NumberDensity> st76(const Length &ha, unsigned int tip) const;
+  vector<NumberDensity> st76(const Length &ha, size_t tip) const;
   double poli2(double ha,
                double x1,
                double x2,

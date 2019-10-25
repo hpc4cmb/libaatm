@@ -30,7 +30,7 @@
 #error "This is a C++ include file and cannot be used from plain C"
 #endif
 
-#include "ATMCommon.h" 
+#include "ATMCommon.h"
 #include <exception>
 #include <string>
 
@@ -221,6 +221,6 @@ ATM_NAMESPACE_END
  *  atm::AtmException(ATM_EXCEPTION_ARGS("An exception message..."));
  * @endcode
  */
-#define ATM_EXCEPTION_ARGS(msg) __FILE__, __PRETTY_FUNCTION__, __LINE__, msg
+#define ATM_EXCEPTION_ARGS(msg) __FILE__, __FUNCTION__, __LINE__, msg
 
 #endif /*!_ATM_EXCEPTIONS_H*/

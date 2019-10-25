@@ -72,10 +72,12 @@ public:
   Temperature operator*(float scf) { return Temperature(valueIS_ * (double) scf); }
   Temperature operator*(int scf) { return Temperature(valueIS_ * (double) scf); }
   Temperature operator*(unsigned int scf) { return Temperature(valueIS_ * (double) scf); }
+  Temperature operator*(size_t scf) { return Temperature(valueIS_ * (double) scf); }
   Temperature operator/(double scf) { return Temperature(valueIS_ / scf); }
   Temperature operator/(float scf) { return Temperature(valueIS_ / (double) scf); }
   Temperature operator/(int scf) { return Temperature(valueIS_ / (double) scf); }
   Temperature operator/(unsigned int scf) { return Temperature(valueIS_ / (double) scf); }
+  Temperature operator/(size_t scf) { return Temperature(valueIS_ / (double) scf); }
   bool operator<(const Temperature &rhs) const { return (valueIS_ < rhs.get()); }
   bool operator>(const Temperature &rhs) const { return (valueIS_ > rhs.get()); }
   bool operator<=(const Temperature &rhs) const { return (valueIS_ <= rhs.get()); }
@@ -90,5 +92,3 @@ private:
 ATM_NAMESPACE_END
 
 #endif /*!_ATM_TEMPERATURE_H*/
-
-

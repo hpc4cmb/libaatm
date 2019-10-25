@@ -51,13 +51,13 @@ public:
   WaterVaporRadiometer() {}
 
   /** Class constructor with identifiers of radiometric channels. Sky Coupling = 1.0, Sideband Gain: 50% (no spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels);
+  WaterVaporRadiometer(const vector<size_t> &IdChannels);
 
   /** Class constructor with identifiers of radiometric channels. Sideband Gain: 50% (no spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<double> &skyCoupling);
 
-  inline WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  inline WaterVaporRadiometer(const vector<size_t> &IdChannels,
                               double skyCoupling)
   {
     WaterVaporRadiometer(IdChannels, vector<double> (IdChannels.size(),
@@ -65,32 +65,32 @@ public:
   }
 
   /** Class constructor with identifiers of radiometric channels. Sky Coupling = 1.0 (no spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<Percent> &signalGain);
 
-  /* WaterVaporRadiometer(vector<unsigned int> IdChannels, Percent signalGain); */
+  /* WaterVaporRadiometer(vector<size_t> IdChannels, Percent signalGain); */
 
   /** Full class constructor (no spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<double> &skyCoupling,
                        const vector<Percent> &signalGain);
 
   /** Class constructor with identifiers of radiometric channels. Sky Coupling = 1.0, Sideband Gain: 50% (spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const Temperature &spilloverTemperature);
 
   /** Class constructor with identifiers of radiometric channels. Sideband Gain: 50% (spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<double> &skyCoupling,
                        const Temperature &spilloverTemperature);
 
   /** Class constructor with identifiers of radiometric channels. Sky Coupling = 1.0 (spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<Percent> &signalGain,
                        const Temperature &spilloverTemperature);
 
   /** Full class constructor (spilloverTemperature given) */
-  WaterVaporRadiometer(const vector<unsigned int> &IdChannels,
+  WaterVaporRadiometer(const vector<size_t> &IdChannels,
                        const vector<double> &skyCoupling,
                        const vector<Percent> &signalGain,
                        const Temperature &spilloverTemperature);
@@ -98,7 +98,7 @@ public:
   virtual ~WaterVaporRadiometer();
 
   /** Accessor to identifiers of radiometric channels (vector of int) */
-  inline vector<unsigned int> getIdChannels() const { return IdChannels_; }
+  inline vector<size_t> getIdChannels() const { return IdChannels_; }
 
   /** Accessor to Sky coupling of the different radiometric channels (vector of double) */
   inline vector<double> getSkyCoupling() const { return skyCoupling_; }
@@ -106,12 +106,12 @@ public:
   /** Multiplier of the Sky coupling vector  */
   inline void multiplySkyCoupling(double factor)
   {
-    for(unsigned int i = 0; i < skyCoupling_.size(); i++) {
+    for(size_t i = 0; i < skyCoupling_.size(); i++) {
       skyCoupling_[i] = skyCoupling_[i] * factor;
     }
   }
   /** Multiplier of one  Sky coupling channel  */
-  inline void multiplySkyCouplingChannel(unsigned int ichan, double factor)
+  inline void multiplySkyCouplingChannel(size_t ichan, double factor)
   {
     skyCoupling_[ichan] = skyCoupling_[ichan] * factor;
   }
@@ -119,13 +119,13 @@ public:
   /** Setter of the Sky coupling vector to a single Sky Coupling value */
   inline void setSkyCoupling(double factor)
   {
-    /* for(unsigned int i=0; i<skyCoupling_.size(); i++){ skyCoupling_[i] = factor;} */
+    /* for(size_t i=0; i<skyCoupling_.size(); i++){ skyCoupling_[i] = factor;} */
     for(vector<double>::iterator it(skyCoupling_.begin()),
         itmax(skyCoupling_.end()); it != itmax; ++it) {
       (*it) = factor;
     }
   }
-  inline void setSkyCoupling(unsigned int i, double factor)
+  inline void setSkyCoupling(size_t i, double factor)
   {
     if(i < skyCoupling_.size()) {
       skyCoupling_[i] = factor;
@@ -141,7 +141,7 @@ public:
   inline void setSpilloverTemperature(Temperature spilloverTemperature) { spilloverTemperature_ = spilloverTemperature; }
 
 protected:
-  vector<unsigned int> IdChannels_;
+  vector<size_t> IdChannels_;
   vector<double> skyCoupling_;
   vector<Percent> signalGain_;
   Temperature spilloverTemperature_;

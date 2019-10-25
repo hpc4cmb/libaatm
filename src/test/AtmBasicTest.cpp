@@ -51,7 +51,7 @@ int main()
 {
   // Initialize the Atmospheric model
 
-  unsigned int      atmType = 1;       // 1=tropical (ALMA site), 2=midlatSummer, 3=midlatWinter
+  size_t      atmType = 1;       // 1=tropical (ALMA site), 2=midlatSummer, 3=midlatWinter
   atm::Temperature  T(273. ,"K" );     // Ground temperature
   atm::Pressure     P(55000. ,"Pa");   // Ground Pressure
   atm::Humidity     H(8.,"%" );       // Ground Relative Humidity (indication)
@@ -89,12 +89,12 @@ int main()
   double bandWidthAstro = 2.*1.e9;
   double chanWidthAstro = 0.1*1e9; // 100Mhz
 
-  unsigned int numChanAstro=int(bandWidthAstro/chanWidthAstro);
-  unsigned int refChanAstro=numChanAstro/2+1;
+  size_t numChanAstro=int(bandWidthAstro/chanWidthAstro);
+  size_t refChanAstro=numChanAstro/2+1;
 
 
-  atm::SpectralGrid * spGrid_p = new atm::SpectralGrid(numChanAstro,   // unsigned int numChan
-                                                       refChanAstro,   // unsigned int refChan
+  atm::SpectralGrid * spGrid_p = new atm::SpectralGrid(numChanAstro,   // size_t numChan
+                                                       refChanAstro,   // size_t refChan
                                                        atm::Frequency(refFreqAstro), // Frequency refFreq
                                                        atm::Frequency(chanWidthAstro));
 
@@ -103,7 +103,7 @@ int main()
     // Print description of spectral windows
     //
   cout<<"-----------------------------------------------"<<endl;
-  for(unsigned int j=0; j<spGrid_p->getNumSpectralWindow(); j++){
+  for(size_t j=0; j<spGrid_p->getNumSpectralWindow(); j++){
     cout << "Spectral Window " << j
       // << " Central Frequency: " <<  spGrid_p->getRefFreq(j).get("GHz") << " GHz, "
          << " Central Frequency: " <<  spGrid_p->getChanFreq(j,(spGrid_p->getNumChan(j)/2)).get("GHz") << " GHz, "
@@ -111,7 +111,7 @@ int main()
          << " LO frequency: " <<  spGrid_p->getLoFrequency(j)/1.e9 << " GHz, "
          << " Num. of channels: " << spGrid_p->getNumChan(j)<<endl;
 
-    //         for (unsigned int i=0;i<spGrid_p->getNumChan(j);i++)
+    //         for (size_t i=0;i<spGrid_p->getNumChan(j);i++)
     //           cout<<spGrid_p->getChanFreq(j,i).get("GHz")<<" ";
     //         cout<<endl;
   }
@@ -150,14 +150,14 @@ int main()
   string filename="path.dat";
   ofstream resultFile(filename.c_str());
   resultFile <<"! Pressure TotalPath H2OPathLength DispersiveDryPathLength NonDispersiveDryPathLength"<<endl;
-  for (unsigned int i=0; i<numPressure; i++) {
+  for (size_t i=0; i<numPressure; i++) {
     skyStatus.setBasicAtmosphericParameters(atm::Pressure(startPressure+i*deltaPressure,"Pa"));
 
     cout<<"Number of layers :"<<skyStatus.getNumLayer()<<endl;
     cout<<"First guess precipitable water vapor content: " << skyStatus.getGroundWH2O().get("mm") << " mm" << endl;
     cout<<"Ground Pressure: " << skyStatus.getGroundPressure().get("Pa") << " Pa" << endl;
     cout<<"Ground Temperature: " << skyStatus.getGroundTemperature().get("K") << " K" << endl;
-    for (unsigned int ii=0; ii<skyStatus.getNumLayer(); ii++) {
+    for (size_t ii=0; ii<skyStatus.getNumLayer(); ii++) {
       cout << "Pressure in Layer " << ii << " = " <<  skyStatus.getLayerPressure(ii).get("Pa") << " Pa " <<
 	"Temperature: " <<  skyStatus.getLayerTemperature(ii).get("K") << " K " << endl;
     }

@@ -77,6 +77,8 @@ public:
   inline InverseLength operator*(int scf) { return InverseLength(valueIS_ * (double) scf); }
   /** Operator "multiplication of a inverse length by an unsigned int" */
   inline InverseLength operator*(unsigned int scf) { return InverseLength(valueIS_ * (double) scf); }
+  /** Operator "multiplication of a inverse length by an size_t" */
+  inline InverseLength operator*(size_t scf) { return InverseLength(valueIS_ * (double) scf); }
   /** Operator "division of a inverse length by a double" */
   inline InverseLength operator/(double scf) { return InverseLength(valueIS_ / scf); }
   /** Operator "division of a inverse length by a float" */
@@ -85,6 +87,8 @@ public:
   inline InverseLength operator/(int scf) { return InverseLength(valueIS_ / (double) scf); }
   /** Operator "division of a inverse length by an unsigned int" */
   inline InverseLength operator/(unsigned int scf) { return InverseLength(valueIS_ / (double) scf); }
+  /** Operator "division of a inverse length by an size_t" */
+  inline InverseLength operator/(size_t scf) { return InverseLength(valueIS_ / (double) scf); }
   /** Operator "comparator < for two inverse lengths" */
   inline bool operator<(const InverseLength & rhs) const { return (valueIS_ < rhs.get()); }
   /** Operator "comparator > for two inverse lengths" */

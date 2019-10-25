@@ -5,6 +5,10 @@ add_executable(aatm_test_basic
     AtmBasicTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_basic PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_basic PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -22,6 +26,10 @@ add_executable(aatm_test_version
     ATMVersionTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_version PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_version PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -38,6 +46,10 @@ add_test(NAME test_version COMMAND aatm_test_version)
 add_executable(aatm_test_abinitio
     AbInitioTest.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_abinitio PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_abinitio PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -63,6 +75,10 @@ add_custom_command(TARGET aatm_test_abinitio POST_BUILD
 add_executable(aatm_test_apex
     ApexTest.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_apex PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_apex PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -90,6 +106,10 @@ add_executable(aatm_test_length
     LengthTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_length PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_length PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -106,6 +126,10 @@ add_test(NAME test_length COMMAND aatm_test_length)
 add_executable(aatm_test_profile
     AtmProfileTest.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_profile PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_profile PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -124,6 +148,10 @@ add_executable(aatm_test_skystatus
     SkyStatusTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_skystatus PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_skystatus PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -140,6 +168,10 @@ add_test(NAME test_skystatus COMMAND aatm_test_skystatus)
 add_executable(aatm_test_skystatusinv
     SkyStatusTest_TINV.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_skystatusinv PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_skystatusinv PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -166,6 +198,10 @@ add_executable(aatm_test_refindex
     RefractiveIndexProfileTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_refindex PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_refindex PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -183,6 +219,10 @@ add_executable(aatm_test_specgrid
     SpectralGridTest.cpp
 )
 
+if(WIN32)
+    target_compile_definitions(aatm_test_specgrid PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
+
 target_include_directories(aatm_test_specgrid PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
@@ -199,6 +239,10 @@ add_test(NAME test_specgrid COMMAND aatm_test_specgrid)
 add_executable(aatm_test_sma
     SMATest.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_sma PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_sma PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -224,6 +268,10 @@ add_custom_command(TARGET aatm_test_sma POST_BUILD
 add_executable(aatm_test_atm651
     atm651.cpp
 )
+
+if(WIN32)
+    target_compile_definitions(aatm_test_atm651 PRIVATE HAVE_WINDOWS=1)
+endif(WIN32)
 
 target_include_directories(aatm_test_atm651 PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}"

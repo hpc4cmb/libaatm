@@ -139,7 +139,7 @@ int main()
   //  double h_div_k=0.04799274551;        // plank/boltz in units of K/GHz
 
   // Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1;  // TROPICAL
+  size_t atmType = 1;  // TROPICAL
   Temperature      T( 270.0,"K" );     // Ground temperature
   Pressure         P( 560.0,"mb");     // Ground Pressure
   Humidity         H(  20.0,"%" );     // Ground Relative Humidity (indication)
@@ -175,7 +175,7 @@ int main()
   cout<<" RefractiveIndexProfileTest: Layer parameters:  " <<endl;
 
 
-  for(unsigned int i=0; i<myProfile.getNumLayer(); i++){
+  for(size_t i=0; i<myProfile.getNumLayer(); i++){
     cout << " RefractiveIndexProfileTest:  P: "          << myProfile.getLayerPressure(i).get("mb")    << " mb"
 	 << " T: "          << myProfile.getLayerTemperature(i).get("K")   << " K"
 	 << " Thickness: "  << myProfile.getLayerThickness(i).get("m")   << " m"

@@ -84,7 +84,7 @@ int main()
   cout << " AbInitioTest: Pressure step factor: 1.2 (please check the above reference)" << endl;
 
   // Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1; // TROPICAL
+  size_t atmType = 1; // TROPICAL
   Temperature      T( 268.15,"K" );    // Ground temperature
   Pressure         P( 623.0,"mb");     // Ground Pressure
   Humidity         H(  11.30,"%" );    // Ground Relative Humidity (indication)
@@ -104,9 +104,9 @@ int main()
   cout << " AbInitioTest:       3 WATER VAPOR RADIOMETER CHANNELS + 1 ASTRONOMICAL BAND       " << endl;
   cout << " AbInitioTest:         (Negative frequency resolutions are used for image side bands)    " << endl;
 
-  vector<unsigned int> WVR_signalId;    // IDs of the Signal Side Band of each Water Vapor Radiometer Channel in the SpectralGrid object.
+  vector<size_t> WVR_signalId;    // IDs of the Signal Side Band of each Water Vapor Radiometer Channel in the SpectralGrid object.
 
-  unsigned int numchan1=11;  unsigned int refchan1=6;
+  size_t numchan1=11;  size_t refchan1=6;
   Frequency reffreq1(182.11,"GHz"); Frequency chansep1(  0.04,"GHz"); Frequency intfreq1(  1.20,"GHz");
   SidebandSide sidebandside1=LSB; SidebandType sidebandtype1=DSB;
   SpectralGrid alma_SpectralGrid(numchan1, refchan1, reffreq1, chansep1, intfreq1, sidebandside1, sidebandtype1);
@@ -114,27 +114,27 @@ int main()
 
   RefractiveIndexProfile alma_RefractiveIndexProfile(alma_SpectralGrid, myProfile);
 
-  unsigned int numchan2=11;  unsigned int refchan2=6;
+  size_t numchan2=11;  size_t refchan2=6;
   Frequency reffreq2(179.11,"GHz"); Frequency chansep2(  0.09,"GHz"); Frequency intfreq2(  4.20,"GHz");
   SidebandSide sidebandside2=LSB; SidebandType sidebandtype2=DSB;
   WVR_signalId.push_back(alma_RefractiveIndexProfile.getNumSpectralWindow());  // this will be the Id of the 1st spw of the 2nd pair
   alma_RefractiveIndexProfile.addNewSpectralWindow(numchan2, refchan2, reffreq2, chansep2, intfreq2, sidebandside2, sidebandtype2);
 
-  unsigned int numchan3=11; unsigned int refchan3=6;
+  size_t numchan3=11; size_t refchan3=6;
   Frequency reffreq3(175.51,"GHz"); Frequency chansep3(  0.10,"GHz"); Frequency intfreq3(  7.80,"GHz");
   SidebandSide sidebandside3=LSB; SidebandType sidebandtype3=DSB;
   WVR_signalId.push_back(alma_RefractiveIndexProfile.getNumSpectralWindow());
   alma_RefractiveIndexProfile.addNewSpectralWindow(numchan3, refchan3, reffreq3, chansep3, intfreq3, sidebandside3, sidebandtype3);
 
   Frequency  mySingleFreq_astro2(467.75,"GHz");  Frequency  chanSep_astro2(0.050,"GHz");
-  unsigned int numChan_astro2=31;  unsigned int refChan_astro2=16;
+  size_t numChan_astro2=31;  size_t refChan_astro2=16;
 
 
   alma_RefractiveIndexProfile.addNewSpectralWindow(numChan_astro2, refChan_astro2, mySingleFreq_astro2, chanSep_astro2);
 
-  unsigned int astro_band=alma_RefractiveIndexProfile.getNumSpectralWindow()-1;
+  size_t astro_band=alma_RefractiveIndexProfile.getNumSpectralWindow()-1;
 
-  for(unsigned int j=0; j<alma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<alma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     cout << " AbInitioTest: Spectral Window " << j
 	 << " Central Frequency: " <<  alma_RefractiveIndexProfile.getRefFreq(j).get("GHz") << " GHz, "
 	 << " Freq. Resolution: " <<  alma_RefractiveIndexProfile.getChanSep(j).get("MHz") << " MHz, "
@@ -142,7 +142,7 @@ int main()
   }
 
   cout << " AbInitioTest: Spectral windows associations:    " << endl;
-  for(unsigned int j=0; j<alma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<alma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     if(alma_RefractiveIndexProfile.getAssocSpwId(j).size()==1){
       cout << " AbInitioTest: Spectral Window " << j << " associated to spectral window: "
 	   <<  alma_RefractiveIndexProfile.getAssocSpwId(j)[0] << " (double band)" << endl;
@@ -163,7 +163,7 @@ int main()
   vector<Percent> signalgain183; // Signal Side Band Gain of the WVR Channels (set to 50% below)
   double skyCoupling_1stGuess = 0.8;
   Temperature tspill(285.15,"K"); // Spillover Temperature see by the WVR
-  for(unsigned int i=0; i<WVR_signalId.size(); i++){
+  for(size_t i=0; i<WVR_signalId.size(); i++){
     skycoupling183.push_back(skyCoupling_1stGuess);
     signalgain183.push_back(Percent(50.0,"%"));
   }
@@ -173,8 +173,8 @@ int main()
   cout << " AbInitioTest:  " << endl;
 
   cout << " AbInitioTest: WaterVaporRadiometer characteristics: " << endl;
-  unsigned int Ids;
-  for(unsigned int i=0; i<skyAntenna1.getWaterVaporRadiometer().getIdChannels().size(); i++){
+  size_t Ids;
+  for(size_t i=0; i<skyAntenna1.getWaterVaporRadiometer().getIdChannels().size(); i++){
     Ids=skyAntenna1.getWaterVaporRadiometer().getIdChannels()[i];
     cout << " AbInitioTest: WVR Channel " << i << " SpectralGrid Id of Signal sideband: " <<
       Ids << " / SpectralGrid Id of Image sideband: " << skyAntenna1.getAssocSpwId(Ids)[0] << endl;
@@ -190,15 +190,19 @@ int main()
   vector<double> time;
   Angle aaa;
   FILE*  fp;
+  #ifdef HAVE_WINDOWS
+  fp = fopen("WVR_MAUNA_KEA\\radiometer_data.dat", "r");
+  #else
   fp = fopen("WVR_MAUNA_KEA/radiometer_data.dat", "r");
+  #endif
   if (fp != 0) {
     char  aRow[STRLEN+1];
     char* token;
     vector<Temperature> v_tsky;
-    unsigned int numWVRChannels = 0;
+    size_t numWVRChannels = 0;
     char * fgrow = fgets( aRow, STRLEN, fp );
-    unsigned int inilen=strlen(aRow);
-    unsigned int lacum=0;
+    size_t inilen=strlen(aRow);
+    size_t lacum=0;
     token = strtok(aRow,","); time.push_back(atof(token));
     lacum=lacum+strlen(token)+1;
     token = 0; token = strtok(token,","); aaa=Angle(atof(token),"deg");
@@ -215,7 +219,7 @@ int main()
       if(strncmp(aRow," ",1)==0){
 	token = strtok(aRow,","); time.push_back(atof(token));
 	token = 0; token = strtok(token,","); aaa=Angle(atof(token),"deg");
-	for(unsigned int j=0; j<numWVRChannels-1; j++){
+	for(size_t j=0; j<numWVRChannels-1; j++){
 	  token = 0; token = strtok(token,","); v_tsky[j]=Temperature(atof(token),"K");
 	}
 	token = 0; token = strtok(token,"\n"); v_tsky[numWVRChannels-1]=Temperature(atof(token),"K");
@@ -230,9 +234,9 @@ int main()
   cout << " AbInitioTest: Total number of WVR data: " << RadiometerData.size() << endl;
   cout << " AbInitioTest:  " << endl;
 
-  unsigned int FirstMeasurementAnalyzed=9300;
-  unsigned int NumberofMeasurementsAnalyzed=1; // 7
-  unsigned int NumberofMeasurementsforSkyCoupligRetrieval=5;
+  size_t FirstMeasurementAnalyzed=9300;
+  size_t NumberofMeasurementsAnalyzed=1; // 7
+  size_t NumberofMeasurementsforSkyCoupligRetrieval=5;
 
 
   cout << " AbInitioTest: STEP 6: Performing Water Vapor Retrieval over " << NumberofMeasurementsAnalyzed <<
@@ -253,7 +257,7 @@ int main()
   skyAntenna1.updateSkyCoupling_fromWVR(RadiometerData,FirstMeasurementAnalyzed,FirstMeasurementAnalyzed+NumberofMeasurementsforSkyCoupligRetrieval);
 
   cout << " AbInitioTest: The best sky coupling is: " << endl;
-  for(unsigned int i=0; i<skyAntenna1.getWaterVaporRadiometer().getIdChannels().size(); i++){
+  for(size_t i=0; i<skyAntenna1.getWaterVaporRadiometer().getIdChannels().size(); i++){
     cout << " AbInitioTest: WVR Channel " << i << ": " << skyAntenna1.getWaterVaporRadiometerSkyCoupling(i) << ": " << endl;
   }
   cout << " AbInitioTest: For which the AverageSigmaTskyFit over those measurements is: " <<
@@ -267,10 +271,10 @@ int main()
 
   skyAntenna1.WaterVaporRetrieval_fromWVR(RadiometerData,FirstMeasurementAnalyzed,FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed);
 
-  for(unsigned int i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
+  for(size_t i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
     cout << " AbInitioTest: Data point " << i << " (UT time: " << time[i]/3600 << " hours on 2002, March 3)" << endl;
     cout << " AbInitioTest: Measured and fitted Sky Tebb's (in K): " << endl;
-    for(unsigned int j=0; j<RadiometerData[i].getmeasuredSkyBrightness().size(); j++){
+    for(size_t j=0; j<RadiometerData[i].getmeasuredSkyBrightness().size(); j++){
       cout << " AbInitioTest:   Channel " << j << ": " << RadiometerData[i].getmeasuredSkyBrightness()[j].get("K") <<
 	"  "<< RadiometerData[i].getfittedSkyBrightness()[j].get("K") << endl;
     }

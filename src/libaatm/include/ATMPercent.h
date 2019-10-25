@@ -2,18 +2,18 @@
 #define _ATM_PERCENT_H
 /*******************************************************************************
 * ALMA - Atacama Large Millimiter Array
-* (c) Instituto de Estructura de la Materia, 2009 
-* 
+* (c) Instituto de Estructura de la Materia, 2009
+*
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
 * License as published by the Free Software Foundation; either
 * version 2.1 of the License, or (at your option) any later version.
-* 
+*
 * This library is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 * Lesser General Public License for more details.
-* 
+*
 * You should have received a copy of the GNU Lesser General Public
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
@@ -76,6 +76,8 @@ public:
   inline Percent operator*(int scf) { return Percent(valueIS_ * (double) scf); }
   /** Operator "multiplication of a percent by an unsigned int" */
   inline Percent operator*(unsigned int scf) { return Percent(valueIS_ * (double) scf); }
+  /** Operator "multiplication of a percent by an size_t" */
+  inline Percent operator*(size_t scf) { return Percent(valueIS_ * (double) scf); }
   /** Operator "division of a percent by a double" */
   inline Percent operator/(double scf) { return Percent(valueIS_ / scf); }
   /** Operator "division of a percent by a float" */
@@ -84,6 +86,8 @@ public:
   inline Percent operator/(int scf) { return Percent(valueIS_ / (double) scf); }
   /** Operator "division of a percent by an unsigned int" */
   inline Percent operator/(unsigned int scf) { return Percent(valueIS_ / (double) scf); }
+  /** Operator "division of a percent by an size_t" */
+  inline Percent operator/(size_t scf) { return Percent(valueIS_ / (double) scf); }
   /** Operator "comparator < for two percentages" */
   inline bool operator<(const Percent &rhs) const { return (valueIS_ < rhs.get()); }
   /** Operator "comparator > for two percentages" */
@@ -96,7 +100,7 @@ public:
   inline bool operator==(const Percent &rhs) const { return (valueIS_ == rhs.get()); }
   /** Operator "comparator != for two percentages" */
   inline bool operator!=(const Percent &rhs) const { return (valueIS_ != rhs.get()); }
-  
+
 private:
   double valueIS_;
 }; // class Percent
@@ -104,5 +108,3 @@ private:
 ATM_NAMESPACE_END
 
 #endif /*!_ATM_PERCENT_H*/
-
-

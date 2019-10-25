@@ -65,7 +65,7 @@ int main()
   cout << " SmaTest: STEP 1: CREATES REFERENCE ATMOSPHERIC PROFILE CORRESTONDING TO THE FOLLOWING BASIC PARAMETERS:" << endl;
 
   //  Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1; // TROPICAL
+  size_t atmType = 1; // TROPICAL
   Temperature      T( 268.15,"K" );    // Ground temperature
   Pressure         P( 623.0,"mb");     // Ground Pressure
   Humidity         H(  11.30,"%" );    // Ground Relative Humidity (indication)
@@ -89,9 +89,9 @@ int main()
 
   cout << " SMATest: STEP 2: CREATES SpectralGrid and RefractiveIndexProfile objects" << endl;
 
-  vector<unsigned int> WVR_signalId;
+  vector<size_t> WVR_signalId;
 
-  unsigned int numchan0=25;  unsigned int refchan0=13;
+  size_t numchan0=25;  size_t refchan0=13;
    Frequency reffreq0(183.310-5.225,"GHz"); Frequency chansep0(2.650/25.0,"GHz"); Frequency intfreq0(0,"GHz");
    //  SidebandSide sidebandside0=LSB; SidebandType sidebandtype0=SSB;
   SpectralGrid sma_SpectralGrid(numchan0, refchan0, reffreq0, chansep0); //, intfreq0, sidebandside0, sidebandtype0);
@@ -101,50 +101,50 @@ int main()
   // windows directly at the level of this RefractiveIndexProfile object.
   RefractiveIndexProfile sma_RefractiveIndexProfile(sma_SpectralGrid, sma_AtmProfile);
 
-  unsigned int numchan1=25;  unsigned int refchan1=13;
+  size_t numchan1=25;  size_t refchan1=13;
   Frequency reffreq1(183.310-3.18,"GHz"); Frequency chansep1(1.400/25.0,"GHz"); Frequency intfreq1(0,"GHz");
   //  SidebandSide sidebandside1=LSB; SidebandType sidebandtype1=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 2nd pair (WVR channel 2)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan1, refchan1, reffreq1, chansep1); //, intfreq1, sidebandside1, sidebandtype1);
 
-  unsigned int numchan2=25; unsigned int refchan2=13;
+  size_t numchan2=25; size_t refchan2=13;
   Frequency reffreq2(183.310-1.9475,"GHz"); Frequency chansep2(0.845/25.0,"GHz"); Frequency intfreq2(0,"GHz");
   //  SidebandSide sidebandside2=LSB; SidebandType sidebandtype2=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 3rd pair (WVR channel 3)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan2, refchan2, reffreq2, chansep2);  //, intfreq2, sidebandside2, sidebandtype2);
 
-  unsigned int numchan3=25; unsigned int refchan3=13;
+  size_t numchan3=25; size_t refchan3=13;
   Frequency reffreq3(183.310-0.882,"GHz"); Frequency chansep3(0.206/25.0,"GHz"); Frequency intfreq3(0,"GHz");
   //  SidebandSide sidebandside3=LSB; SidebandType sidebandtype3=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 3rd pair (WVR channel 3)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan3, refchan3, reffreq3, chansep3);  //, intfreq3, sidebandside3, sidebandtype3);
 
-  unsigned int numchan4=25; unsigned int refchan4=13;
+  size_t numchan4=25; size_t refchan4=13;
   Frequency reffreq4(183.310+0.882,"GHz"); Frequency chansep4(0.206/25.0,"GHz"); Frequency intfreq4(0,"GHz");
   //  SidebandSide sidebandside3=LSB; SidebandType sidebandtype3=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 3rd pair (WVR channel 3)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan4, refchan4, reffreq4, chansep4);  //, intfreq3, sidebandside3, sidebandtype3);
 
-  unsigned int numchan5=25; unsigned int refchan5=13;
+  size_t numchan5=25; size_t refchan5=13;
   Frequency reffreq5(183.310+1.9475,"GHz"); Frequency chansep5(0.845/25.0,"GHz"); Frequency intfreq5(0,"GHz");
   //  SidebandSide sidebandside2=LSB; SidebandType sidebandtype2=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 3rd pair (WVR channel 3)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan5, refchan5, reffreq5, chansep5);  //, intfreq2, sidebandside2, sidebandtype2);
 
-  unsigned int numchan6=25;  unsigned int refchan6=13;
+  size_t numchan6=25;  size_t refchan6=13;
   Frequency reffreq6(183.310+3.18,"GHz"); Frequency chansep6(1.400/25.0,"GHz"); Frequency intfreq6(0,"GHz");
   //  SidebandSide sidebandside1=LSB; SidebandType sidebandtype1=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 2nd pair (WVR channel 2)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan6, refchan6, reffreq6, chansep6); //, intfreq1, sidebandside1, sidebandtype1);
 
-  unsigned int numchan7=25;  unsigned int refchan7=13;
+  size_t numchan7=25;  size_t refchan7=13;
   Frequency reffreq7(183.310+5.225,"GHz"); Frequency chansep7(2.650/25.0,"GHz"); Frequency intfreq7(0,"GHz");
   //  SidebandSide sidebandside1=LSB; SidebandType sidebandtype1=SSB;
   WVR_signalId.push_back(sma_RefractiveIndexProfile.getNumSpectralWindow()); // this is the Id of the 1st spectral window of the 2nd pair (WVR channel 2)
   sma_RefractiveIndexProfile.addNewSpectralWindow(numchan7, refchan7, reffreq7, chansep7); //, intfreq1, sidebandside1, sidebandtype1);
 
 
-  for(unsigned int j=0; j<sma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<sma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     cout << " SMATest: Spectral Window " << j
 	 << " Central Frequency: " <<  sma_RefractiveIndexProfile.getRefFreq(j).get("GHz") << " GHz, "
 	 << " Freq. Resolution: " <<  sma_RefractiveIndexProfile.getChanSep(j).get("MHz") << " MHz, "
@@ -153,7 +153,7 @@ int main()
   cout << " " << endl;
 
   cout << " SMATest: Spectral windows associations:    " << endl;
-  for(unsigned int j=0; j<sma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
+  for(size_t j=0; j<sma_RefractiveIndexProfile.getNumSpectralWindow(); j++){
     if(sma_RefractiveIndexProfile.getAssocSpwId(j).size()==1){
       cout << " SMATest: Spectral Window " << j << " associated to spectral window: "
 	   <<  sma_RefractiveIndexProfile.getAssocSpwId(j)[0] << " (double band)" << endl;
@@ -171,7 +171,7 @@ int main()
 
   vector<double> skycouplingastro; // Sky couplings the astro channel taken as WWR
   vector<Percent> signalgainastro; // Signal Side Band Gain of the astro channel taken as WWR
-  for(unsigned int i=0; i<1; i++){
+  for(size_t i=0; i<1; i++){
     skycouplingastro.push_back(1.0);
     signalgainastro.push_back(Percent(50.0,"%"));
   }
@@ -185,7 +185,7 @@ int main()
 
 
 
-  for(unsigned int i=0; i<WVR_signalId.size(); i++){
+  for(size_t i=0; i<WVR_signalId.size(); i++){
     skycoupling183.push_back(skyCoupling_1stGuess);
     signalgain183.push_back(Percent(100.0,"%"));
   }
@@ -208,10 +208,10 @@ int main()
   cout << " SMATest:  " << endl;
 
   cout << " SMATest: WaterVaporRadiometer characteristics: " << endl;
-  unsigned int Ids;
+  size_t Ids;
 
 
-  for(unsigned int i=0; i<sma_SkyStatus.getWaterVaporRadiometer().getIdChannels().size(); i++){
+  for(size_t i=0; i<sma_SkyStatus.getWaterVaporRadiometer().getIdChannels().size(); i++){
     cout << " SMATest: i=" << i << endl;
     Ids=sma_SkyStatus.getWaterVaporRadiometer().getIdChannels()[i];
     cout << " SMATest: WVR Channel " << i << " SpectralGrid Id of Signal sideband: " <<
@@ -240,16 +240,20 @@ int main()
 
   Angle aaa;
   FILE*  fp;
+  #ifdef HAVE_WINDOWS
+  fp = fopen("SMA\\SMA_17JUL2006_skydip1.dat", "r");
+  #else
   fp = fopen("SMA/SMA_17JUL2006_skydip1.dat", "r");
+  #endif
   if (fp != 0) {
     cout << " SMATest: file open" << endl;
     char  aRow[STRLEN+1];
     char* token;
     vector<Temperature> v_tsky;
-    unsigned int numWVRChannels = 0;
+    size_t numWVRChannels = 0;
     char * fgrow = fgets( aRow, STRLEN, fp );
-    unsigned int inilen=strlen(aRow);
-    unsigned int lacum=0;
+    size_t inilen=strlen(aRow);
+    size_t lacum=0;
 
     token = strtok(aRow,","); lacum=lacum+strlen(token)+1; time_mjd.push_back(atof(token));
     token = 0; token = strtok(token,","); lacum=lacum+strlen(token)+1; aaa=Angle(atof(token),"rad"); elevation.push_back(aaa);
@@ -276,7 +280,7 @@ int main()
 	token = 0; token = strtok(token,","); aaa=Angle(atof(token),"rad");     elevation.push_back(aaa);
 	token = 0; token = strtok(token,",");
 
-	for(unsigned int j=0; j<numWVRChannels-1; j++){
+	for(size_t j=0; j<numWVRChannels-1; j++){
 	  token = 0; token = strtok(token,","); v_tsky[j]=Temperature(atof(token)+0.0,"K");
 	  // cout << "v_tsky["<<j<<"]=" << v_tsky[j].get("K") <<endl;
 	}
@@ -294,8 +298,8 @@ int main()
   cout << " SMATest: Elevation of last measurement: " << RadiometerData[RadiometerData.size()-1].getElevation().get("deg") << " deg" << endl;
   cout << " " << endl;
 
-  unsigned int FirstMeasurementAnalyzed=0;
-  unsigned int NumberofMeasurementsAnalyzed=5;
+  size_t FirstMeasurementAnalyzed=0;
+  size_t NumberofMeasurementsAnalyzed=5;
 
   //  sma_SkyStatus.setUserWH2O(Length(1.18686,"mm"));
   // sma_SkyStatus.setAirMass(1.213137262);   ELV 55.5185
@@ -316,7 +320,7 @@ int main()
   cout << "The average Sigma of this ensemble of fits is: " <<
     sma_SkyStatus.getWVRAverageSigmaTskyFit(RadiometerData,FirstMeasurementAnalyzed,FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed).get("K")
        << " K" << endl;
-  for(unsigned int i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
+  for(size_t i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
     cout << "Data point analyzed: " << i << "/ Measured (fitted) Sky Tebb's (in K): " <<
       RadiometerData[i].getmeasuredSkyBrightness()[0].get("K") <<"  K ("<< RadiometerData[i].getfittedSkyBrightness()[0].get("K") << " K) "  <<
       RadiometerData[i].getmeasuredSkyBrightness()[1].get("K") <<"  K ("<< RadiometerData[i].getfittedSkyBrightness()[1].get("K") << " K) "  <<
@@ -336,7 +340,7 @@ int main()
 
 
 
-  /*  for(unsigned int i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
+  /*  for(size_t i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
     cout << "Measurement analyzed " << i << ": " << RadiometerData[i].getretrievedWaterVaporColumn().get("mm") << " mm" << endl;
 } */
 
@@ -363,7 +367,7 @@ int main()
   cout << "The average Sigma of this ensemble of fits is: " <<
     sma_SkyStatus.getWVRAverageSigmaTskyFit(RadiometerData,FirstMeasurementAnalyzed,FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed).get("K")
        << " K" << endl;
-  for(unsigned int i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
+  for(size_t i=FirstMeasurementAnalyzed; i<FirstMeasurementAnalyzed+NumberofMeasurementsAnalyzed; i++){
     /* cout << "Data point analyzed: " << i << "/ Measured (fitted) Sky Tebb's (in K): " <<
       RadiometerData[i].getmeasuredSkyBrightness()[0].get("K") <<"  K ("<< RadiometerData[i].getfittedSkyBrightness()[0].get("K") << " K) "  <<
       RadiometerData[i].getmeasuredSkyBrightness()[1].get("K") <<"  K ("<< RadiometerData[i].getfittedSkyBrightness()[1].get("K") << " K) "  <<

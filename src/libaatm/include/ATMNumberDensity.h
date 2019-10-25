@@ -69,10 +69,12 @@ class NumberDensity
   NumberDensity operator*(float scf) { return NumberDensity(valueIS_ * (double) scf); }
   NumberDensity operator*(int scf) { return NumberDensity(valueIS_ * (double) scf); }
   NumberDensity operator*(unsigned int scf) { return NumberDensity(valueIS_ * (double) scf); }
+  NumberDensity operator*(size_t scf) { return NumberDensity(valueIS_ * (double) scf); }
   NumberDensity operator/(double scf) { return NumberDensity(valueIS_ / scf); }
   NumberDensity operator/(float scf) { return NumberDensity(valueIS_ / (double) scf); }
   NumberDensity operator/(int scf) { return NumberDensity(valueIS_ / (double) scf); }
   NumberDensity operator/(unsigned int scf) { return NumberDensity(valueIS_ / (double) scf); }
+  NumberDensity operator/(size_t scf) { return NumberDensity(valueIS_ / (double) scf); }
   bool operator<(const NumberDensity &rhs) const { return (valueIS_ < rhs.get()); }
   bool operator>(const NumberDensity &rhs) const { return (valueIS_ > rhs.get()); }
   bool operator<=(const NumberDensity &rhs) const { return (valueIS_ <= rhs.get()); }
@@ -87,5 +89,3 @@ class NumberDensity
 ATM_NAMESPACE_END
 
 #endif /*!_ATM_NUMBERDENSITY_H*/
-
-

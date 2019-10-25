@@ -56,8 +56,8 @@ ATM_NAMESPACE_BEGIN
 			   (1.0-exp(-1556.38*1.43/temperature))+
 			   mkSpecificRefractivity_16o16o_vib(temperature,pressure,wvpressure,frequency)*(1.0-2.0*(abun_18o+abun_17o))*
 			   exp(-1556.38*1.43/temperature)
-			   +mkSpecificRefractivity_16o18o(temperature,pressure,wvpressure,frequency)*2.0*abun_18o    
-			   +mkSpecificRefractivity_16o17o(temperature,pressure,wvpressure,frequency)*2.0*abun_17o    
+			   +mkSpecificRefractivity_16o18o(temperature,pressure,wvpressure,frequency)*2.0*abun_18o
+			   +mkSpecificRefractivity_16o17o(temperature,pressure,wvpressure,frequency)*2.0*abun_17o
 			   )*o2_mixing_ratio*pressure*100.0/(1.380662e-23*temperature);
 
     //      if(frequency<143&&frequency>142.21){cout << "O2: " << frequency << "  " << ccc << "  " << pressure <<  endl;}
@@ -67,11 +67,11 @@ ATM_NAMESPACE_BEGIN
   }
 
   std::complex<double> RefractiveIndex::getRefractivity_o2(double temperature,double pressure,double wvpressure,
-						      double frequency,double width,unsigned int n)
+						      double frequency,double width,size_t n)
   {
     std::complex<double> average(0.0,0.0);
     double newfreq;
-    for(unsigned int i=0; i<n; i++){
+    for(size_t i=0; i<n; i++){
       if(n==1){
 	newfreq=frequency;
       }else{
@@ -103,11 +103,11 @@ ATM_NAMESPACE_BEGIN
   }
 
   std::complex<double> RefractiveIndex::getRefractivity_h2o(double temperature,double pressure,double wvpressure,
-						       double frequency,double width,unsigned int n)
+						       double frequency,double width,size_t n)
   {
     std::complex<double> average(0.0,0.0);
     double newfreq;
-    for(unsigned int i=0; i<n; i++){
+    for(size_t i=0; i<n; i++){
       if(n==1){
 	newfreq=frequency;
       }else{
@@ -118,23 +118,23 @@ ATM_NAMESPACE_BEGIN
     std::complex<double> averagen(real(average)/n,imag(average)/n);
     return averagen;
   }
-  
- 
+
+
   std::complex<double> RefractiveIndex::getSpecificRefractivity_o3(double temperature, double pressure, double frequency){
-    
+
     static const double abun_18o=0.0020439;
     static const double abun_17o=0.0003750;
     static const double Tex_nu2=1009.5;   //(in Kelvin)  Degeneracy=1  http://www.cfa.harvard.edu/hitran/vibrational.html
     static const double Tex_nu1=1588.41;  //(in Kelvin)  Degeneracy=1
     static const double Tex_nu3=1500.48;  //(in Kelvin)  Degeneracy=1
-    
-    
+
+
     double pob_v2=exp(-Tex_nu2/temperature);
     double pob_v1=exp(-Tex_nu1/temperature);
     double pob_v3=exp(-Tex_nu3/temperature);
-    
-    
-    std::complex<double> ccc =  
+
+
+    std::complex<double> ccc =
       ((1-pob_v2-pob_v1-pob_v3)/(1.0+3.0*(abun_18o+abun_17o)))*
       (
        mkSpecificRefractivity_16o16o16o(temperature,pressure,frequency)
@@ -142,23 +142,23 @@ ATM_NAMESPACE_BEGIN
        +mkSpecificRefractivity_16o16o18o(temperature,pressure,frequency)*(2*abun_18o)
        +mkSpecificRefractivity_16o17o16o(temperature,pressure,frequency)*(abun_17o)
        +mkSpecificRefractivity_16o18o16o(temperature,pressure,frequency)*(abun_18o)
-       )				
-      +mkSpecificRefractivity_16o16o16o_v2(temperature,pressure,frequency)*pob_v2    
-      +mkSpecificRefractivity_16o16o16o_v1(temperature,pressure,frequency)*pob_v1    
+       )
+      +mkSpecificRefractivity_16o16o16o_v2(temperature,pressure,frequency)*pob_v2
+      +mkSpecificRefractivity_16o16o16o_v1(temperature,pressure,frequency)*pob_v1
       +mkSpecificRefractivity_16o16o16o_v3(temperature,pressure,frequency)*pob_v3;    //m^2
-   
+
     //cout << "temperature=" << temperature << " pob_v2=" << pob_v2 << endl;
-    
+
     return ccc;
-    
+
   }
-  
+
   std::complex<double> RefractiveIndex::getSpecificRefractivity_o3(double temperature,double pressure,double frequency,
-							      double width,unsigned int n)
+							      double width,size_t n)
   {
     std::complex<double> average(0.0,0.0);
     double newfreq;
-    for(unsigned int i=0; i<n; i++){
+    for(size_t i=0; i<n; i++){
       if(n==1){
 	newfreq=frequency;
       }else{
@@ -169,10 +169,10 @@ ATM_NAMESPACE_BEGIN
     std::complex<double> averagen(real(average)/n,imag(average)/n);
     return averagen;
   }
- 
-  unsigned int RefractiveIndex::vpIndex(double nu)
+
+  size_t RefractiveIndex::vpIndex(double nu)
   {
-    unsigned int vp;
+    size_t vp;
     if(nu<1.0){
       vp=0;
     }else{
@@ -310,7 +310,7 @@ ATM_NAMESPACE_BEGIN
     //    double fv=((dv-(vl-v)*itf)/a1+(dv-(vl+v)*itf)/a2);	   //   ! line profile (imaginary)
                                                                    //   !          in 1/frec units
     //    double frv=((vl-v+lf)/a1-(vl+v+lf)/a2);                  //   ! delay profile (real part)
- 
+
     //  return std::complex<double> (frv,fv)*(v/vl);
 
     return std::complex<double> (v/vl)*(std::complex<double>(1.0,-itf)/std::complex<double>(vl-v,-dv)
@@ -327,13 +327,13 @@ ATM_NAMESPACE_BEGIN
   ////////////////////////////////////////////////////////////////////////////////
 
 
-  std::complex<double>  RefractiveIndex::mkSpecificRefractivity(unsigned int species,
-							   double tt, double pp, double eh2o,  
-							   double nu, double width, unsigned int n)
+  std::complex<double>  RefractiveIndex::mkSpecificRefractivity(size_t species,
+							   double tt, double pp, double eh2o,
+							   double nu, double width, size_t n)
   {
     std::complex<double> average(0.0,0.0);
     double newfreq;
-    for(unsigned int i=0; i<n; i++){
+    for(size_t i=0; i<n; i++){
       if(n==1){
 	newfreq=nu;
       }else{
@@ -345,9 +345,9 @@ ATM_NAMESPACE_BEGIN
     std::complex<double> averagen(real(average)/n,imag(average)/n);
     return averagen;
   }
-  
-  std::complex<double>  RefractiveIndex::mkSpecificRefractivity(unsigned int species,
-							   double tt, double pp, double eh2o,  
+
+  std::complex<double>  RefractiveIndex::mkSpecificRefractivity(size_t species,
+							   double tt, double pp, double eh2o,
 							   double nu)
   {
     if(species==1){return mkSpecificRefractivity_16o16o(tt,pp,eh2o,nu);}
@@ -377,7 +377,7 @@ ATM_NAMESPACE_BEGIN
     std::complex<double> aa(0.0,0.0);
     return aa;
   }
-  
+
 
   //////////////////////// Opacity Source Number: 8 //////////////////////////////
 
@@ -418,7 +418,7 @@ ATM_NAMESPACE_BEGIN
       459.52841,459.66837,459.79990,459.87900,459.93613,459.96918,459.98718,461.87595,463.01144,463.32639,464.28793,465.41611,465.62198,465.75122,465.88190,466.78979,466.88785,469.42245,
       471.19046,471.55963,471.89441,472.03772,472.13968,472.52078,472.70630,472.85135,475.19659,475.86591,476.62155,477.46619,478.82608,479.73309,481.16629,481.23663,482.50317,483.99429,
       484.20007,484.22736,484.27087,485.20999,488.72867,488.77545,489.81982,490.73245,491.88474,491.93472,494.55759,494.77975,495.84152,496.81067,498.97610,500.43149,500.65533,501.10776};
-    
+
 
 
     static const double flin[594]={
@@ -526,7 +526,7 @@ ATM_NAMESPACE_BEGIN
       2.9565,2.8500,2.7967,2.8500,2.8677,3.1281,2.8056,2.8884,3.0334,2.7612,2.9180,2.7760,2.9890,2.8411,2.9683,2.8292,2.8529,2.9535,3.0690,2.9447,
       2.8411,2.9003,2.8292,3.0867,2.8559,3.1193,2.8115,3.0778,3.0423,2.7671,2.8352,2.9979,2.9091,2.9417};
 
-    
+
     static const double pi=3.141592654;
     static const double picube8div3hcesu=4.1623755E-19;  // (8*pi**3/(3*h*c))*(1e-18)**2 = 4.1623755E-19
     static const double mu=1.62;  //Debyes
@@ -534,9 +534,9 @@ ATM_NAMESPACE_BEGIN
 
     //double q=1.1346738633*pow(tt,1.5);
     double q=1.1346738633*tt*sqrt(tt);
-    //    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    //    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -574,7 +574,7 @@ ATM_NAMESPACE_BEGIN
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdSO2air[i]*0.001,0.75),0.0);   // broadenind en GHz/mb 14/11/2018
 	  //lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);   //2.5 MHz/mb
@@ -697,7 +697,7 @@ ATM_NAMESPACE_BEGIN
       2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,1.9947,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000};
 
 
-    
+
     static const double pi=3.141592654;
     static const double picube8div3hcesu=4.1623755E-19;  // (8*pi**3/(3*h*c))*(1e-18)**2 = 4.1623755E-19
     static const double mu=0.3161;  //Debyes
@@ -705,9 +705,9 @@ ATM_NAMESPACE_BEGIN
 
     //double q=0.430965924*pow(tt,1.5);
     double q=0.430965924*tt*sqrt(tt);
-    //    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    //    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -745,7 +745,7 @@ ATM_NAMESPACE_BEGIN
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdNO2air[i]*0.001,texpNO2[i]),0.0);   // broadenind en GHz/mb 14/11/2018
 	  //lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -800,8 +800,8 @@ ATM_NAMESPACE_BEGIN
       2.1989,2.1841,2.1722,2.1604,2.1486,2.1367,2.1278,2.1190,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.0627};
 
 
-    
-    static const unsigned int ifin1[500]={
+
+    static const size_t ifin1[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   3,   3,   3,   3,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   5,   5,  5,   5,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   6,   6,   6,   6,   6,   6,   6,   6,   6,  6,   6,   6,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   8,   8,   8,   8,
@@ -820,7 +820,7 @@ ATM_NAMESPACE_BEGIN
       37,  37,  37,  37,  37,  37,  37,  37,  37,  37, 37,  37,  38,  38,  38,  38,  38,  38,  38,  38, 38,  38,  38,  38,  38,  39,  39,  39,  39,  39,
       39,  39,  39,  39,  39,  39,  39,  39,  39,  39, 39,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   3,   3,   3,   3,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   5,   5,   5,   5,   6,   6,   6,   6,   6,  6,   6,   6,   6,   6,   6,   6,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
@@ -839,7 +839,7 @@ ATM_NAMESPACE_BEGIN
       36,  36,  36,  36,  37,  37,  37,  37,  37,  37, 37,  37,  37,  37,  37,  37,  38,  38,  38,  38, 38,  38,  38,  38,  38,  38,  38,  38,  38,  39,
       39,  39,  39,  39,  39,  39,  39,  39,  39,  39, 39,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   3,   3,   3,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   3,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   5,  5,   5,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   5,   6,   6,   6,   6,   6,   6,   6,   6,  6,   6,   6,   6,   6,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   8,   8,   8,
@@ -858,7 +858,7 @@ ATM_NAMESPACE_BEGIN
       36,  37,  37,  37,  37,  37,  37,  37,  37,  37, 37,  37,  37,  38,  38,  38,  38,  38,  38,  38, 38,  38,  38,  38,  38,  38,  39,  39,  39,  39,
       39,  39,  39,  39,  39,  39,  39,  39,  39,  39,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini2[500]={
+    static const size_t ini2[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   3,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   3,   3,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   5,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   5,   5,   5,   6,   6,   6,   6,   6,   6,  6,   6,   6,   6,   6,   6,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   8,
@@ -877,7 +877,7 @@ ATM_NAMESPACE_BEGIN
       36,  36,  37,  37,  37,  37,  37,  37,  37,  37, 37,  37,  37,  37,  37,  38,  38,  38,  38,  38, 38,  38,  38,  38,  38,  38,  38,  38,  39,  39,
       39,  39,  39,  39,  39,  39,  39,  39,  39,  39,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   3,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   5,   5,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   8,   8,
@@ -896,7 +896,7 @@ ATM_NAMESPACE_BEGIN
       36,  37,  37,  37,  37,  37,  37,  37,  37,  37,  37,  37,  37,  37,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  39,  39,  39,
       39,  39,  39,  39,  39,  39,  39,  39,  39,  39,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,
        3,   3,   3,   3,   3,   3,   3,   3,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   4,   5,   5,   5,   5,   5,   5,   5,   5,   5,   5,
        5,   5,   5,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   8,   8,
@@ -922,9 +922,9 @@ ATM_NAMESPACE_BEGIN
     static const double mmol=44.0;
 
     double q=1.65873970*tt;
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -938,18 +938,18 @@ ATM_NAMESPACE_BEGIN
       if(pp<25){ ini=ini3[vp]; ifin=ifin3[vp]; }else{ if(pp<300){ ini=ini2[vp]; ifin=ifin2[vp]; }else{ ini=ini1[vp]; ifin=ifin1[vp]; } }
 
       if(ini>4){ini=ini-3;}else{ini=1;}        // NEW PATCH 02 SEP 2016
-      if(ifin<37){ifin=ifin+3;}else{ifin=39;}  // NEW PATCH 02 SEP 2016  
-      
+      if(ifin<37){ifin=ifin+3;}else{ifin=39;}  // NEW PATCH 02 SEP 2016
+
       if(ini>0){ini=ini-1;}else{ifin=0;}
       if(ifin>0){ifin=ifin-1;}else{ifin=0;}
-      
+
       if(ifin==0||ifin<ini){
 
 	return std::complex<double> (0.0,0.0);
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdN2Oair[i]*0.001,texpN2O[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  // lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -987,7 +987,7 @@ ATM_NAMESPACE_BEGIN
     static const double brdCOair[8] ={
       2.3587,2.2137,2.0983,2.0006,1.9236,1.8615,1.8112,1.7727};
 
-    static const unsigned int ifin1[500] ={
+    static const size_t ifin1[500] ={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   2,   2,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1006,7 +1006,7 @@ ATM_NAMESPACE_BEGIN
       8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   8,   8,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1026,7 +1026,7 @@ ATM_NAMESPACE_BEGIN
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   2,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1044,8 +1044,8 @@ ATM_NAMESPACE_BEGIN
       8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   8,   8,   8,   8,   8,   8,   8,   8,   8,
       8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   8,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
-    
-    static const unsigned int ini2[500]={
+
+    static const size_t ini2[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1064,7 +1064,7 @@ ATM_NAMESPACE_BEGIN
       8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   8,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   2,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1083,7 +1083,7 @@ ATM_NAMESPACE_BEGIN
       8,   8,   8,   8,   8,   8,   8,   8,   8,   8,  8,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -1109,9 +1109,9 @@ ATM_NAMESPACE_BEGIN
     static const double mmol=28.0;
 
     double q=0.3615187262*tt;
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -1145,7 +1145,7 @@ ATM_NAMESPACE_BEGIN
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdCOair[i]*0.001,texpCO[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  //lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -1192,7 +1192,7 @@ ATM_NAMESPACE_BEGIN
     double delayh2o=(4.163*t300+0.239)*eh2o*t300*nu*1.2008e-3/57.29578;   // VERSIÓN INSTALADA ANTES DE 16/12/2015 // AÑADIR REFERENCIA
 
     // double delayh2o=eh2o*pow(t300,2.5)*.791e-6*pow(nu,2)*nu*1.2008e-3/57.29578; //VERSION DE PRUEBA 16/12/2015
-    
+
     return std::complex<double> (delayh2o,cnth2o);       // (  rad m^-1 , m^-1 )
 
   }
@@ -1430,7 +1430,7 @@ ATM_NAMESPACE_BEGIN
       1.00,  3.00,  1.00,  3.00,  1.00,  3.00,  3.00,  1.00,  1.00,  1.00,  3.00,  3.00,  1.00,  3.00,  1.00};
 
 
-    static const unsigned int ifin1[800]={
+    static const size_t ifin1[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
       2,   2,   2,   3,   3,   3,   3,   3,   3,   3,  3,   3,   3,   3,   3,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
       4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1459,7 +1459,7 @@ ATM_NAMESPACE_BEGIN
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44,
      44,  45,  45,  45,  45,  45,  45,  45,  45,  45, 45,  45,  45,  45,  45,  45,  45,  45,  45,  45};
 
-    static const unsigned int ini1[800]={
+    static const size_t ini1[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
       2,   2,   2,   3,   3,   3,   3,   3,   3,   3,  3,   3,   3,   3,   3,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1488,7 +1488,7 @@ ATM_NAMESPACE_BEGIN
      42,  42,  43,  43,  43,  43,  43,  43,  43,  43, 43,  43,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44,
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44};
 
-    static const unsigned int ifin2[800]={
+    static const size_t ifin2[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   3,   3,   3,   3,   3,   3,  3,   3,   3,   3,   3,   3,   4,   4,   4,   4,
       4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1517,7 +1517,7 @@ ATM_NAMESPACE_BEGIN
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44,
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  45,  45,  45,  45,  45,  45,  45,  45,  45};
 
-    static const unsigned int ini2[800]={
+    static const size_t ini2[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   3,   3,   3,   3,   3,   3,   3,
       3,   3,   3,   3,   3,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1546,7 +1546,7 @@ ATM_NAMESPACE_BEGIN
      43,  43,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44,
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44};
 
-    static const unsigned int ifin3[800]={
+    static const size_t ifin3[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   3,   3,   3,  3,   3,   3,   3,   3,   3,   3,   3,   3,   4,
       4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1575,7 +1575,7 @@ ATM_NAMESPACE_BEGIN
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  44,  44,  44,  44,  44,  44,
      44,  44,  44,  44,  44,  44,  44,  44,  44,  44, 44,  44,  44,  44,  45,  45,  45,  45,  45,  45};
 
-    static const unsigned int ini3[800]={
+    static const size_t ini3[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  3,   3,   3,   3,   3,   3,   3,   3,   3,   3,
       3,   3,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,
@@ -1612,9 +1612,9 @@ ATM_NAMESPACE_BEGIN
 
     //double q=0.034256116*pow(tt,1.5);    // Q(300 K)=178.120 JPL Line Catalog
     double q=0.034256116*tt*sqrt(tt);    // Q(300 K)=178.120 JPL Line Catalog
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -1636,7 +1636,7 @@ ATM_NAMESPACE_BEGIN
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening_water(fre[i],tt,pp,eh2o,ensanche[i][0],ensanche[i][1],ensanche[i][2],ensanche[i][3]),0.0);
 
@@ -1898,7 +1898,7 @@ ATM_NAMESPACE_BEGIN
       1.00,  3.00,  1.00,  3.00,  1.00, 3.00,  1.00,  1.00,  3.00,  1.00, 3.00,  1.00,  3.00,  3.00,  1.00, 3.00,  1.00,  3.00,  1.00,  3.00,
       1.00,  3.00,  1.00,  3.00,  1.00, 1.00,  1.00,  3.00,  1.00,  3.00, 1.00,  3.00,  1.00,  3.00,  3.00, 3.00,  1.00,  3.00,  1.00,  3.00};
 
-    static const unsigned int ifin1[800] = {
+    static const size_t ifin1[800] = {
       226, 226, 226, 226, 226, 227, 228, 228, 228, 228, 229, 229, 229, 229, 229, 229, 229, 229, 230, 230, 230, 230, 230, 230, 230, 230, 230, 230, 230, 230,
       230, 230, 230, 230, 230, 230, 231, 231, 231, 231, 231, 231, 231, 231, 231, 231, 231, 231, 231, 231, 232, 233, 233, 233, 233, 233, 233, 233, 233, 233,
       234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 234, 235, 235, 235, 235, 235, 235,
@@ -1927,7 +1927,7 @@ ATM_NAMESPACE_BEGIN
       337, 339, 339, 339, 340, 342, 343, 343, 343, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345, 345,
       345, 345, 345, 345, 345, 346, 346, 346, 347, 347, 347, 347, 348, 348, 348, 348, 348, 348, 348, 348};
 
-    static const unsigned int ini1[800]={
+    static const size_t ini1[800]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
@@ -1956,7 +1956,7 @@ ATM_NAMESPACE_BEGIN
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1};
 
-    static const unsigned int ifin2[800]={
+    static const size_t ifin2[800]={
        75,  75,  75,  75,  75,  75,  75,  75,  76,  76,  76,  77,  77,  78,  78,  78,  78,  78,  78,  78,  79,  79,  79,  79,  79,  79,  79,  79,  79,  79,
        79,  79,  79,  79,  79,  79,  79,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,
        80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  80,  81,  82,  82,  82,  82,  82,  82,  84,  84,
@@ -1985,7 +1985,7 @@ ATM_NAMESPACE_BEGIN
       163, 163, 164, 164, 164, 165, 165, 165, 165, 165, 165, 165, 166, 166, 166, 166, 166, 166, 167, 168, 168, 168, 168, 168, 169, 169, 169, 169, 169, 169,
       169, 169, 169, 169, 169, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170, 170};
 
-    static const unsigned int ini2[800]= {
+    static const size_t ini2[800]= {
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
@@ -2014,7 +2014,7 @@ ATM_NAMESPACE_BEGIN
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1};
 
-    static const unsigned int ifin3[800] = {
+    static const size_t ifin3[800] = {
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
        1,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2043,7 +2043,7 @@ ATM_NAMESPACE_BEGIN
       51,  52,  52,  52,  52,  52,  52,  52,  52,  52, 52,  52,  52,  52,  52,  52,  52,  52,  52,  52, 52,  52,  52,  52,  52,  52,  52,  52,  52,  52,
       52,  53,  53,  53,  53,  53,  53,  53,  53,  53, 53,  53,  53,  53,  53,  53,  53,  53,  53,  53};
 
-    static const unsigned int ini3[800] = {
+    static const size_t ini3[800] = {
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2080,9 +2080,9 @@ ATM_NAMESPACE_BEGIN
 
     //double q=0.034278209*pow(tt,1.5);    // Q(300 K)=178.120 JPL Line Catalog
     double q=0.034278209*tt*sqrt(tt);    // Q(300 K)=178.120 JPL Line Catalog
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -2102,7 +2102,7 @@ ATM_NAMESPACE_BEGIN
 
     }
 
-    
+
     if(ifin==0||ifin<ini){
 
       return std::complex<double> (0.0,0.0);
@@ -2111,7 +2111,7 @@ ATM_NAMESPACE_BEGIN
 
       //  cout << "nu=" << nu << " GHz: including lines from " << fre[ini] << " GHz to " << fre[ifin] << " GHz" << endl;
 
-      for(unsigned int i=ini; i<ifin+1; i++){
+      for(size_t i=ini; i<ifin+1; i++){
 
 	lshape=lineshape(nu,fre[i],linebroadening_water(fre[i],tt,pp,eh2o,ensanche[i][0],ensanche[i][1],ensanche[i][2],ensanche[i][3]),0.0);
 	lshape=lshape*flin[i]*gl[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2161,7 +2161,7 @@ ATM_NAMESPACE_BEGIN
       .626,.649,.619,.63,.29,.36,.332,.51, .380,.38,.645,.6,.69,.676,.56,.66};
 
 
-    static const unsigned int ifin1[500]={
+    static const size_t ifin1[500]={
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   3,   3,   3,   3,   3,   3,   3,   3,
@@ -2180,7 +2180,7 @@ ATM_NAMESPACE_BEGIN
       14,  14,  14,  14,  14,  14,  14,  15,  15,  15, 15,  15,  15,  15,  15,  15,  15,  15,  15,  15, 15,  15,  15,  15,  15,  15,  15,  15,  15,  16,
       16,  16,  16,  16,  16,  16,  16,  16,  16,  16, 16,  16,  16,  16,  16,  16,  16,  16,  16,  16};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   2,   2,   2,   2,   2,   2,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
       2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2199,7 +2199,7 @@ ATM_NAMESPACE_BEGIN
      14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  14,  14,  14,  14,  14,  14,  14,  14,  14,
      14,  14,  14,  14,  14,  14,  14,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15};
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
        1,   1,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2218,7 +2218,7 @@ ATM_NAMESPACE_BEGIN
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  14,  14,  14,  14,  14,  14,  14,  15,  15, 15,  15,  15,  15,  15,  15,  15,  15,  15,  15,
       15,  15,  15,  15,  15,  15,  15,  15,  15,  16, 16,  16,  16,  16,  16,  16,  16,  16,  16,  16};
 
-    static const unsigned int ini2[500]={
+    static const size_t ini2[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2237,7 +2237,7 @@ ATM_NAMESPACE_BEGIN
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  14,  14,  14,  14,  14,  14,  15,  15,  15,
       15,  15,  15,  15,  15,  15,  15,  15,  15,  15, 15,  15,  15,  15,  15,  15,  15,  15,  16,  16};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
        1,   1,   1,   1,   1,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2256,7 +2256,7 @@ ATM_NAMESPACE_BEGIN
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  14,  14,  14,  14,  14,  14,  14,  14,  14, 14,  15,  15,  15,  15,  15,  15,  15,  15,  15,
       15,  15,  15,  15,  15,  15,  15,  15,  15,  15, 15,  15,  16,  16,  16,  16,  16,   0,   0,   0};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,  2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2282,9 +2282,9 @@ ATM_NAMESPACE_BEGIN
 
     //double q=0.034412578*pow(tt,1.5);   // Q(300 K)=178.813   JPL Line Catalog
     double q=0.034412578*tt*sqrt(tt);   // Q(300 K)=178.813   JPL Line Catalog
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -2306,7 +2306,7 @@ ATM_NAMESPACE_BEGIN
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening_hh18o_hh17o(tt,pp,eh2o,dv0[i],dvlm[i],temp_exp[i]),0.0);
 	  lshape=lshape*flin[i]*gl[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2355,7 +2355,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       1,1,1,1,1,1}; */
 
-    static const unsigned int ifin11[500]={
+    static const size_t ifin11[500]={
        3,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   5,   5,   5,   5,   5,  5,   5,   6,   6,   6,   6,   6,   6,   6,   6,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   8,   8,   8,   8,   9,   9,   9,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,
@@ -2374,7 +2374,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini11[500]={
+    static const size_t ini11[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   2,   2,   3,   3,   3,   3,   3,  3,   4,   4,   4,   4,   4,   4,   4,   4,   4,
        4,   4,   4,   4,   4,   5,   5,   5,   5,   5,  5,   5,   6,   6,   6,   6,   6,   6,   6,   6,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   8,   8,   8,   8,   9,   9,   9,   9,
@@ -2393,7 +2393,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       21,  21,  21,  21,  21,  22,  22,  22,  22,  22, 22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin21[500]={
+    static const size_t ifin21[500]={
        2,   2,   3,   3,   3,   3,   3,   3,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   5,   5,   5,   5,   5,   5,   5,   6,
        6,   6,   6,   6,   6,   6,   6,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   8,  8,   8,   8,   9,   9,   9,   9,   9,   9,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,
@@ -2412,7 +2412,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 22,  22,  22,   0,   0,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini21[500]={
+    static const size_t ini21[500]={
        1,   1,   1,   1,   1,   1,   2,   2,   3,   3,  3,   3,   3,   3,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   4,   4,   5,   5,
        5,   5,   5,   5,   5,   6,   6,   6,   6,   6,  6,   6,   6,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   8,   8,   8,   8,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,
@@ -2431,7 +2431,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 22,  22,  22,   0,   0,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin31[500]={
+    static const size_t ifin31[500]={
        1,   1,   2,   2,   3,   3,   3,   3,   3,   3,  4,   4,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   5,   5,   5,   5,   5,   5,
        5,   6,   6,   6,   6,   6,   6,   6,   6,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   8,   8,   8,   8,   9,   9,   9,   9,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,
@@ -2450,7 +2450,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 22,   0,   0,   0,   0,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini31[500]={
+    static const size_t ini31[500]={
        1,   1,   1,   1,   2,   2,   3,   3,   3,   3,  3,   3,   4,   4,   4,   4,   4,   4,   4,   4,  4,   4,   4,   4,   4,   4,   5,   5,   5,   5,
        5,   5,   5,   6,   6,   6,   6,   6,   6,   6,  6,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   7,   7,   7,   7,   7,   7,   7,
        7,   7,   7,   7,   7,   7,   7,   7,   7,   7,  7,   7,   7,   8,   8,   8,   8,   9,   9,   9,  9,   9,   9,   9,   9,   9,   9,   9,   9,   9,
@@ -2469,7 +2469,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       22,  22,  22,  22,  22,  22,  22,  22,  22,  22, 22,   0,   0,   0,   0,   0,   0,   0,   0,   0, 0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0};
 
-    static const unsigned int ifin12[500]={
+    static const size_t ifin12[500]={
       24,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  25,  25,  25,  25,  25,  25,  25,  25,  25,
       25,  25,  25,  25,  26,  26,  26,  26,  26,  26, 26,  26,  26,  26,  26,  26,  26,  26,  26,  26, 27,  27,  27,  27,  27,  27,  27,  27,  27,  28,
       28,  28,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2488,7 +2488,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       55,  55,  55,  55,  55,  55,  55,  55,  55,  56, 56,  56,  56,  56,  56,  56,  56,  56,  56,  57, 57,  57,  57,  57,  57,  57,  57,  57,  57,  57,
       57,  57,  58,  58,  58,  58,  58,  58,   0,   0,  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   };
 
-    static const unsigned int ini12[500]={
+    static const size_t ini12[500]={
       23,  23,  23,  23,  23,  23,  23,  23,  23,  23, 23,  23,  23,  23,  23,  23,  23,  23,  23,  23, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24,
       24,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  25,  25,  25,  25,  25,  25,  25,  25,  25, 25,  25,  25,  25,  26,  26,  26,  26,  26,  26,
       26,  26,  26,  26,  26,  26,  26,  26,  26,  26, 27,  27,  27,  27,  27,  27,  27,  27,  27,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2508,7 +2508,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       56,  56,  56,  56,  56,  56,  56,  56,  56,  57, 57,  57,  57,  57,  57,  57,  57,  57,  57,  57};
 
 
-    static const unsigned int ifin22[500]={
+    static const size_t ifin22[500]={
       23,  23,  23,  23,  23,  23,  23,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  25,  25,
       25,  25,  25,  25,  25,  25,  25,  25,  25,  25, 25,  26,  26,  26,  26,  26,  26,  26,  26,  26, 26,  26,  26,  26,  26,  26,  26,  27,  27,  27,
       27,  27,  27,  27,  27,  27,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2527,7 +2527,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       55,  55,  55,  55,  55,  55,  55,  55,  55,  55, 55,  55,  55,  55,  55,  55,  56,  56,  56,  56, 56,  56,  56,  56,  56,  56,  57,  57,  57,  57,
       57,  57,  57,  57,  57,  57,  57,  57,  57,  58, 58,  58,  58,  58,  58,   0,   0,   0,   0,   0};
 
-    static const unsigned int ini22[500]={
+    static const size_t ini22[500]={
       23,  23,  23,  23,  23,  23,  23,  23,  23,  23, 23,  23,  23,  24,  24,  24,  24,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24,
       24,  24,  24,  24,  25,  25,  25,  25,  25,  25, 25,  25,  25,  25,  25,  25,  25,  26,  26,  26, 26,  26,  26,  26,  26,  26,  26,  26,  26,  26,
       26,  26,  26,  27,  27,  27,  27,  27,  27,  27, 27,  27,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2546,7 +2546,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       53,  54,  54,  54,  54,  55,  55,  55,  55,  55, 55,  55,  55,  55,  55,  55,  55,  55,  55,  55, 55,  55,  56,  56,  56,  56,  56,  56,  56,  56,
       56,  56,  57,  57,  57,  57,  57,  57,  57,  57, 57,  57,  57,  57,  57,  58,  58,  58,  58,  58};
 
-    static const unsigned int ifin32[500]={
+    static const size_t ifin32[500]={
       23,  23,  23,  23,  23,  23,  23,  23,  23,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24,
       25,  25,  25,  25,  25,  25,  25,  25,  25,  25, 25,  25,  25,  26,  26,  26,  26,  26,  26,  26, 26,  26,  26,  26,  26,  26,  26,  26,  26,  27,
       27,  27,  27,  27,  27,  27,  27,  27,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2565,7 +2565,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       54,  55,  55,  55,  55,  55,  55,  55,  55,  55, 55,  55,  55,  55,  55,  55,  55,  55,  56,  56, 56,  56,  56,  56,  56,  56,  56,  56,  57,  57,
       57,  57,  57,  57,  57,  57,  57,  57,  57,  57, 57,  58,  58,  58,  58,  58,  58,   0,   0,   0};
 
-    static const unsigned int ini32[500]={
+    static const size_t ini32[500]={
       23,  23,  23,  23,  23,  23,  23,  23,  23,  23, 23,  24,  24,  24,  24,  24,  24,  24,  24,  24, 24,  24,  24,  24,  24,  24,  24,  24,  24,  24,
       24,  24,  25,  25,  25,  25,  25,  25,  25,  25, 25,  25,  25,  25,  25,  26,  26,  26,  26,  26, 26,  26,  26,  26,  26,  26,  26,  26,  26,  26,
       26,  27,  27,  27,  27,  27,  27,  27,  27,  27, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28, 28,  28,  28,  28,  28,  28,  28,  28,  28,  28,
@@ -2591,9 +2591,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
     //double q=0.028263028*pow(tt,1.5);   // Q(300 K)=179.639   JPL Line Catalog
     double q=0.028263028*tt*sqrt(tt);   // Q(300 K)=179.639   JPL Line Catalog
-    unsigned int vp;
-    unsigned int ini1, ini2;
-    unsigned int ifin1, ifin2;
+    size_t vp;
+    size_t ini1, ini2;
+    size_t ifin1, ifin2;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -2620,7 +2620,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
       }else{
 
-	for(unsigned int i=ini1; i<ifin1+1; i++){
+	for(size_t i=ini1; i<ifin1+1; i++){
 
 	  lshape=lineshape(nu,fre[i],0.003*pp*pow((300/tt),0.7),0.0);
 	  lshape=lshape*flin[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2639,7 +2639,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
       }else{
 
-	for(unsigned int i=ini2; i<ifin2+1; i++){
+	for(size_t i=ini2; i<ifin2+1; i++){
 
 	  lshape=lineshape(nu,fre[i],0.003*pp,0.0);
 	  lshape=lshape*flin[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2686,7 +2686,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
     static const double temp_exp[15]={
       .626,.649,.619,.63,.29,.36,.332,.51, .380,.38,.645,.6,.69,.676,.66};
 
-    static const unsigned int ifin1[500]={
+    static const size_t ifin1[500]={
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2705,7 +2705,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  15,  15,  15,  15,  15,
       15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2724,7 +2724,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  15,  15,  15,  15,  15};
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2743,7 +2743,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,
       14,  14,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15};
 
-    static const unsigned int ini2[500]={
+    static const size_t ini2[500]={
        1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2762,7 +2762,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,
       14,  14,  14,  14,  14,  14,  14,  14,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
        1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2781,7 +2781,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
       14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,  14,
       14,  14,  14,  14,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
        1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
        2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -2808,9 +2808,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
     //double q=0.034571542*pow(tt,1.5);   // Q(300 K)=179.639   JPL Line Catalog
     double q=0.034571542*tt*sqrt(tt);   // Q(300 K)=179.639   JPL Line Catalog
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -2833,7 +2833,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening_hh18o_hh17o(tt,pp,eh2o,dv0[i],dvlm[i],temp_exp[i]),0.0);
 	  lshape=lshape*flin[i]*gl[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2874,7 +2874,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
     if(nu>999.9){return std::complex<double> (0.0,0.0);}
 
-    for(unsigned int i=0; i<6; i++){
+    for(size_t i=0; i<6; i++){
 
       lshape=lineshape(nu,fre[i], linebroadening_o2(fre[i],tt,pp,eh2o,32.0,dv0,0.2),0.0);
       lshape=lshape*flin[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2921,7 +2921,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_hdo(double tt, dou
 
     if(nu>999.9){return std::complex<double> (0.0,0.0);}
 
-    for(unsigned int i=0; i<14; i++){
+    for(size_t i=0; i<14; i++){
 
       lshape=lineshape(nu,fre[i],linebroadening_o2(fre[i],tt,pp,eh2o,33.0,dv0,0.2),0.0);
       lshape=lshape*flin[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -2968,7 +2968,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     if(nu>999.9){return std::complex<double> (0.0,0.0);}
 
-    for(unsigned int i=0; i<15; i++){
+    for(size_t i=0; i<15; i++){
 
       lshape=lineshape(nu,fre[i], linebroadening_o2(fre[i],tt,pp,eh2o,34.0,dv0,0.2),0.0);
       lshape=lshape*flin[i]*exp(-el[i]/tt)*(1-exp(-0.047992745509*fre[i]/tt));
@@ -3028,7 +3028,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       {1.900 ,  .2 ,  .0 ,  .0},{1.900 ,  .2 ,  .0 ,  .0},{1.900 ,  .2 ,  .0 ,  .0}};
 
 
-    static const unsigned int ifin1[800]={                 // NEW PATCH 16 SEP 2016
+    static const size_t ifin1[800]={                 // NEW PATCH 16 SEP 2016
       41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,
       41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,
       41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,  41,
@@ -3057,7 +3057,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,
       53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  53,  54,  54};    // NEW PATCH 16 SEP 2016
 
-    static const unsigned int ini1[800]={                  // NEW PATCH 16 SEP 2016
+    static const size_t ini1[800]={                  // NEW PATCH 16 SEP 2016
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       38,  38,  38,  38,  38,  38,  38,  38,  38,  38, 38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,
@@ -3086,7 +3086,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       45,  45,  45,  45,  45,  45,  45,  45,  45,  45, 45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,  45,
       45,  46,  46,  46,  46,  46,  46,  46,  46,  46, 46,  46,  46,  46,  46,  46,  46,  46,  46,  46};  // NEW PATCH 16 SEP 2016
 
-    static const unsigned int ifin2[800]={                 // NEW PATCH 16 SEP 2016
+    static const size_t ifin2[800]={                 // NEW PATCH 16 SEP 2016
       37,  37,  37,  37,  37,  37,  37,  37,  37,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,
       38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,
       38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,  38,
@@ -3115,7 +3115,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,
       50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50,  50};    // NEW PATCH 16 SEP 2016
 
-    static const unsigned int ini2[800]={     // NEW PATCH 16 SEP 2016
+    static const size_t ini2[800]={     // NEW PATCH 16 SEP 2016
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
@@ -3150,9 +3150,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
     static const double mu=0.0186;  //Debyes (M1 Transitions)
 
     double q=0.72923*tt;
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -3164,9 +3164,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
     }else{
 
       vp=vpIndex(nu);
-      
+
       if(pp<25){ ini=ini2[vp]; ifin=ifin2[vp]; }else{ if(pp<300){ ini=ini1[vp]; ifin=ifin1[vp]; }else{ ini=ini1[vp]; ifin=ifin1[vp];  }}  // NEW PATCH 16 SEP 2016
-      
+
 
       if(ini<38&&nu>135.0){ini=38;}
       if(ini>0){ini=ini-1;}else{ifin=0;}
@@ -3178,7 +3178,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening_o2(fre[i],tt,pp,eh2o,32.0,ensanche[i][0],ensanche[i][1]),
 			   interf_o2(tt,pp,ensanche[i][2],ensanche[i][3]));
@@ -3243,7 +3243,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       934.66297,935.01694, 935.07653, 935.29581, 935.67426, 938.35059,938.81009,941.94142, 943.26205, 943.33399, 944.81071, 947.68152,948.47843,950.27326, 953.02120, 957.08315, 959.02762, 959.96394,
       960.39622,960.49677, 960.83281, 961.09020, 961.90512, 961.93041,962.17344,963.87630, 966.24899, 966.41783, 967.70572, 968.43274,969.25619,969.47424, 969.84707, 973.41999, 973.61940, 975.44060,
       975.56576,981.37877, 981.53804, 982.66663, 983.57350, 984.81783,986.50649,987.26748, 987.81624, 988.47613, 988.83493, 988.94762,989.44755,989.44802, 995.03809, 995.24924, 997.58337, 998.35617 };
-    
+
     static const double texpO3[666] ={
       0.77,0.78,0.77,0.76,0.79,0.77,0.79,0.79,0.80,0.77,0.80,0.76,0.77,0.78,0.81,0.76,0.78,0.80,0.80,0.78,0.82,0.76,0.76,0.77,0.77,0.80,0.77,0.79,0.81,0.77,0.77,0.82,0.78,
       0.83,0.77,0.77,0.80,0.77,0.81,0.76,0.76,0.82,0.79,0.76,0.83,0.78,0.80,0.79,0.82,0.77,0.77,0.83,0.82,0.81,0.77,0.78,0.83,0.83,0.78,0.76,0.79,0.76,0.77,0.83,0.81,0.78,
@@ -3265,11 +3265,11 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.78,0.76,0.76,0.79,0.76,0.76,0.77,0.76,0.76,0.76,0.83,0.76,0.77,0.80,0.78,0.82,0.77,0.84,0.77,0.76,0.77,0.84,0.78,0.78,0.76,0.76,0.76,0.78,0.78,0.76,0.77,0.76,0.82,
       0.76,0.80,0.76,0.77,0.76,0.84,0.82,0.83,0.76,0.76,0.78,0.78,0.76,0.76,0.82,0.77,0.79,0.76,0.83,0.76,0.79,0.76,0.76,0.76,0.77,0.76,0.83,0.76,0.78,0.76,0.78,0.76,0.83,
       0.83,0.77,0.79,0.76,0.78,0.76,0.76,0.76,0.79,0.76,0.77,0.76,0.76,0.83,0.76,0.83,0.76,0.76,0.78,0.83,0.76,0.76,0.83,0.76,0.76,0.77,0.79,0.79,0.76,0.84,0.76,0.76,0.77,
-      0.76,0.76,0.76,0.83,0.83,0.78}; 
+      0.76,0.76,0.76,0.83,0.83,0.78};
 
 
 
-      
+
     static const double brdO3air[666] ={
       2.4859,2.2877,2.3439,2.5155,2.1574,2.3883,2.1870,2.2018,2.1338,2.4060,2.1130,2.5895,2.3498,2.2314,2.0953,2.5244,2.3291,2.1130,2.1249,2.2314,2.0687,2.5392,2.7405,2.4149,2.4386,2.1249,2.4771,
       2.2166,2.0835,2.3705,2.3439,2.0716,2.2314,2.0598,2.3735,2.3942,2.1338,2.3291,2.0775,2.6428,2.5540,2.0716,2.2018,2.5925,2.0568,2.2492,2.1042,2.1456,2.0598,2.3735,2.2936,2.0568,2.0627,2.0835,
@@ -3298,7 +3298,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.0509,1.9444,2.3000,2.3000,2.3735,2.1722,2.1574,2.3000,2.0627,2.3000,2.3000,2.4711,2.0450,2.0450,2.5540,2.0598,2.0746,2.3084};
 
 
-    
+
     static const double flin[666] = {
       .148E+01, .278E+01, .144E+01, .281E+01, .318E+01, .284E+01, .392E+01, .378E+01, .301E+01, .125E+01, .275E+01, .253E+01, .236E+01, .386E+01, .501E+01, .443E+01, .244E+01, .498E+01,
       .506E+01, .613E+01, .638E+01, .908E+00, .102E+01, .754E+01, .415E+01, .478E+01, .955E+00, .353E+01, .508E+01, .860E+01, .366E+01, .600E+01, .334E+01, .664E+01, .205E+01, .189E+01,
@@ -3339,7 +3339,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       .266E+02, .373E+02, .141E-01, .126E+02, .515E+01, .252E+01, .720E+01, .251E+02, .251E+02, .256E+02, .630E+01, .171E+00, .838E+01, .327E+02, .466E+01, .498E+01, .237E+02, .115E+01};
 
 
-    
+
 
     static const double el[666] = {
       47.992,  201.070,   80.695,    20.970,  403.476,   96.488, 373.096,  346.143,  465.831,   56.122,  533.230,    2.479, 144.689,  269.119,  633.829,   10.918,  161.444,  597.026,
@@ -3385,62 +3385,62 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
     static const double picube8div3hcesu=4.1623755E-19;  // (8*pi**3/(3*h*c))*(1e-18)**2 = 4.1623755E-19
     static const double mu=0.53;  //Debyes
     static const double mmol=48.0;
-    
+
     //double q=0.6531261*pow(tt,1.5);
     double q=0.6531261*tt*sqrt(tt);
-    //    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    //    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
-    
+
     if(nu>999.9){
-      
+
       return std::complex<double> (0.0,0.0);
-      
+
     }else{
 
       // vp=vpIndex(nu);
-      
+
       // if(pp<100){ ini=ini3[vp]; ifin=ifin3[vp]; }else{ if(pp<300){ ini=ini2[vp]; ifin=ifin2[vp]; }else{ ini=ini1[vp]; ifin=ifin1[vp]; } }
-      
+
       ini=1;   ifin=666;
-      
-      //      cout << "  16O16O16O_V1 LINES: " << INI << " TO " << IFIN << ENDL; 
+
+      //      cout << "  16O16O16O_V1 LINES: " << INI << " TO " << IFIN << ENDL;
       if(ini>0){ini=ini-1;}else{ifin=0;}
       if(ifin>0){ifin=ifin-1;}else{ifin=0;}
 
-      //      COUT << "16O16O16O_V1 LINES: " << INI << " TO " << IFIN << ENDL; 
+      //      COUT << "16O16O16O_V1 LINES: " << INI << " TO " << IFIN << ENDL;
       if(ifin==0||ifin<ini){
-	
+
 	return std::complex<double> (0.0,0.0);
-	
+
       }else{
-	
-	for(unsigned int i=ini; i<ifin+1; i++){
+
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // BROADENING EN GHZ/MB 13/11/2018
-	  //  lshape=lineshape(nu,FRE[I],linebroadening(FRE[I],TT,PP,MMOL,0.0025,0.76),0.0);      
-	  
-	  lshape=lshape*flin[i]*exp(-el[i]/tt)*fre[i];	  
+	  //  lshape=lineshape(nu,FRE[I],linebroadening(FRE[I],TT,PP,MMOL,0.0025,0.76),0.0);
+
+	  lshape=lshape*flin[i]*exp(-el[i]/tt)*fre[i];
           lshapeacum=lshapeacum+lshape;
-	  
+
 	}
-	
+
 	lshapeacum=lshapeacum*(nu/pi)*(picube8div3hcesu*pow(mu,2)/q)  // IMAGINARY PART: ABSORPTION COEFFICIENT IN CM^2
 	  *(0.047992745509/tt);                                                               // REAL PART: DELAY IN RAD*CM^2
-	
+
 	return lshapeacum*1e-4;    // TO GIVE IT IN SI UNITS (M^2)    // (  RAD M^2 , M^2 )
-	
-	
+
+
       }
-      
+
     }
-    
+
   }
-  
-  
-  
+
+
+
   //////////////////////// OPACITY SOURCE nuMBER: 19 /////////////////////////////
 
   std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o16o16o_v3(double tt, double pp, double nu){
@@ -3516,7 +3516,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.76,0.78,0.76,0.82,0.82,0.77,0.82,0.76,0.81,0.81,0.76,0.77,0.81,0.76};
 
 
-      
+
     static const double brdO3air[714] ={
       2.1456,2.4120,2.3291,2.3143,2.1042,2.1042,2.5126,2.3735,2.0568,2.1130,2.3084,2.6250,2.4771,2.5570,2.0687,2.2018,2.1338,2.2166,2.0894,2.4948,
       2.4386,2.0716,2.3676,2.4415,2.0716,2.3735,2.0598,2.1249,2.0775,2.3498,2.3912,2.1338,2.6901,2.0687,2.5658,2.0598,2.5155,2.2314,2.0775,2.0568,
@@ -3557,7 +3557,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.3000,2.4978,2.1456,2.3000};
 
 
-    
+
     static const double flin[714] = {
       .450e+01, .515e+01, .527e+01, .274e+01, .934e+01, .103e+02, .244e+01, .259e+01, .740e+01, .100e+02, .515e+01, .309e+01, .715e+01, .706e+01, .124e+02, .743e+01, .978e+01, .717e+01,
       .933e+01, .106e+02, .218e+01, .124e+02, .681e+01, .136e+02, .121e+02, .429e+01, .126e+02, .954e+01, .701e+01, .448e+01, .159e+02, .919e+01, .309e+01, .856e+01, .131e+01, .787e+01,
@@ -3646,24 +3646,24 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
     static const double picube8div3hcesu=4.1623755e-19;  // (8*pi**3/(3*h*c))*(1e-18)**2 = 4.1623755e-19
     static const double mu=0.53;  //debyes
     static const double mmol=48.0;
-    
+
     //double q=1.321477358*pow(tt,1.5);
     double q=1.321477358*tt*sqrt(tt);
-    //    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    //    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
-    
+
     if(nu>999.9){
-      
+
       return std::complex<double> (0.0,0.0);
-      
+
     }else{
-      
+
       // vp=vpIndex(nu);
 
-      
+
       //      if(pp<100){
       //	ini=ini3[vp];
       //	ifin=ifin3[vp];
@@ -3676,36 +3676,36 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       //      	  ifin=ifin1[vp];
       //      	}
       //      }
-      
+
       ini=0;
       ifin=712;
-      
+
       if(ini>0){ini=ini-1;}else{ifin=0;}
       if(ifin>0){ifin=ifin-1;}else{ifin=0;}
-      
+
       if(ifin==0||ifin<ini){
-	
+
 	return std::complex<double> (0.0,0.0);
-	
+
       }else{
-	
-	for(unsigned int i=ini; i<ifin+1; i++){
+
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en ghz/mb 13/11/2018
 	  //     lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
-	  lshape=lshape*flin[i]*exp(-el[i]/tt)*fre[i];	  
+	  lshape=lshape*flin[i]*exp(-el[i]/tt)*fre[i];
           lshapeacum=lshapeacum+lshape;
-	  
+
 	}
-	
+
 	lshapeacum=lshapeacum*(nu/pi)*(picube8div3hcesu*pow(mu,2)/q)  // imaginary part: absorption coefficient in cm^2
 	  *(0.047992745509/tt);                                                               // real part: delay in rad*cm^2
-	
+
 	return lshapeacum*1e-4;    // to give it in si units (m^2)    // (  rad m^2 , m^2 )
-	
-	
+
+
       }
-      
+
     }
 
   }
@@ -3920,9 +3920,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=0.647739935*pow(tt,1.5);
     double q=0.647739935*tt*sqrt(tt);
-    //    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    //    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -3959,7 +3959,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdo3air[i]*0.001,texpo3[i]),0.0);   // broadening en ghz/mb 13/11/2018
 	  //    lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -4102,7 +4102,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.78,0.77,0.81,0.79,0.77,0.76,0.78,0.76,0.76,0.77,0.79,0.81,0.76,0.78,0.81, 0.77,0.79,0.82,0.78,0.76,0.76,0.71,0.76,0.77,0.82,0.79,0.77,0.79,0.81,0.83,
       0.81,0.76,0.76,0.76,0.76,0.77,0.80,0.80,0.82,0.78,0.78,0.76,0.76,0.76,0.77, 0.80,0.79,0.83,0.82,0.76,0.82,0.76,0.76,0.83,0.78,0.76,0.80,0.76,0.76,0.76,
       0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76};
-    
+
     static const double brdO3air[1151] ={ // MHz/mb
       2.0894,2.0835,2.0450,2.2166,2.4356,2.0716,2.5984,2.0568,2.1722,2.1338, 2.2492,2.0509,2.0598,2.1959,2.0627,2.0568,2.1574,2.3084,2.2403,2.1604,
       2.0450,2.1870,2.2669,2.0835,2.6901,2.2877,2.0598,2.1278,2.0953,2.0627, 2.1456,2.0391,2.4859,2.1574,2.0568,2.1130,2.0953,2.1042,2.2877,2.0775,
@@ -4234,7 +4234,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       .4830E+01,  .4440E+00,  .3640E+01,  .2480E+01,  .3920E+01, .9150E+01,  .4950E+00,  .9600E+01,  .8550E+01,  .1000E-01, .4610E+01,  .3150E+00,  .2280E+01,  .4010E+01,  .9330E+01,
       .8740E+01,  .9810E+01,  .9260E+01,  .2020E+00,  .5640E+01, .3220E+01,  .2080E+01,  .8180E+01,  .2000E-01,  .2590E+02, .9500E+01,  .2530E+02,  .2470E+02,  .2410E+02,  .2350E+02,
       .2290E+02,  .2230E+02,  .2170E+02,  .2110E+02,  .2050E+02, .2000E+02,  .1940E+02,  .1880E+02,  .1820E+02,  .1760E+02};
-    
+
     static const double el[1151]={
       712.962,  751.948, 1527.675,  295.458,   72.409,  769.490, 11.568, 1105.888,  405.486,  497.424,   246.754, 1470.888, 1057.475,  183.068,  856.081, 1154.462, 434.109,  184.357,
       144.750,  226.134, 1584.658,  347.970,  225.783,  686.506, 3.643,  110.903, 1010.594,  273.645,   673.097,   833.248, 465.603, 1642.703,   49.321,  405.541, 1414.963,  564.310,
@@ -4308,7 +4308,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1613.949, 1559.621, 1506.495, 1454.571,1403.848,  1354.328, 1306.009, 1258.891, 1212.975,1168.260};
 
 
-    static const unsigned int ifin1[800]={
+    static const size_t ifin1[800]={
          7,   8,  10,  11,  11,  11,  11,  12,  15,  18,  21,  22,  22,  23,  24,  25,  26,  29,  29,  29,  30,  33,  34,  36,  38,  38,  40,  41,  43,  47,
         47,  47,  48,  51,  53,  54,  55,  55,  55,  55,  55,  55,  57,  59,  59,  62,  64,  65,  65,  65,  68,  69,  70,  70,  71,  72,  72,  74,  76,  79,
         80,  81,  82,  84,  84,  86,  87,  91,  91,  92,  92,  92,  95,  96,  96,  96,  96,  98, 100, 101, 102, 103, 104, 106, 107, 108, 108, 111, 112, 115,
@@ -4337,7 +4337,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1017,1018,1018,1020,1020,1022,1023,1023,1023,1023,1023,1024,1024,1024,1024,1024,1027,1028,1028,1028,1028,1028,1028,1029,1031,1031,1031,1032,1034,1036,
       1040,1043,1046,1049,1055,1063,1078,1078,1079,1079,1079,1082,1082,1082,1082,1083,1084,1084,1085,1086};
 
-    static const unsigned int ini1[800]={
+    static const size_t ini1[800]={
          1,   1,   1,   1,   1,   2,   4,   4,   4,   4,   7,   8,  10,  11,  11,  11,  11,  12,  15,  18,  21,  22,  22,  23,  24,  25,  26,  29,  29,  29,
         30,  33,  34,  36,  38,  38,  40,  41,  43,  47,  47,  47,  48,  51,  53,  54,  55,  55,  55,  55,  55,  55,  57,  59,  59,  62,  64,  65,  65,  65,
         68,  69,  70,  70,  71,  72,  72,  74,  76,  79,  80,  81,  82,  84,  84,  86,  87,  91,  91,  92,  92,  92,  95,  96,  96,  96,  96,  98, 100, 101,
@@ -4366,7 +4366,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1010,1011,1013,1015,1015,1015,1015,1015,1016,1017,1017,1018,1018,1020,1020,1022,1023,1023,1023,1023,1023,1024,1024,1024,1024,1024,1027,1028,1028,1028,
       1028,1028,1028,1029,1031,1031,1031,1032,1034,1036,1040,1043,1046,1049,1055,1063,1078,1078,1079,1079};
 
-    static const unsigned int ifin2[800]={
+    static const size_t ifin2[800]={
          4,   4,   4,   5,   8,   8,  10,  11,  11,  11,  12,  15,  17,  18,  21,  22,  22,  24,  25,  25,  28,  29,  29,  29,  33,  34,  35,  36,  38,  40,
         41,  42,  46,  47,  47,  48,  49,  52,  53,  55,  55,  55,  55,  55,  55,  57,  58,  59,  60,  64,  65,  65,  65,  66,  69,  69,  70,  70,  72,  72,
         73,  76,  77,  79,  80,  82,  82,  84,  85,  86,  89,  91,  91,  92,  92,  94,  95,  96,  96,  96,  96,  99, 101, 101, 103, 104, 106, 106, 107, 108,
@@ -4395,7 +4395,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1015,1016,1017,1017,1017,1018,1018,1020,1021,1023,1023,1023,1023,1023,1024,1024,1024,1024,1024,1026,1027,1028,1028,1028,1028,1028,1028,1029,1031,1031,
       1031,1032,1034,1038,1042,1044,1047,1052,1058,1078,1078,1079,1079,1079,1080,1082,1082,1082,1082,1084};
 
-    static const unsigned int ini2[800]={
+    static const size_t ini2[800]={
          1,   1,   3,   4,   4,   4,   5,   8,   8,  10,  11,  11,  11,  12,  15,  17,  18,  21,  22,  22,  24,  25,  25,  28,  29,  29,  29,  33,  34,  35,
         36,  38,  40,  41,  42,  46,  47,  47,  48,  49,  52,  53,  55,  55,  55,  55,  55,  55,  57,  58,  59,  60,  64,  65,  65,  65,  66,  69,  69,  70,
         70,  72,  72,  73,  76,  77,  79,  80,  82,  82,  84,  85,  86,  89,  91,  91,  92,  92,  94,  95,  96,  96,  96,  96,  99, 101, 101, 103, 104, 106,
@@ -4424,7 +4424,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1015,1015,1015,1015,1016,1017,1017,1017,1018,1018,1020,1021,1023,1023,1023,1023,1023,1024,1024,1024,1024,1024,1026,1027,1028,1028,1028,1028,1028,1028,
       1029,1031,1031,1031,1032,1034,1038,1042,1044,1047,1052,1058,1078,1078,1079,1079,1079,1080,1082,1082};
 
-    static const unsigned int ifin3[800]={
+    static const size_t ifin3[800]={
          3,   4,   4,   4,   5,   8,   8,  10,  11,  11,  11,  12,  15,  17,  18,  21,  22,  22,  24,  25,  25,  28,  29,  29,  29,  33,  34,  35,  36,  38,
         40,  41,  42,  46,  47,  47,  48,  49,  52,  53,  55,  55,  55,  55,  55,  55,  57,  58,  59,  60,  64,  65,  65,  65,  66,  69,  69,  70,  70,  72,
         72,  73,  76,  77,  79,  80,  82,  82,  84,  85,  86,  89,  91,  91,  92,  92,  94,  95,  96,  96,  96,  96,  99, 101, 101, 103, 104, 106, 106, 107,
@@ -4453,7 +4453,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1015,1015,1016,1017,1017,1017,1018,1018,1020,1021,1023,1023,1023,1023,1023,1024,1024,1024,1024,1024,1026,1027,1028,1028,1028,1028,1028,1028,1029,1031,
       1031,1031,1032,1034,1038,1042,1044,1047,1052,1058,1078,1078,1079,1079,1079,1080,1082,1082,1082,1082};
 
-    static const unsigned int ini3[800]={
+    static const size_t ini3[800]={
          1,   3,   4,   4,   4,   5,   8,   8,  10,  11,  11,  11,  12,  15,  17,  18,  21,  22,  22,  24,  25,  25,  28,  29,  29,  29,  33,  34,  35,  36,
         38,  40,  41,  42,  46,  47,  47,  48,  49,  52,  53,  55,  55,  55,  55,  55,  55,  57,  58,  59,  60,  64,  65,  65,  65,  66,  69,  69,  70,  70,
         72,  72,  73,  76,  77,  79,  80,  82,  82,  84,  85,  86,  89,  91,  91,  92,  92,  94,  95,  96,  96,  96,  96,  99, 101, 101, 103, 104, 106, 106,
@@ -4491,9 +4491,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=0.649698902072*pow(tt,1.5);
     double q=0.649698902072*tt*sqrt(tt);
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -4507,7 +4507,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       if(pp<25){ ini=ini3[vp]; ifin=ifin3[vp]; }else{ if(pp<300){ ini=ini2[vp]; ifin=ifin2[vp]; }else{ ini=ini1[vp]; ifin=ifin1[vp];} }
       if(ini>21){ini=ini-20;}else{ini=1;}           // NEW PATCH 02 SEP 2016
-      if(ifin<1132){ifin=ifin+20;}else{ifin=1151;}  // NEW PATCH 02 SEP 2016  
+      if(ifin<1132){ifin=ifin+20;}else{ifin=1151;}  // NEW PATCH 02 SEP 2016
       if(ini>0){ini=ini-1;}else{ifin=0;}
       if(ifin>0){ifin=ifin-1;}else{ifin=0;}
 
@@ -4517,7 +4517,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en GHz/mb 20/6/2018
 	  lshape=lshape*flin[i]*exp(-el[i]/tt)*fre[i];
@@ -4778,7 +4778,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1050.215,  626.296,  626.296, 1296.265,1332.850, 1332.850,  1244.700, 1288.576, 1004.263, 1194.231, 524.304, 1144.861,  959.428, 1039.114, 1168.604, 1039.093, 1096.791, 1049.720,
       915.808, 1003.851,   95.041,   95.041,  372.623,  372.623,  873.402,  959.183};
 
-    
+
     static const double texpO3[1376] ={
       0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.76,
       0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.78,0.76,0.76, 0.76,0.76,0.76,0.76,0.76,0.76,0.78,0.79,0.76,0.76,0.76,0.77, 0.76,0.76,0.78,0.76,0.76,0.76,0.79,0.76,0.78,0.76,0.76,0.76,
@@ -4819,7 +4819,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.77,0.77,0.79,0.76,0.77, 0.77,0.83,0.84,0.83,0.76,0.76,0.76,0.76,0.76,0.76,0.80,0.76, 0.84,0.84,0.84,0.78,0.76,0.76,0.78,0.78,0.80,0.84,0.76,0.76,
       0.76,0.78,0.76,0.76,0.77,0.77,0.83,0.83,0.77,0.77,0.80,0.83, 0.76,0.76,0.76,0.84,0.76,0.76,0.83,0.77,0.77,0.76,0.79,0.79, 0.84,0.76,0.83,0.84,0.80,0.83,0.82,0.84,0.76,0.84,0.83,0.83,
       0.82,0.83,0.77,0.77,0.76,0.76,0.82,0.82};
-    
+
     static const double brdO3air[1376] ={
       2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,
       2.3000,2.3000,2.4120,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.5540,2.4623,2.3000,2.3000,2.3000,2.3000,2.3000, 2.2492,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,
@@ -4873,8 +4873,8 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.2314,2.5540,2.5540,2.2877,2.2877,2.1249,2.0687,2.3000,2.3000, 2.3000,2.1426,2.3000,2.3000,2.3498,2.3498,2.0746,1.9680,2.4711, 2.4711,2.1130,2.0835,2.0331,2.0391,2.0450,1.9621,2.0509,2.3000,
       2.0923,2.3498,2.3498,2.0568,2.1841,2.1841,2.0627,2.3000,2.0983, 2.0687,2.1042,2.0746,2.1071,1.9177,2.0627,1.9177,2.0835,2.0923, 2.1160,2.0983,2.5244,2.5244,2.3000,2.3000,2.1249,2.1071};
 
-    
-    static const unsigned int ifin1[500]={
+
+    static const size_t ifin1[500]={
          5,   8,   9,  12,  15,  17,  19,  21,  24,  27,  27,  30,  33,  36,  40,  45,  45,  48,  51,  52,  56,  58,  61,  63,  67,  68,  70,  77,  79,  82,
         86,  86,  87,  91,  91,  91,  94,  97,  99, 103, 106, 108, 110, 111, 112, 115, 118, 120, 122, 122, 127, 130, 132, 136, 137, 142, 144, 146, 149, 151,
        153, 153, 155, 156, 162, 162, 164, 169, 171, 172, 175, 177, 180, 184, 184, 185, 189, 192, 196, 197, 197, 201, 202, 208, 210, 212, 215, 216, 217, 223,
@@ -4893,7 +4893,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1244,1248,1248,1250,1253,1254,1255,1259,1260,1261,1262,1264,1269,1273,1275,1276,1280,1280,1282,1289,1289,1291,1292,1296,1300,1304,1306,1307,1310,1311,
       1313,1319,1320,1321,1323,1329,1333,1337,1339,1340,1344,1347,1354,1358,1362,1365,1369,1375,1376,1376};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
          1,   1,   1,   3,   5,   8,   9,  12,  15,  17,  19,  21,  24,  27,  27,  30,  33,  36,  40,  45,  45,  48,  51,  52,  56,  58,  61,  63,  67,  68,
         70,  77,  79,  82,  86,  86,  87,  91,  91,  91,  94,  97,  99, 103, 106, 108, 110, 111, 112, 115, 118, 120, 122, 122, 127, 130, 132, 136, 137, 142,
        144, 146, 149, 151, 153, 153, 155, 156, 162, 162, 164, 169, 171, 172, 175, 177, 180, 184, 184, 185, 189, 192, 196, 197, 197, 201, 202, 208, 210, 212,
@@ -4912,7 +4912,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1235,1237,1238,1239,1244,1248,1248,1250,1253,1254,1255,1259,1260,1261,1262,1264,1269,1273,1275,1276,1280,1280,1282,1289,1289,1291,1292,1296,1300,1304,
       1306,1307,1310,1311,1313,1319,1320,1321,1323,1329,1333,1337,1339,1340,1344,1347,1354,1358,1362,1365};
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
          3,   5,   8,   9,  12,  15,  16,  19,  21,  24,  26,  27,  29,  32,  35,  39,  44,  45,  48,  50,  52,  54,  57,  61,  63,  66,  68,  70,  74,  78,
         82,  84,  86,  86,  91,  91,  91,  94,  95,  99, 102, 106, 107, 110, 110, 112, 114, 116, 118, 122, 122, 125, 128, 132, 135, 136, 140, 144, 145, 148,
        151, 153, 153, 155, 155, 161, 162, 163, 168, 170, 172, 175, 177, 179, 184, 184, 184, 189, 191, 196, 196, 197, 199, 202, 208, 210, 211, 215, 216, 217,
@@ -4931,7 +4931,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1239,1243,1247,1248,1250,1252,1254,1255,1259,1260,1260,1262,1264,1267,1273,1274,1276,1278,1280,1281,1287,1289,1290,1292,1293,1298,1304,1305,1307,1310,
       1310,1313,1319,1320,1321,1322,1325,1330,1337,1338,1340,1343,1347,1351,1357,1361,1363,1368,1373,1376};
 
-    static const unsigned int ini2[500]={
+    static const size_t ini2[500]={
          1,   3,   4,   6,   9,  10,  12,  15,  18,  20,  23,  25,  27,  27,  30,  34,  36,  40,  45,  45,  49,  52,  53,  56,  60,  61,  64,  68,  68,  73,
         77,  81,  84,  86,  86,  88,  91,  91,  92,  94,  97, 101, 103, 107, 108, 110, 111, 113, 115, 118, 120, 122, 123, 127, 131, 132, 136, 138, 142, 144,
        147, 149, 152, 153, 155, 155, 157, 162, 162, 166, 169, 171, 172, 176, 177, 181, 184, 184, 185, 190, 195, 196, 197, 198, 201, 205, 208, 211, 213, 215,
@@ -4950,7 +4950,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1237,1238,1243,1244,1248,1250,1250,1254,1254,1257,1260,1260,1261,1263,1266,1271,1273,1276,1276,1280,1280,1284,1289,1290,1291,1292,1298,1302,1304,1306,
       1307,1310,1311,1316,1320,1321,1321,1325,1329,1335,1337,1340,1341,1346,1348,1354,1359,1362,1368,1370};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
          3,   4,   6,   9,  10,  12,  15,  18,  20,  23,  25,  27,  27,  30,  34,  36,  40,  45,  45,  49,  52,  53,  56,  60,  61,  64,  68,  68,  73,  77,
         81,  84,  86,  86,  88,  91,  91,  92,  94,  97, 101, 103, 107, 108, 110, 111, 113, 115, 118, 120, 122, 123, 127, 131, 132, 136, 138, 142, 144, 147,
        149, 152, 153, 155, 155, 157, 162, 162, 166, 169, 171, 172, 176, 177, 181, 184, 184, 185, 190, 195, 196, 197, 198, 201, 205, 208, 211, 213, 215, 217,
@@ -4969,7 +4969,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1238,1243,1244,1248,1250,1250,1254,1254,1257,1260,1260,1261,1263,1266,1271,1273,1276,1276,1280,1280,1284,1289,1290,1291,1292,1298,1302,1304,1306,1307,
       1310,1311,1316,1320,1321,1321,1325,1329,1335,1337,1340,1341,1346,1348,1354,1359,1362,1368,1370,1376};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
          1,   3,   5,   8,   9,  12,  15,  16,  19,  21,  24,  26,  27,  29,  32,  35,  39,  44,  45,  48,  50,  52,  54,  57,  61,  63,  66,  68,  70,  74,
         78,  82,  84,  86,  86,  91,  91,  91,  94,  95,  99, 102, 106, 107, 110, 110, 112, 114, 116, 118, 122, 122, 125, 128, 132, 135, 136, 140, 144, 145,
        148, 151, 153, 153, 155, 155, 161, 162, 163, 168, 170, 172, 175, 177, 179, 184, 184, 184, 189, 191, 196, 196, 197, 199, 202, 208, 210, 211, 215, 216,
@@ -4995,9 +4995,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=1.387429043*pow(tt,1.5);
     double q=1.387429043*tt*sqrt(tt);
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -5019,7 +5019,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  // lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -5316,7 +5316,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.78,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.77,0.77,0.76, 0.76,0.76,0.76,0.76,0.76,0.77,0.83,0.77,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76,
       0.76,0.76,0.76,0.76,0.78,0.77,0.77,0.76,0.83,0.76,0.76,0.76, 0.76,0.76,0.77,0.77,0.76,0.76,0.76,0.76,0.84,0.76,0.76,0.76, 0.76,0.76,0.84,0.76,0.76,0.76,0.76,0.76,0.83,0.76,0.76,0.77,
       0.77,0.76,0.83,0.83,0.76,0.76,0.76,0.76,0.76,0.83,0.76,0.76, 0.76,0.78,0.77,0.76,0.77,0.76,0.76,0.83,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.82,0.76,0.76};
-    
+
     static const double brdO3air[1363] ={
       2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.5984,2.2877,2.3000,2.3000,2.3000,2.3000,2.3000,2.6428, 2.3000,2.3000,2.0716,2.0894,2.0894,2.3000,2.2669,2.3000,2.3000,
       2.1959,2.1782,2.2166,2.4623,2.1604,2.3000,2.3000,2.3000,2.3000, 2.1722,2.3000,2.2403,2.2403,2.1456,2.3000,2.3000,2.3000,2.4120, 2.5540,2.2640,2.0775,2.3000,2.3000,2.3084,2.3000,2.3000,2.3000,
@@ -5371,8 +5371,8 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.3000,2.0983,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.1071,2.3000,2.3000};
 
 
-    
-    static const unsigned int ifin1[500]={
+
+    static const size_t ifin1[500]={
          9,   9,  13,  14,  14,  16,  17,  21,  22,  25,  27,  30,  32,  37,  42,  45,  47,  49,  51,  55,  57,  59,  61,  64,  65,  67,  72,  75,  76,  79,
         83,  87,  90,  92,  93,  94,  95,  96, 100, 104, 104, 104, 107, 108, 112, 115, 117, 118, 123, 125, 127, 129, 133, 137, 139, 139, 142, 144, 146, 148,
        149, 151, 153, 156, 160, 162, 166, 168, 171, 172, 173, 175, 179, 181, 183, 185, 186, 186, 190, 195, 196, 197, 201, 203, 208, 211, 217, 220, 220, 221,
@@ -5391,7 +5391,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1235,1237,1239,1243,1247,1247,1248,1250,1252,1253,1257,1259,1260,1264,1264,1270,1273,1274,1274,1276,1280,1283,1286,1286,1292,1293,1293,1297,1304,1305,
       1305,1309,1312,1315,1318,1319,1323,1324,1325,1327,1332,1336,1338,1341,1348,1352,1357,1363,1363,1363};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
          1,   1,   2,   4,   9,   9,  13,  14,  14,  16,  17,  21,  22,  25,  27,  30,  32,  37,  42,  45,  47,  49,  51,  55,  57,  59,  61,  64,  65,  67,
         72,  75,  76,  79,  83,  87,  90,  92,  93,  94,  95,  96, 100, 104, 104, 104, 107, 108, 112, 115, 117, 118, 123, 125, 127, 129, 133, 137, 139, 139,
        142, 144, 146, 148, 149, 151, 153, 156, 160, 162, 166, 168, 171, 172, 173, 175, 179, 181, 183, 185, 186, 186, 190, 195, 196, 197, 201, 203, 208, 211,
@@ -5410,7 +5410,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       1223,1227,1231,1233,1235,1237,1239,1243,1247,1247,1248,1250,1252,1253,1257,1259,1260,1264,1264,1270,1273,1274,1274,1276,1280,1283,1286,1286,1292,1293,
       1293,1297,1304,1305,1305,1309,1312,1315,1318,1319,1323,1324,1325,1327,1332,1336,1338,1341,1348,1352};
 
-      static const unsigned int ifin2[500]={
+      static const size_t ifin2[500]={
 	4,   8,   9,  11,  13,  14,  16,  17,  20,  21,   4,  27,  30,  32,  37,  41,  45,  47,  48,  50,  55,  56,  59,  61,  63,  65,  67,  71,  74,  75,
 	78,  82,  86,  90,  91,  93,  94,  95,  96, 100, 102, 104, 104, 106, 108, 112, 114, 117, 118, 121,124, 126, 128, 133, 137, 138, 139, 141, 144, 146,
 	148, 148, 151, 151, 156, 160, 162, 166, 167, 171,171, 173, 174, 178, 181, 182, 185, 185, 186, 189,193, 196, 197, 200, 203, 207, 209, 215, 220, 220,
@@ -5429,7 +5429,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	1233,1234,1236,1239,1243,1247,1247,1247,1248,1251,1252,1255,1257,1260,1264,1264,1270,1272,1274,1274,1275,1278,1281,1285,1286,1292,1293,1293,1295,1301,
 	1305,1305,1309,1311,1315,1317,1319,1323,1324,1325,1325,1332,1336,1338,1339,1347,1351,1354,1360,1363};
 
-      static const unsigned int ini2[500]={
+      static const size_t ini2[500]={
 	1,   2,   6,   9,   9,  13,  14,  15,  16,  18,  21,  22,  25,  27,  30,  34,  39,  43,  46,  47,  50,  54,  55,  58,  60,  61,  65,  66,  68,  73,
 	75,  76,  80,  83,  89,  91,  92,  93,  94,  96, 98, 102, 104, 104, 104, 108, 110, 113, 116, 117,118, 123, 126, 128, 130, 136, 137, 139, 140, 143,
 	144, 146, 148, 150, 151, 153, 156, 160, 164, 167,168, 171, 173, 173, 175, 180, 181, 183, 185, 186,186, 192, 196, 196, 199, 201, 205, 209, 214, 218,
@@ -5449,7 +5449,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	1300,1304,1305,1306,1309,1313,1315,1318,1320,1323,1325,1325,1330,1334,1336,1339,1342,1349,1352,1359};
 
 
-            static const unsigned int ifin3[500]={
+            static const size_t ifin3[500]={
 	2,   6,   9,   9,  13,  14,  15,  16,  18,  21, 22,  25,  27,  30,  34,  39,  43,  46,  47,  50, 54,  55,  58,  60,  61,  65,  66,  68,  73,  75,
         76,  80,  83,  89,  91,  92,  93,  94,  96,  98, 102, 104, 104, 104, 108, 110, 113, 116, 117, 118, 123, 126, 128, 130, 136, 137, 139, 140, 143, 144,
 	146, 148, 150, 151, 153, 156, 160, 164, 167, 168, 171, 173, 173, 175, 180, 181, 183, 185, 186, 186, 192, 196, 196, 199, 201, 205, 209, 214, 218, 220,
@@ -5469,7 +5469,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	1304,1305,1306,1309,1313,1315,1318,1320,1323,1325,1325,1330,1334,1336,1339,1342,1349,1352,1359,1363};
 
 
-      static const unsigned int ini3[500]={
+      static const size_t ini3[500]={
 	2,   4,   8,   9,  11,  13,  14,  16,  17,  20, 21,  24,  27,  30,  32,  37,  41,  45,  47,  48,  50,  55,  56,  59,  61,  63,  65,  67,  71,  74,
         75,  78,  82,  86,  90,  91,  93,  94,  95,  96, 100, 102, 104, 104, 106, 108, 112, 114, 117, 118, 121, 124, 126, 128, 133, 137, 138, 139, 141, 144,
 	146, 148, 148, 151, 151, 156, 160, 162, 166, 167,171, 171, 173, 174, 178, 181, 182, 185, 185, 186,189, 193, 196, 197, 200, 203, 207, 209, 215, 220,
@@ -5495,9 +5495,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=1.344455353*pow(tt,1.5);
     double q=1.344455353*tt*sqrt(tt);
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -5519,7 +5519,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  //	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -5697,7 +5697,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.79,0.83,0.76,0.76,0.76,0.82,0.77,0.76,0.76,0.84,0.78,0.76, 0.82,0.82,0.76,0.76,0.76,0.79,0.76,0.78,0.84,0.76,0.82,0.82, 0.83,0.76,0.76,0.83,0.81,0.76,0.76,0.82,0.78,0.83,0.77,0.82,
       0.76,0.81,0.76,0.81,0.77,0.76,0.76,0.80,0.80,0.81,0.83,0.80, 0.80,0.80,0.79,0.79,0.79,0.76,0.79,0.79,0.79,0.78,0.78,0.78, 0.78,0.78,0.78,0.77,0.77,0.77,0.77,0.77,0.77,0.77,0.77,0.76,
       0.76,0.83,0.76,0.80,0.77,0.76,0.77,0.76,0.76,0.83,0.77,0.76, 0.81,0.76,0.76,0.83,0.76,0.83,0.76,0.77,0.78,0.76,0.76,0.77, 0.81,0.76,0.78,0.76,0.76,0.76,0.83,0.83,0.77,0.76,0.83};
-    
+
     static const double brdO3air[755] ={
       2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,
       2.4356,2.3000,2.3000,2.3000,2.3000,2.3439,2.1722,2.3000,2.3000, 2.3498,2.3000,2.3000,2.3000,2.3000,2.1338,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3291,2.2166,2.4060,2.5155,2.3000,2.2314,2.3000,
@@ -5728,8 +5728,8 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.1722,2.1841,2.1959,2.2078,2.2196,2.2344,2.2462,2.2610,2.2788, 2.2936,2.3113,2.3291,2.3498,2.3705,2.3912,2.4149,2.4415,2.4682, 2.3000,1.9532,2.3000,2.1130,2.5244,2.3000,2.3498,2.3000,2.3000,
       1.9858,2.3735,2.3000,2.0953,2.3000,2.3000,1.9799,2.3000,1.9444, 2.3000,2.4978,2.3291,2.3000,2.3000,2.3942,2.0835,2.3000,2.2314, 2.3000,2.0568,2.3000,1.9355,2.0568,2.4711,2.3000,1.9710};
 
-    
-    static const unsigned int ifin1[500]={
+
+    static const size_t ifin1[500]={
         3,   4,   5,   6,   6,   7,   9,  11,  12,  13,  14,  18,  18,  21,  24,  27,  30,  30,  30,  30,  31,  33,  34,  36,  38,  39,  41,  41,  43,  44,
        45,  46,  48,  49,  49,  51,  53,  54,  55,  56,  58,  61,  63,  63,  64,  65,  65,  66,  67,  70,  71,  72,  73,  74,  77,  79,  81,  82,  83,  84,
        85,  86,  87,  87,  87,  89,  90,  92,  92,  93,  95,  97,  97,  99, 101, 101, 103, 106, 108, 108, 111, 111, 112, 113, 117, 118, 118, 120, 120, 120,
@@ -5748,7 +5748,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       658, 661, 662, 662, 664, 668, 672, 675, 677, 677, 683, 685, 687, 689, 695, 697, 699, 701, 705, 712, 722, 722, 726, 726, 729, 730, 733, 733, 733, 733,
       735, 737, 737, 738, 739, 741, 742, 743, 744, 747, 748, 748, 748, 750, 750, 752, 753, 755, 755, 755};
 
-      static const unsigned int ini1[500]={
+      static const size_t ini1[500]={
 	  1,   1,   1,   1,   3,   4,   5,   6,   6,   7,  9,  11,  12,  13,  14,  18,  18,  21,  24,  27, 30,  30,  30,  30,  31,  33,  34,  36,  38,  39,
          41,  41,  43,  44,  45,  46,  48,  49,  49,  51, 53,  54,  55,  56,  58,  61,  63,  63,  64,  65, 65,  66,  67,  70,  71,  72,  73,  74,  77,  79,
          81,  82,  83,  84,  85,  86,  87,  87,  87,  89, 90,  92,  92,  93,  95,  97,  97,  99, 101, 101,103, 106, 108, 108, 111, 111, 112, 113, 117, 118,
@@ -5767,7 +5767,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	651, 653, 654, 656, 658, 661, 662, 662, 664, 668,672, 675, 677, 677, 683, 685, 687, 689, 695, 697,699, 701, 705, 712, 722, 722, 726, 726, 729, 730,
 	733, 733, 733, 733, 735, 737, 737, 738, 739, 741,742, 743, 744, 747, 748, 748, 748, 750, 750, 752};
 
-	static const unsigned int ifin2[500]={
+	static const size_t ifin2[500]={
 	  1,   2,   3,   5,   6,   6,   6,   8,  10,  12,  13,  14,  18,  18,  20,  22,  25,  29,  30,  30, 30,  30,  33,  33,  36,  38,  39,  41,  41,  42,
 	  44,  45,  46,  48,  49,  49,  50,  53,  53,  55, 56,  57,  60,  62,  63,  64,  65,  65,  66,  67, 69,  71,  72,  73,  74,  75,  79,  80,  81,  82,
 	  83,  85,  86,  86,  87,  87,  89,  89,  91,  92, 93,  94,  97,  97,  99,  99, 101, 103, 104, 108, 108, 109, 111, 112, 113, 116, 118, 118, 119, 120,
@@ -5786,7 +5786,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	  655, 657, 661, 662, 662, 663, 668, 672, 674, 677, 677, 682, 683, 687, 689, 695, 696, 698, 700, 705, 710, 722, 722, 724, 726, 727, 729, 732, 733, 733,
 	  733, 733, 736, 737, 738, 739, 741, 742, 742, 744, 747, 748, 748, 748, 749, 750, 752, 753, 753, 755};
 
-	  static const unsigned int ini2[500]={
+	  static const size_t ini2[500]={
 	      1,   1,   1,   3,   4,   5,   6,   6,   7,   9,  12,  12,  14,  16,  18,  19,  21,  25,  29,  30,  30,  30,  30,  31,  33,  34,  38,  39,  39,  41,
 	     41,  43,  44,  46,  47,  49,  49,  49,  52,  53,  55,  56,  56,  59,  62,  63,  64,  64,  65,  65,  66,  68,  70,  71,  73,  73,  74,  78,  79,  81,
              82,  83,  85,  85,  86,  87,  87,  89,  89,  91,  92,  92,  94,  96,  97,  97,  99, 101, 101, 103, 107, 108, 108, 111, 112, 112, 116, 118, 118, 118,
@@ -5805,7 +5805,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	    653, 655, 656, 658, 661, 662, 662, 664, 670, 672, 676, 677, 680, 683, 686, 687, 690, 696, 698, 700, 702, 707, 720, 722, 722, 726, 726, 729, 731, 733,
 	    733, 733, 733, 735, 737, 738, 739, 739, 742, 742, 743, 745, 747, 748, 748, 748, 750, 750, 752, 753};
 
-      static const unsigned int ifin3[500]={
+      static const size_t ifin3[500]={
 	  1,   1,   3,   4,   5,   6,   6,   7,   9,  12,  12,  14,  16,  18,  19,  21,  25,  29,  30,  30,  30,  30,  31,  33,  34,  38,  39,  39,  41,  41,
          43,  44,  46,  47,  49,  49,  49,  52,  53,  55,  56,  56,  59,  62,  63,  64,  64,  65,  65,  66,  68,  70,  71,  73,  73,  74,  78,  79,  81,  82,
          83,  85,  85,  86,  87,  87,  89,  89,  91,  92,  92,  94,  96,  97,  97,  99, 101, 101, 103, 107, 108, 108, 111, 112, 112, 116, 118, 118, 118, 120,
@@ -5823,9 +5823,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 	616, 618, 619, 619, 620, 621, 623, 625, 627, 627, 627, 628, 630, 633, 634, 635, 637, 639, 640, 642, 644, 645, 646, 646, 648, 648, 649, 650, 651, 653,
 	655, 656, 658, 661, 662, 662, 664, 670, 672, 676, 677, 680, 683, 686, 687, 690, 696, 698, 700, 702, 707, 720, 722, 722, 726, 726, 729, 731, 733, 733,
 	733, 733, 735, 737, 738, 739, 739, 742, 742, 743, 745, 747, 748, 748, 748, 750, 750, 752, 753, 755};
-	
 
-      static const unsigned int ini3[500]={
+
+      static const size_t ini3[500]={
 	  1,   1,   2,   3,   5,   6,   6,   6,   8,  10,  12,  13,  14,  18,  18,  20,  22,  25,  29,  30,  30,  30,  30,  33,  33,  36,  38,  39,  41,  41,
          42,  44,  45,  46,  48,  49,  49,  50,  53,  53,  55,  56,  57,  60,  62,  63,  64,  65,  65,  66,  67,  69,  71,  72,  73,  74,  75,  79,  80,  81,
          82,  83,  85,  86,  86,  87,  87,  89,  89,  91,  92,  93,  94,  97,  97,  99,  99, 101, 103, 104, 108, 108, 109, 111, 112, 113, 116, 118, 118, 119,
@@ -5853,9 +5853,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=0.678068387*pow(tt,1.5);
     double q=0.678068387*tt*sqrt(tt);
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -5877,7 +5877,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  //	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);
@@ -6010,7 +6010,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76, 0.76,0.79,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76,
       0.76,0.76,0.76,0.76,0.80,0.76,0.76,0.76,0.76,0.76,0.76,0.76, 0.76,0.76,0.76,0.76,0.76,0.76,0.80,0.76,0.76,0.77,0.76,0.76, 0.76,0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.76,0.76,0.76,0.76,
       0.76,0.76,0.76,0.76,0.76,0.76,0.76,0.77,0.76,0.76,0.76,0.81, 0.76,0.76};
-    
+
     static const double brdO3air[518] ={
       2.3000,2.3498,2.5155,2.4060,2.3000,2.3000,2.3883,2.5895,2.3000, 2.5244,2.5392,2.3000,2.4682,2.7405,2.4771,2.3000,2.4149,2.3735, 2.4386,2.3942,2.3000,2.3000,2.3705,2.3000,2.5540,2.3000,2.6428,
       2.3000,2.3000,2.3291,2.3000,2.4208,2.3735,2.4445,2.3000,2.3000, 2.3000,2.5540,2.3000,2.3000,2.3000,2.3000,2.4711,2.2610,2.2610, 2.3000,2.3291,2.2344,2.3000,2.3705,2.3000,2.2078,2.4978,2.4771,
@@ -6033,8 +6033,8 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       2.1130,2.3000,2.3000,2.3498,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.5244,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000, 2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.3000,2.4415,2.3000,
       2.3000,2.3000,2.0953,2.3000,2.3000};
 
-    
-    static const unsigned int ifin1[500]={
+
+    static const size_t ifin1[500]={
        1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,
        2,   2,   2,   2,   4,   4,   4,   4,   4,   4,  5,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  13,  14,  14,  14,  15,  15,  17,  17,  18,
       18,  18,  18,  20,  21,  21,  23,  23,  24,  24, 24,  24,  25,  25,  25,  25,  26,  27,  28,  29,  30,  31,  31,  32,  32,  32,  33,  33,  33,  33,
@@ -6053,7 +6053,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       439, 440, 441, 443, 443, 443, 443, 446, 447, 448, 449, 449, 450, 452, 456, 458, 458, 458, 458, 459, 460, 460, 460, 460, 461, 466, 469, 470, 474, 476,
       476, 478, 480, 481, 482, 484, 487, 491, 494, 503, 515, 516, 516, 516, 516, 517, 517, 518, 518, 518};
 
-    static const unsigned int ini1[500]={
+    static const size_t ini1[500]={
         1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
         1,   1,   1,   2,   2,   2,   2,   2,   4,   4,   4,   4,   4,   4,   5,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  13,  14,  14,  14,  15,
        15,  17,  17,  18,  18,  18,  18,  20,  21,  21,  23,  23,  24,  24,  24,  24,  25,  25,  25,  25,  26,  27,  28,  29,  30,  31,  31,  32,  32,  32,
@@ -6072,7 +6072,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       434, 436, 436, 436, 439, 440, 441, 443, 443, 443, 443, 446, 447, 448, 449, 449, 450, 452, 456, 458, 458, 458, 458, 459, 460, 460, 460, 460, 461, 466,
       469, 470, 474, 476, 476, 478, 480, 481, 482, 484, 487, 491, 494, 503, 515, 516, 516, 516, 516, 517};
 
-    static const unsigned int ifin2[500]={
+    static const size_t ifin2[500]={
         1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
         1,   2,   2,   2,   2,   4,   4,   4,   4,   4,   4,   5,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  13,  14,  14,  14,  15,  15,  17,  17,
        18,  18,  18,  18,  20,  21,  21,  22,  23,  24,  24,  24,  24,  25,  25,  25,  25,  26,  26,  28,  29,  30,  31,  31,  32,  32,  32,  33,  33,  33,
@@ -6091,7 +6091,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       436, 438, 440, 441, 443, 443, 443, 443, 444, 447, 448, 448, 449, 449, 451, 455, 457, 458, 458, 458, 459, 460, 460, 460, 460, 461, 466, 468, 469, 473,
       476, 476, 478, 479, 481, 482, 484, 487, 490, 493, 500, 514, 516, 516, 516, 516, 517, 517, 518, 518};
 
-    static const unsigned int ini2[500]={
+    static const size_t ini2[500]={
         1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
         1,   1,   2,   2,   2,   2,   4,   4,   4,   4,   4,   4,   4,   6,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  14,  14,  14,  14,  15,  17,
        17,  18,  18,  18,  18,  19,  20,  21,  21,  23,  23,  24,  24,  24,  25,  25,  25,  25,  25,  26,  27,  28,  29,  31,  31,  32,  32,  32,  32,  33,
@@ -6110,7 +6110,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       436, 436, 437, 439, 440, 443, 443, 443, 443, 444, 446, 448, 448, 449, 449, 451, 453, 457, 458, 458, 458, 458, 459, 460, 460, 460, 460, 465, 466, 469,
       471, 474, 476, 477, 478, 480, 482, 482, 484, 487, 492, 495, 506, 515, 516, 516, 516, 516, 517, 517};
 
-    static const unsigned int ifin3[500]={
+    static const size_t ifin3[500]={
         1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
         1,   2,   2,   2,   2,   4,   4,   4,   4,   4,   4,   4,   6,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  14,  14,  14,  14,  15,  17,  17,
        18,  18,  18,  18,  19,  20,  21,  21,  23,  23,  24,  24,  24,  25,  25,  25,  25,  25,  26,  27,  28,  29,  31,  31,  32,  32,  32,  32,  33,  33,
@@ -6129,7 +6129,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
       436, 437, 439, 440, 443, 443, 443, 443, 444, 446, 448, 448, 449, 449, 451, 453, 457, 458, 458, 458, 458, 459, 460, 460, 460, 460, 465, 466, 469, 471,
       474, 476, 477, 478, 480, 482, 482, 484, 487, 492, 495, 506, 515, 516, 516, 516, 516, 517, 517, 518};
 
-    static const unsigned int ini3[500]={
+    static const size_t ini3[500]={
         1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
         1,   1,   2,   2,   2,   2,   4,   4,   4,   4,   4,   4,   5,   6,   7,   8,   9,   9,   9,  11,  11,  12,  12,  13,  14,  14,  14,  15,  15,  17,
        17,  18,  18,  18,  18,  20,  21,  21,  22,  23,  24,  24,  24,  24,  25,  25,  25,  25,  26,  26,  28,  29,  30,  31,  31,  32,  32,  32,  33,  33,
@@ -6155,9 +6155,9 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
     //double q=0.664313224*pow(tt,1.5);
     double q=0.664313224*tt*sqrt(tt);
-    unsigned int vp;
-    unsigned int ini;
-    unsigned int ifin;
+    size_t vp;
+    size_t ini;
+    size_t ifin;
     std::complex<double>  lshape;
     std::complex<double>  lshapeacum;
 
@@ -6179,7 +6179,7 @@ std::complex<double>  RefractiveIndex::mkSpecificRefractivity_16o18o(double tt, 
 
       }else{
 
-	for(unsigned int i=ini; i<ifin+1; i++){
+	for(size_t i=ini; i<ifin+1; i++){
 
 	  lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,brdO3air[i]*0.001,texpO3[i]),0.0);   // broadening en GHz/mb 14/11/2018
 	  // lshape=lineshape(nu,fre[i],linebroadening(fre[i],tt,pp,mmol,0.0025,0.76),0.0);

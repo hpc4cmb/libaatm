@@ -83,6 +83,8 @@ public:
   inline Frequency operator*(int scf) { return Frequency(valueIS_ * (double) scf); }
   /** Operator "multiplication of a frequency by an unsigned int" */
   inline Frequency operator*(unsigned int scf) { return Frequency(valueIS_ * (double) scf); }
+  /** Operator "multiplication of a frequency by an size_t" */
+  inline Frequency operator*(size_t scf) { return Frequency(valueIS_ * (double) scf); }
   /** Operator "division of a frequency by a double" */
   inline Frequency operator/(double scf) { return Frequency(valueIS_ / scf); }
   /** Operator "division of a frequency by a float" */
@@ -91,6 +93,8 @@ public:
   inline Frequency operator/(int scf) { return Frequency(valueIS_ / (double) scf); }
   /** Operator "division of a frequency by an unsigned int" */
   inline Frequency operator/(unsigned int scf) { return Frequency(valueIS_ / (double) scf); }
+  /** Operator "division of a frequency by an size_t" */
+  inline Frequency operator/(size_t scf) { return Frequency(valueIS_ / (double) scf); }
   /** Operator "comparator < for two frequencies" */
   inline bool operator<(const Frequency &rhs) const {return (valueIS_ < rhs.get()); }
   /** Operator "comparator > for two frequencies" */
@@ -115,4 +119,3 @@ private:
 ATM_NAMESPACE_END
 
 #endif /*!_ATM_FREQUENCY_H*/
-

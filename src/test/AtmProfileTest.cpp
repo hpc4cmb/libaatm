@@ -43,7 +43,7 @@ using namespace atm;
    *         - Gets the number of layers of "myProfile" using the operator
    *           <a href="classatm_1_1AtmProfile.html#z7_21">.getNumLayer()</a> of the Class <a href="classatm_1_1AtmProfile.html">AtmProfile</a>.
    *         - Lists different physical and chemical parameters layer by layer, using operators such as
-   *           <a href="classatm_1_1AtmProfile.html#z7_29">.getLayerWaterVaporMassDensity(unsigned int i)</a> of the Class <a href="classatm_1_1AtmProfile.html">AtmProfile</a>.
+   *           <a href="classatm_1_1AtmProfile.html#z7_29">.getLayerWaterVaporMassDensity(size_t i)</a> of the Class <a href="classatm_1_1AtmProfile.html">AtmProfile</a>.
    *
    * The ouput of this test should be as follows:
    *
@@ -94,7 +94,7 @@ int main()
   // double h_div_k=0.04799274551;        // plank/boltz in units of K/GHz
 
   // Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1; // TROPICAL
+  size_t atmType = 1; // TROPICAL
   Temperature      T( 270.0,"K" );     // Ground temperature
   Pressure         P( 560.0,"mb");     // Ground Pressure
   Humidity         H(  20.0,"%" );     // Ground Relative Humidity (indication)
@@ -130,7 +130,7 @@ int main()
   cout<<" AtmProfileTest: Layer parameters:  " <<endl;
 
 
-  for(unsigned int i=0; i<myProfile.getNumLayer(); i++){
+  for(size_t i=0; i<myProfile.getNumLayer(); i++){
     cout << " AtmProfileTest:  P: "          << myProfile.getLayerPressure(i).get("mb")    << " mb"
 	 << "  T: "          << myProfile.getLayerTemperature(i).get("K")   << " K"
 	 << "  Thickness: "  << myProfile.getLayerThickness(i).get("m")   << " m"

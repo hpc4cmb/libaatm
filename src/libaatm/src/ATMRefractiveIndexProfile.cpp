@@ -62,7 +62,7 @@ RefractiveIndexProfile::RefractiveIndexProfile(const RefractiveIndexProfile & a)
    v_hx_.reserve(a.v_hx_.size());
    v_px_.reserve(a.v_px_.size());
    v_tx_.reserve(a.v_tx_.size());
-   for(unsigned int n=0; n<a.v_hx_.size(); n++){
+   for(size_t n=0; n<a.v_hx_.size(); n++){
    v_hx_.push_back(a.v_hx_[n]);
    v_px_.push_back(a.v_px_[n]);
    v_tx_.push_back(a.v_tx_[n]);
@@ -88,7 +88,7 @@ RefractiveIndexProfile::RefractiveIndexProfile(const RefractiveIndexProfile & a)
   groundTemperatureThreshold_ = a.groundTemperatureThreshold_;
   tropoLapseRateThreshold_ = a.tropoLapseRateThreshold_;
   relativeHumidityThreshold_ = a.relativeHumidityThreshold_;
-  wvScaleHeightThreshold_ = a.wvScaleHeightThreshold_; 
+  wvScaleHeightThreshold_ = a.wvScaleHeightThreshold_;
 
   v_layerThickness_.reserve(numLayer_);
   v_layerTemperature_.reserve(numLayer_);
@@ -99,8 +99,8 @@ RefractiveIndexProfile::RefractiveIndexProfile(const RefractiveIndexProfile & a)
   v_layerNO2_.reserve(numLayer_);
   v_layerSO2_.reserve(numLayer_);
 
-  
-  for(unsigned int n = 0; n < numLayer_; n++) {
+
+  for(size_t n = 0; n < numLayer_; n++) {
     v_layerThickness_.push_back(a.v_layerThickness_[n]);
     v_layerTemperature_.push_back(a.v_layerTemperature_[n]);
     //cout << "n=" << n << std::endl;
@@ -155,7 +155,7 @@ RefractiveIndexProfile::RefractiveIndexProfile(const RefractiveIndexProfile & a)
   std::vector<std::complex<double> >* v_N_NO2LinesPtr;
   std::vector<std::complex<double> >* v_N_SO2LinesPtr;
 
-  for(unsigned int nc = 0; nc < v_chanFreq_.size(); nc++) {
+  for(size_t nc = 0; nc < v_chanFreq_.size(); nc++) {
 
     v_N_H2OLinesPtr = new std::vector<std::complex<double> > ;
     v_N_H2OLinesPtr->reserve(numLayer_);
@@ -176,7 +176,7 @@ RefractiveIndexProfile::RefractiveIndexProfile(const RefractiveIndexProfile & a)
     v_N_SO2LinesPtr = new std::vector<std::complex<double> > ;
     v_N_SO2LinesPtr->reserve(numLayer_);
 
-    for(unsigned int n = 0; n < numLayer_; n++) {
+    for(size_t n = 0; n < numLayer_; n++) {
 
       // std::cout << "numLayer_=" << nc << " " << n << std::endl; // COMMENTED OUT BY JUAN MAY/16/2005
 
@@ -218,7 +218,7 @@ RefractiveIndexProfile::~RefractiveIndexProfile()
 void RefractiveIndexProfile::rmRefractiveIndexProfile()
 {
   // for every frequency channel delete the pointer to the absorption profile
-  for(unsigned int nc = 0; nc < v_chanFreq_.size(); nc++) {
+  for(size_t nc = 0; nc < v_chanFreq_.size(); nc++) {
     delete vv_N_H2OLinesPtr_[nc];
     delete vv_N_H2OContPtr_[nc];
     delete vv_N_O2LinesPtr_[nc];
@@ -246,7 +246,7 @@ bool RefractiveIndexProfile::updateRefractiveIndexProfile(const Length &altitude
                                           tropoLapseRate,
                                           relativeHumidity,
                                           wvScaleHeight);
-  unsigned int numLayer = getNumLayer();
+  size_t numLayer = getNumLayer();
 
   if(vv_N_H2OLinesPtr_.size() < v_chanFreq_.size()) {
     mkNewAtmProfile = true;
@@ -299,9 +299,9 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
   double nu;
   // double nu2, nu_pi; // [-Wunused_but_set_variable]
   // double width;
-  // unsigned int npoints;
+  // size_t npoints;
   RefractiveIndex atm;
-  //    double sumAbsO3Lines1, sumAbsCOLines1, sumAbsN2OLines1, sumAbsNO2Lines1, sumAbsSO2Lines1; 
+  //    double sumAbsO3Lines1, sumAbsCOLines1, sumAbsN2OLines1, sumAbsNO2Lines1, sumAbsSO2Lines1;
 
 
   //TODO we will have to put numLayer_ and v_chanFreq_.size() const
@@ -337,14 +337,14 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
   // std::cout << "numLayer_=" << numLayer_ << std::endl;
   // std::cout << "v_chanFreq_[0]=" << v_chanFreq_[0] << std::endl;
   // check if new spectral windows have been added
-  unsigned int ncmin;
+  size_t ncmin;
   /*  std::cout << "vv_N_H2OLinesPtr_.size()="<<vv_N_H2OLinesPtr_.size()<<endl; */
   ncmin = vv_N_H2OLinesPtr_.size(); // will be > 0 if spectral window(s) have been added
   if(newBasicParam_) ncmin = 0;
 
   //    std::cout << "ncmin=" << ncmin << std::endl;
 
-  for(unsigned int nc = ncmin; nc < v_chanFreq_.size(); nc++) {
+  for(size_t nc = ncmin; nc < v_chanFreq_.size(); nc++) {
 
     v_N_H2OLinesPtr = new std::vector<std::complex<double> > ;
     v_N_H2OContPtr = new std::vector<std::complex<double> > ;
@@ -374,14 +374,14 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
     if (v_chanFreq_.size()>1){
       if(nc==0){
 	width = fabs(v_chanFreq_[nc+1]-v_chanFreq_[nc])*1e-9;       // width en GHz para ATM
-	npoints=(unsigned int)round(width*100);                     // One point every 10 MHz
+	npoints=(size_t)round(width*100);                     // One point every 10 MHz
       }else{
 	if(nc==v_chanFreq_.size()-1){
 	  width = fabs(v_chanFreq_[nc]-v_chanFreq_[nc-1])*1e-9;     // width en GHz para ATM
-	  npoints=(unsigned int)round(width*100);                   // One point every 10 MHz 
+	  npoints=(size_t)round(width*100);                   // One point every 10 MHz
 	}else{
 	  width = fabs((v_chanFreq_[nc+1]-v_chanFreq_[nc-1])/2.0)*1e-9;    // width en GHz para ATM
-	  npoints=(unsigned int)round(width*100);                          // One point every 10 MHz
+	  npoints=(size_t)round(width*100);                          // One point every 10 MHz
 	}
       }
     }else{
@@ -398,13 +398,13 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
     // std::cout << "nc =" << nc << " nu=" << nu << " width=" << width << " GHz    npoints=" << npoints << std::endl;
 
     // nu2 = nu * nu;      // [-Wunused_but_set_variable]
-    // nu_pi = nu / M_PI;    // [-Wunused_but_set_variable] 
+    // nu_pi = nu / M_PI;    // [-Wunused_but_set_variable]
 
-    for(unsigned int j = 0; j < numLayer_; j++) {
+    for(size_t j = 0; j < numLayer_; j++) {
 
       wv = v_layerWaterVapor_[j] * 1000.0; // se multiplica por 10**3 por cuestión de unidades en las rutinas fortran.
       wvt = wv * v_layerTemperature_[j] / 217.0; // v_layerWaterVapor_[j] está en kg/m**3
-      // t = v_layerTemperature_[j] / 300.0;    // [-Wunused_but_set_variable] 
+      // t = v_layerTemperature_[j] / 300.0;    // [-Wunused_but_set_variable]
 
 
       // std::cout <<"ATMRefractiveIndexProfile: " << v_layerTemperature_[j] << " K " << v_layerPressure_[j] << " mb "  << nu << " GHz " << std::endl;
@@ -531,17 +531,17 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
 }
 
 
-Opacity RefractiveIndexProfile::getDryOpacityUpTo(unsigned int nc, Length refalti)
+Opacity RefractiveIndexProfile::getDryOpacityUpTo(size_t nc, Length refalti)
 {
-  unsigned int ires; unsigned int numlayerold; Length alti;  double fractionLast; 
+  size_t ires; size_t numlayerold; Length alti;  double fractionLast;
   Opacity opacityout0; Opacity opacityout1; Opacity zeroOp(0.0,"np");
-  
+
   if(refalti.get("km") <= altitude_.get("km")) {
     return zeroOp;
   }else{
       fractionLast = 1.0; numlayerold = numLayer_;
       opacityout0=getDryOpacity(nc); ires=numlayerold-1; alti=altitude_;
-      for(unsigned int i=0; i<numLayer_; i++){
+      for(size_t i=0; i<numLayer_; i++){
 	if(alti.get("km") < refalti.get("km") &&  (alti.get("km")+v_layerThickness_[i]/1000.0) >= refalti.get("km"))
 	  { ires=i; fractionLast = (refalti.get("m")-alti.get("m"))/v_layerThickness_[i]; }
 	alti = alti + Length(v_layerThickness_[i],"m");
@@ -549,16 +549,16 @@ Opacity RefractiveIndexProfile::getDryOpacityUpTo(unsigned int nc, Length refalt
       numLayer_ = ires;
       opacityout0=getDryOpacity(nc);
       numLayer_ = ires+1;
-      opacityout1=getDryOpacity(nc);      
+      opacityout1=getDryOpacity(nc);
       numLayer_ = numlayerold;
       return opacityout0+(opacityout1-opacityout0)*fractionLast;
   }
 }
-Opacity RefractiveIndexProfile::getDryOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getDryOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_O2LinesPtr_[nc]->at(j) + vv_N_DryContPtr_[nc]->at(j)
 		   + vv_N_O3LinesPtr_[nc]->at(j)  + vv_N_COLinesPtr_[nc]->at(j)
 		   + vv_N_N2OLinesPtr_[nc]->at(j) + vv_N_NO2LinesPtr_[nc]->at(j)
@@ -568,36 +568,36 @@ Opacity RefractiveIndexProfile::getDryOpacity(unsigned int nc)
 }
 
 
-Opacity RefractiveIndexProfile::getAverageDryOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageDryOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getDryOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageO2LinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageO2LinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getO2LinesOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageO3LinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageO3LinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     /*      std::cout << " Freq = " << getChanFreq(spwid,nc).get("GHz")
      << " O3 opacity = " << getO3LinesOpacity(spwid,nc).get("np")
      << " O3 pathlength = " << getO3LinesPathLength(spwid,nc).get("microns")
@@ -610,36 +610,36 @@ Opacity RefractiveIndexProfile::getAverageO3LinesOpacity(unsigned int spwid)
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageN2OLinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageN2OLinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getN2OLinesOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageNO2LinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageNO2LinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getNO2LinesOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageSO2LinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageSO2LinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getSO2LinesOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
@@ -649,24 +649,24 @@ Opacity RefractiveIndexProfile::getAverageSO2LinesOpacity(unsigned int spwid)
 
 
 
-Opacity RefractiveIndexProfile::getAverageCOLinesOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageCOLinesOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getCOLinesOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
 
-Opacity RefractiveIndexProfile::getAverageDryContOpacity(unsigned int spwid)
+Opacity RefractiveIndexProfile::getAverageDryContOpacity(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getDryContOpacity(spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
@@ -678,18 +678,18 @@ Opacity RefractiveIndexProfile::getDryContOpacity()
   return getDryContOpacity(0);
 }
 
-Opacity RefractiveIndexProfile::getDryContOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getDryContOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_DryContPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getDryContOpacity(unsigned int spwid,
-                                                  unsigned int nc)
+Opacity RefractiveIndexProfile::getDryContOpacity(size_t spwid,
+                                                  size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getDryContOpacity(v_transfertId_[spwid] + nc);
@@ -700,18 +700,18 @@ Opacity RefractiveIndexProfile::getO2LinesOpacity()
   return getO2LinesOpacity(0);
 }
 
-Opacity RefractiveIndexProfile::getO2LinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getO2LinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_O2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getO2LinesOpacity(unsigned int spwid,
-                                                  unsigned int nc)
+Opacity RefractiveIndexProfile::getO2LinesOpacity(size_t spwid,
+                                                  size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getO2LinesOpacity(v_transfertId_[spwid] + nc);
@@ -722,18 +722,18 @@ Opacity RefractiveIndexProfile::getCOLinesOpacity()
   return getCOLinesOpacity(0);
 }
 
-Opacity RefractiveIndexProfile::getCOLinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getCOLinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_COLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getCOLinesOpacity(unsigned int spwid,
-                                                  unsigned int nc)
+Opacity RefractiveIndexProfile::getCOLinesOpacity(size_t spwid,
+                                                  size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getCOLinesOpacity(v_transfertId_[spwid] + nc);
@@ -754,53 +754,53 @@ Opacity RefractiveIndexProfile::getSO2LinesOpacity()
   return getSO2LinesOpacity(0);
 }
 
-Opacity RefractiveIndexProfile::getN2OLinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getN2OLinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_N2OLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getN2OLinesOpacity(unsigned int spwid,
-                                                   unsigned int nc)
+Opacity RefractiveIndexProfile::getN2OLinesOpacity(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getN2OLinesOpacity(v_transfertId_[spwid] + nc);
 }
 
-Opacity RefractiveIndexProfile::getNO2LinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getNO2LinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_NO2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getNO2LinesOpacity(unsigned int spwid,
-                                                   unsigned int nc)
+Opacity RefractiveIndexProfile::getNO2LinesOpacity(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getNO2LinesOpacity(v_transfertId_[spwid] + nc);
 }
 
 
-Opacity RefractiveIndexProfile::getSO2LinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getSO2LinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_SO2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getSO2LinesOpacity(unsigned int spwid,
-                                                   unsigned int nc)
+Opacity RefractiveIndexProfile::getSO2LinesOpacity(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getSO2LinesOpacity(v_transfertId_[spwid] + nc);
@@ -812,18 +812,18 @@ Opacity RefractiveIndexProfile::getO3LinesOpacity()
   return getO3LinesOpacity(0);
 }
 
-Opacity RefractiveIndexProfile::getO3LinesOpacity(unsigned int nc)
+Opacity RefractiveIndexProfile::getO3LinesOpacity(size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_O3LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv);
 }
 
-Opacity RefractiveIndexProfile::getO3LinesOpacity(unsigned int spwid,
-                                                  unsigned int nc)
+Opacity RefractiveIndexProfile::getO3LinesOpacity(size_t spwid,
+                                                  size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getO3LinesOpacity(v_transfertId_[spwid] + nc);
@@ -841,12 +841,12 @@ Opacity RefractiveIndexProfile::getWetOpacity(const Length &integratedwatercolum
 }
 
 Opacity RefractiveIndexProfile::getWetOpacity(const Length &integratedwatercolumn,
-                                              unsigned int nc)
+                                              size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
   /*  std::cout<<"nc="<<nc<<endl; */
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_H2OLinesPtr_[nc]->at(j) + vv_N_H2OContPtr_[nc]->at(j))
         * v_layerThickness_[j];
 
@@ -855,20 +855,20 @@ Opacity RefractiveIndexProfile::getWetOpacity(const Length &integratedwatercolum
 }
 
 Opacity RefractiveIndexProfile::getWetOpacity(const Length & integratedwatercolumn,
-                                              unsigned int spwid,
-                                              unsigned int nc)
+                                              size_t spwid,
+                                              size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getWetOpacity(integratedwatercolumn,v_transfertId_[spwid] + nc);
 }
 
 Opacity RefractiveIndexProfile::getAverageWetOpacity(const Length &integratedwatercolumn,
-                                                     unsigned int spwid)
+                                                     size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getWetOpacity(integratedwatercolumn, spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
@@ -881,11 +881,11 @@ Opacity RefractiveIndexProfile::getH2OLinesOpacity(const Length &integratedwater
 }
 
 Opacity RefractiveIndexProfile::getH2OLinesOpacity(const Length &integratedwatercolumn,
-                                                   unsigned int nc)
+                                                   size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     /*    std::cout <<"j="<<j<<" abs H2O Lines ="<<vv_N_H2OLinesPtr_[nc]->at(j) <<endl; */
     kv = kv + imag(vv_N_H2OLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
@@ -893,39 +893,39 @@ Opacity RefractiveIndexProfile::getH2OLinesOpacity(const Length &integratedwater
 }
 
 Opacity RefractiveIndexProfile::getH2OLinesOpacity(const Length &integratedwatercolumn,
-                                                   unsigned int spwid,
-                                                   unsigned int nc)
+                                                   size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getH2OLinesOpacity(integratedwatercolumn,v_transfertId_[spwid] + nc);
 }
 
 Opacity RefractiveIndexProfile::getAverageH2OLinesOpacity(const Length &integratedwatercolumn,
-                                                          unsigned int spwid)
+                                                          size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getH2OLinesOpacity(integratedwatercolumn,spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
   return totalaverage;
 }
-  
+
 
 Opacity RefractiveIndexProfile::getH2OContOpacity(const Length &integratedwatercolumn)
 {
   return getH2OContOpacity(integratedwatercolumn,0);
-} 
-  
+}
+
 
 Opacity RefractiveIndexProfile::getH2OContOpacity(const Length &integratedwatercolumn,
-                                                  unsigned int nc)
+                                                  size_t nc)
 {
   if(!chanIndexIsValid(nc)) return Opacity(-999.0);
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + imag(vv_N_H2OContPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   return Opacity(kv*(integratedwatercolumn.get()/getGroundWH2O().get()));
@@ -933,8 +933,8 @@ Opacity RefractiveIndexProfile::getH2OContOpacity(const Length &integratedwaterc
 
 
 Opacity RefractiveIndexProfile::getH2OContOpacity(const Length &integratedwatercolumn,
-                                                  unsigned int spwid,
-                                                  unsigned int nc)
+                                                  size_t spwid,
+                                                  size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) return Opacity(-999.0);
   return getH2OContOpacity(integratedwatercolumn,v_transfertId_[spwid] + nc);
@@ -943,12 +943,12 @@ Opacity RefractiveIndexProfile::getH2OContOpacity(const Length &integratedwaterc
 
 
 Opacity RefractiveIndexProfile::getAverageH2OContOpacity(const Length &integratedwatercolumn,
-                                                         unsigned int spwid)
+                                                         size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) return Opacity(-999.0);
   Opacity totalaverage;
   totalaverage = Opacity(0.0, "np");
-  for(unsigned int nc = 0; nc < getNumChan(spwid); nc++) {
+  for(size_t nc = 0; nc < getNumChan(spwid); nc++) {
     totalaverage = totalaverage + getH2OContOpacity(integratedwatercolumn,spwid, nc);
   }
   totalaverage = totalaverage / getNumChan(spwid);
@@ -966,13 +966,13 @@ Length RefractiveIndexProfile::getDispersiveH2OPathLength(const Length &integrat
 }
 
 Angle RefractiveIndexProfile::getDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                         unsigned int nc)
+                                                         size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_H2OLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv*(integratedwatercolumn.get()/getGroundWH2O().get())* 57.29578, "deg");
@@ -980,7 +980,7 @@ Angle RefractiveIndexProfile::getDispersiveH2OPhaseDelay(const Length &integrate
 }
 
 Length RefractiveIndexProfile::getDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                          unsigned int nc)
+                                                          size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -992,8 +992,8 @@ Length RefractiveIndexProfile::getDispersiveH2OPathLength(const Length &integrat
 }
 
 Angle RefractiveIndexProfile::getDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                         unsigned int spwid,
-                                                         unsigned int nc)
+                                                         size_t spwid,
+                                                         size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1002,13 +1002,13 @@ Angle RefractiveIndexProfile::getDispersiveH2OPhaseDelay(const Length &integrate
 }
 
 Angle RefractiveIndexProfile::getAverageDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                                unsigned int spwid)
+                                                                size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getDispersiveH2OPhaseDelay(integratedwatercolumn,v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1017,8 +1017,8 @@ Angle RefractiveIndexProfile::getAverageDispersiveH2OPhaseDelay(const Length &in
 }
 
 Length RefractiveIndexProfile::getDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                          unsigned int spwid,
-                                                          unsigned int nc)
+                                                          size_t spwid,
+                                                          size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1027,13 +1027,13 @@ Length RefractiveIndexProfile::getDispersiveH2OPathLength(const Length &integrat
 }
 
 Length RefractiveIndexProfile::getAverageDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                                 unsigned int spwid)
+                                                                 size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getDispersiveH2OPathLength(integratedwatercolumn,v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1061,20 +1061,20 @@ Length RefractiveIndexProfile::getDispersiveDryPathLength()
   return getDispersiveDryPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getNonDispersiveDryPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getNonDispersiveDryPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_DryContPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(size_t nc)
 {
   //    std::cout << "getO2LinesPhaseDelay(" << nc << ")=" << getO2LinesPhaseDelay(nc).get("deg")  << std::endl;
   // std::cout << "getO3LinesPhaseDelay(" << nc << ")=" << getO3LinesPhaseDelay(nc).get("deg") << std::endl;
@@ -1087,7 +1087,7 @@ Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(unsigned int nc)
       + getNO2LinesPhaseDelay(nc) + getSO2LinesPhaseDelay(nc);
 }
 
-Length RefractiveIndexProfile::getNonDispersiveDryPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getNonDispersiveDryPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1099,8 +1099,8 @@ Length RefractiveIndexProfile::getNonDispersiveDryPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getNonDispersiveDryPhaseDelay(unsigned int spwid,
-                                                            unsigned int nc)
+Angle RefractiveIndexProfile::getNonDispersiveDryPhaseDelay(size_t spwid,
+                                                            size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1108,7 +1108,7 @@ Angle RefractiveIndexProfile::getNonDispersiveDryPhaseDelay(unsigned int spwid,
   return getNonDispersiveDryPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getDispersiveDryPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getDispersiveDryPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1119,8 +1119,8 @@ Length RefractiveIndexProfile::getDispersiveDryPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(unsigned int spwid,
-                                                         unsigned int nc)
+Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(size_t spwid,
+                                                         size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1128,13 +1128,13 @@ Angle RefractiveIndexProfile::getDispersiveDryPhaseDelay(unsigned int spwid,
   return getDispersiveDryPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageNonDispersiveDryPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageNonDispersiveDryPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av
         + getNonDispersiveDryPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
@@ -1143,13 +1143,13 @@ Angle RefractiveIndexProfile::getAverageNonDispersiveDryPhaseDelay(unsigned int 
   return average;
 }
 
-Angle RefractiveIndexProfile::getAverageDispersiveDryPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageDispersiveDryPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getDispersiveDryPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1157,8 +1157,8 @@ Angle RefractiveIndexProfile::getAverageDispersiveDryPhaseDelay(unsigned int spw
   return average;
 }
 
-Length RefractiveIndexProfile::getNonDispersiveDryPathLength(unsigned int spwid,
-                                                             unsigned int nc)
+Length RefractiveIndexProfile::getNonDispersiveDryPathLength(size_t spwid,
+                                                             size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1166,8 +1166,8 @@ Length RefractiveIndexProfile::getNonDispersiveDryPathLength(unsigned int spwid,
   return getNonDispersiveDryPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getDispersiveDryPathLength(unsigned int spwid,
-                                                          unsigned int nc)
+Length RefractiveIndexProfile::getDispersiveDryPathLength(size_t spwid,
+                                                          size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1175,13 +1175,13 @@ Length RefractiveIndexProfile::getDispersiveDryPathLength(unsigned int spwid,
   return getDispersiveDryPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageNonDispersiveDryPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageNonDispersiveDryPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av
         + getNonDispersiveDryPathLength(v_transfertId_[spwid] + i).get("mm");
   }
@@ -1190,13 +1190,13 @@ Length RefractiveIndexProfile::getAverageNonDispersiveDryPathLength(unsigned int
   return average;
 }
 
-Length RefractiveIndexProfile::getAverageDispersiveDryPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageDispersiveDryPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getDispersiveDryPathLength(v_transfertId_[spwid] + i).get("mm");
   }
 
@@ -1215,20 +1215,20 @@ Length RefractiveIndexProfile::getO2LinesPathLength()
   return getO2LinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getO2LinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getO2LinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_O2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Length RefractiveIndexProfile::getO2LinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getO2LinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1238,8 +1238,8 @@ Length RefractiveIndexProfile::getO2LinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getO2LinesPhaseDelay(unsigned int spwid,
-                                                   unsigned int nc)
+Angle RefractiveIndexProfile::getO2LinesPhaseDelay(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1247,13 +1247,13 @@ Angle RefractiveIndexProfile::getO2LinesPhaseDelay(unsigned int spwid,
   return getO2LinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageO2LinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageO2LinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getO2LinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1261,8 +1261,8 @@ Angle RefractiveIndexProfile::getAverageO2LinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getO2LinesPathLength(unsigned int spwid,
-                                                    unsigned int nc)
+Length RefractiveIndexProfile::getO2LinesPathLength(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1270,13 +1270,13 @@ Length RefractiveIndexProfile::getO2LinesPathLength(unsigned int spwid,
   return getO2LinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageO2LinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageO2LinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getO2LinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1294,7 +1294,7 @@ Length RefractiveIndexProfile::getO3LinesPathLength()
   return getO3LinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getO3LinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getO3LinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
@@ -1303,7 +1303,7 @@ Angle RefractiveIndexProfile::getO3LinesPhaseDelay(unsigned int nc)
 
   //    if(nc=66){cout << "vv_N_O3LinesPtr_" << ".size()=" << vv_N_O3LinesPtr_.size() << std::endl;}
 
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     /* if(nc=66){
      std::cout << "j=" << j << " vv_N_O3LinesPtr_[" << nc << "]->at(" << j << ")="  << vv_N_O3LinesPtr_[nc]->at(j) << std::endl;
      } */
@@ -1313,7 +1313,7 @@ Angle RefractiveIndexProfile::getO3LinesPhaseDelay(unsigned int nc)
   return aa;
 }
 
-Length RefractiveIndexProfile::getO3LinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getO3LinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1323,8 +1323,8 @@ Length RefractiveIndexProfile::getO3LinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getO3LinesPhaseDelay(unsigned int spwid,
-                                                   unsigned int nc)
+Angle RefractiveIndexProfile::getO3LinesPhaseDelay(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1332,13 +1332,13 @@ Angle RefractiveIndexProfile::getO3LinesPhaseDelay(unsigned int spwid,
   return getO3LinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageO3LinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageO3LinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getO3LinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1346,8 +1346,8 @@ Angle RefractiveIndexProfile::getAverageO3LinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getO3LinesPathLength(unsigned int spwid,
-                                                    unsigned int nc)
+Length RefractiveIndexProfile::getO3LinesPathLength(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1355,13 +1355,13 @@ Length RefractiveIndexProfile::getO3LinesPathLength(unsigned int spwid,
   return getO3LinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageO3LinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageO3LinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getO3LinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1379,20 +1379,20 @@ Length RefractiveIndexProfile::getCOLinesPathLength()
   return getCOLinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getCOLinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getCOLinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_COLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Length RefractiveIndexProfile::getCOLinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getCOLinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1402,8 +1402,8 @@ Length RefractiveIndexProfile::getCOLinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getCOLinesPhaseDelay(unsigned int spwid,
-                                                   unsigned int nc)
+Angle RefractiveIndexProfile::getCOLinesPhaseDelay(size_t spwid,
+                                                   size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1411,13 +1411,13 @@ Angle RefractiveIndexProfile::getCOLinesPhaseDelay(unsigned int spwid,
   return getCOLinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageCOLinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageCOLinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getCOLinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1425,8 +1425,8 @@ Angle RefractiveIndexProfile::getAverageCOLinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getCOLinesPathLength(unsigned int spwid,
-                                                    unsigned int nc)
+Length RefractiveIndexProfile::getCOLinesPathLength(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1434,13 +1434,13 @@ Length RefractiveIndexProfile::getCOLinesPathLength(unsigned int spwid,
   return getCOLinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageCOLinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageCOLinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getCOLinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1458,20 +1458,20 @@ Length RefractiveIndexProfile::getN2OLinesPathLength()
   return getN2OLinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getN2OLinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getN2OLinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_N2OLinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Length RefractiveIndexProfile::getN2OLinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getN2OLinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1481,8 +1481,8 @@ Length RefractiveIndexProfile::getN2OLinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getN2OLinesPhaseDelay(unsigned int spwid,
-                                                    unsigned int nc)
+Angle RefractiveIndexProfile::getN2OLinesPhaseDelay(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1490,13 +1490,13 @@ Angle RefractiveIndexProfile::getN2OLinesPhaseDelay(unsigned int spwid,
   return getN2OLinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageN2OLinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageN2OLinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getN2OLinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1504,8 +1504,8 @@ Angle RefractiveIndexProfile::getAverageN2OLinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getN2OLinesPathLength(unsigned int spwid,
-                                                     unsigned int nc)
+Length RefractiveIndexProfile::getN2OLinesPathLength(size_t spwid,
+                                                     size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1513,13 +1513,13 @@ Length RefractiveIndexProfile::getN2OLinesPathLength(unsigned int spwid,
   return getN2OLinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageN2OLinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageN2OLinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getN2OLinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1542,20 +1542,20 @@ Length RefractiveIndexProfile::getNO2LinesPathLength()
   return getNO2LinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getNO2LinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getNO2LinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_NO2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Length RefractiveIndexProfile::getNO2LinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getNO2LinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1565,8 +1565,8 @@ Length RefractiveIndexProfile::getNO2LinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getNO2LinesPhaseDelay(unsigned int spwid,
-                                                    unsigned int nc)
+Angle RefractiveIndexProfile::getNO2LinesPhaseDelay(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1574,13 +1574,13 @@ Angle RefractiveIndexProfile::getNO2LinesPhaseDelay(unsigned int spwid,
   return getNO2LinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageNO2LinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageNO2LinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getNO2LinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1588,8 +1588,8 @@ Angle RefractiveIndexProfile::getAverageNO2LinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getNO2LinesPathLength(unsigned int spwid,
-                                                     unsigned int nc)
+Length RefractiveIndexProfile::getNO2LinesPathLength(size_t spwid,
+                                                     size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1597,13 +1597,13 @@ Length RefractiveIndexProfile::getNO2LinesPathLength(unsigned int spwid,
   return getNO2LinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageNO2LinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageNO2LinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getNO2LinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1628,20 +1628,20 @@ Length RefractiveIndexProfile::getSO2LinesPathLength()
   return getSO2LinesPathLength(0);
 }
 
-Angle RefractiveIndexProfile::getSO2LinesPhaseDelay(unsigned int nc)
+Angle RefractiveIndexProfile::getSO2LinesPhaseDelay(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
   double kv = 0;
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_SO2LinesPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv * 57.29578, "deg");
   return aa;
 }
 
-Length RefractiveIndexProfile::getSO2LinesPathLength(unsigned int nc)
+Length RefractiveIndexProfile::getSO2LinesPathLength(size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1651,8 +1651,8 @@ Length RefractiveIndexProfile::getSO2LinesPathLength(unsigned int nc)
   return ll;
 }
 
-Angle RefractiveIndexProfile::getSO2LinesPhaseDelay(unsigned int spwid,
-                                                    unsigned int nc)
+Angle RefractiveIndexProfile::getSO2LinesPhaseDelay(size_t spwid,
+                                                    size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1660,13 +1660,13 @@ Angle RefractiveIndexProfile::getSO2LinesPhaseDelay(unsigned int spwid,
   return getSO2LinesPhaseDelay(v_transfertId_[spwid] + nc);
 }
 
-Angle RefractiveIndexProfile::getAverageSO2LinesPhaseDelay(unsigned int spwid)
+Angle RefractiveIndexProfile::getAverageSO2LinesPhaseDelay(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getSO2LinesPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
   av = av / getNumChan(spwid);
@@ -1674,8 +1674,8 @@ Angle RefractiveIndexProfile::getAverageSO2LinesPhaseDelay(unsigned int spwid)
   return average;
 }
 
-Length RefractiveIndexProfile::getSO2LinesPathLength(unsigned int spwid,
-                                                     unsigned int nc)
+Length RefractiveIndexProfile::getSO2LinesPathLength(size_t spwid,
+                                                     size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0, "m");
@@ -1683,13 +1683,13 @@ Length RefractiveIndexProfile::getSO2LinesPathLength(unsigned int spwid,
   return getSO2LinesPathLength(v_transfertId_[spwid] + nc);
 }
 
-Length RefractiveIndexProfile::getAverageSO2LinesPathLength(unsigned int spwid)
+Length RefractiveIndexProfile::getAverageSO2LinesPathLength(size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0, "m");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av + getSO2LinesPathLength(v_transfertId_[spwid] + i).get("mm");
   }
   av = av / getNumChan(spwid);
@@ -1709,13 +1709,13 @@ Length RefractiveIndexProfile::getNonDispersiveH2OPathLength(const Length &integ
 }
 
 Angle RefractiveIndexProfile::getNonDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                            unsigned int nc)
+                                                            size_t nc)
 {
   double kv = 0;
   if(!chanIndexIsValid(nc)) {
     return Angle(-999.0, "deg");
   }
-  for(unsigned int j = 0; j < numLayer_; j++) {
+  for(size_t j = 0; j < numLayer_; j++) {
     kv = kv + real(vv_N_H2OContPtr_[nc]->at(j)) * v_layerThickness_[j];
   }
   Angle aa(kv*(integratedwatercolumn.get()/getGroundWH2O().get())* 57.29578, "deg");
@@ -1723,7 +1723,7 @@ Angle RefractiveIndexProfile::getNonDispersiveH2OPhaseDelay(const Length &integr
 }
 
 Length RefractiveIndexProfile::getNonDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                             unsigned int nc)
+                                                             size_t nc)
 {
   if(!chanIndexIsValid(nc)) {
     return Length(-999.0, "m");
@@ -1734,8 +1734,8 @@ Length RefractiveIndexProfile::getNonDispersiveH2OPathLength(const Length &integ
 }
 
 Angle RefractiveIndexProfile::getNonDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                            unsigned int spwid,
-                                                            unsigned int nc)
+                                                            size_t spwid,
+                                                            size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Angle(-999.0, "deg");
@@ -1744,13 +1744,13 @@ Angle RefractiveIndexProfile::getNonDispersiveH2OPhaseDelay(const Length &integr
 }
 
 Angle RefractiveIndexProfile::getAverageNonDispersiveH2OPhaseDelay(const Length &integratedwatercolumn,
-                                                                   unsigned int spwid)
+                                                                   size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Angle(-999.0, "deg");
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av
         + getNonDispersiveH2OPhaseDelay(v_transfertId_[spwid] + i).get("deg");
   }
@@ -1760,8 +1760,8 @@ Angle RefractiveIndexProfile::getAverageNonDispersiveH2OPhaseDelay(const Length 
 }
 
 Length RefractiveIndexProfile::getNonDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                             unsigned int spwid,
-                                                             unsigned int nc)
+                                                             size_t spwid,
+                                                             size_t nc)
 {
   if(!spwidAndIndexAreValid(spwid, nc)) {
     return Length(-999.0);
@@ -1770,13 +1770,13 @@ Length RefractiveIndexProfile::getNonDispersiveH2OPathLength(const Length &integ
 }
 
 Length RefractiveIndexProfile::getAverageNonDispersiveH2OPathLength(const Length &integratedwatercolumn,
-                                                                    unsigned int spwid)
+                                                                    size_t spwid)
 {
   if(!spwidAndIndexAreValid(spwid, 0)) {
     return Length(-999.0);
   }
   double av = 0.0;
-  for(unsigned int i = 0; i < getNumChan(spwid); i++) {
+  for(size_t i = 0; i < getNumChan(spwid); i++) {
     av = av
       + getNonDispersiveH2OPathLength(integratedwatercolumn,v_transfertId_[spwid] + i).get("deg");
   }
@@ -1786,7 +1786,7 @@ Length RefractiveIndexProfile::getAverageNonDispersiveH2OPathLength(const Length
 }
 
 // NB: the function chanIndexIsValid will be overrided by ....
-bool RefractiveIndexProfile::chanIndexIsValid(unsigned int nc)
+bool RefractiveIndexProfile::chanIndexIsValid(size_t nc)
 {
   if(nc < vv_N_H2OLinesPtr_.size()) return true;
   if(nc < v_chanFreq_.size()) {
@@ -1803,8 +1803,8 @@ bool RefractiveIndexProfile::chanIndexIsValid(unsigned int nc)
 }
 
 // NB: the function spwidAndIndexAreValid will be overrided by ...
-bool RefractiveIndexProfile::spwidAndIndexAreValid(unsigned int spwid,
-                                                   unsigned int idx)
+bool RefractiveIndexProfile::spwidAndIndexAreValid(size_t spwid,
+                                                   size_t idx)
 {
 
   if(spwid > getNumSpectralWindow() - 1) {
@@ -1818,7 +1818,7 @@ bool RefractiveIndexProfile::spwidAndIndexAreValid(unsigned int spwid,
         << std::endl;
     return false;
   }
-  unsigned int nc = v_transfertId_[spwid] + idx;
+  size_t nc = v_transfertId_[spwid] + idx;
   bool valid = chanIndexIsValid(nc);
   return valid;
 }

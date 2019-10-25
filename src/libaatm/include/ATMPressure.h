@@ -68,10 +68,12 @@ public:
    Pressure operator*(float scf) { return Pressure(valueIS_ * (double) scf); }
    Pressure operator*(int scf) { return Pressure(valueIS_ * (double) scf); }
    Pressure operator*(unsigned int scf) { return Pressure(valueIS_ * (double) scf); }
+   Pressure operator*(size_t scf) { return Pressure(valueIS_ * (double) scf); }
    Pressure operator/(double scf) { return Pressure(valueIS_ / scf); }
    Pressure operator/(float scf) { return Pressure(valueIS_ / (double) scf); }
    Pressure operator/(int scf) { return Pressure(valueIS_ / (double) scf); }
    Pressure operator/(unsigned int scf) { return Pressure(valueIS_ / (double) scf); }
+   Pressure operator/(size_t scf) { return Pressure(valueIS_ / (double) scf); }
    bool operator<(const Pressure &rhs) const { return (valueIS_ < rhs.get()); }
    bool operator>(const Pressure &rhs) const { return (valueIS_ > rhs.get()); }
    bool operator<=(const Pressure &rhs) const { return (valueIS_ <= rhs.get()); }
@@ -86,4 +88,3 @@ private:
 ATM_NAMESPACE_END
 
 #endif /*!_ATM_PRESSURE_H*/
-

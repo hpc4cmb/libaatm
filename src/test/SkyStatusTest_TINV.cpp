@@ -174,7 +174,11 @@ int main()
   vector<Length> v_ProfileHeightLevels;
   vector<MassDensity> v_ProfileWaterVaporLevels;
   FILE*  fp;
+  #ifdef HAVE_WINDOWS
+  fp = fopen("T-INVERSION\\invt.dat", "r");
+  #else
   fp = fopen("T-INVERSION/invt.dat", "r");
+  #endif
   if (fp != 0) {
     char  aRow[STRLEN+1];
     char* token;
@@ -199,7 +203,7 @@ int main()
 
 
   //  Atmospheretype   atmType = tropical; // Atmospheric type (to reproduce behavior above the tropopause)
-  unsigned int atmType = 1; // TROPICAL
+  size_t atmType = 1; // TROPICAL
   Temperature      T(265.54,"K" );     // Ground temperature
   Pressure         P( 560.0,"mb");     // Ground Pressure
   Humidity         H(  20.0,"%" );     // Ground Relative Humidity (indication)
@@ -246,7 +250,7 @@ int main()
 
   cout.setf(ios::fixed, ios::floatfield); cout.precision(4);
 
-  for(unsigned int i=0; i<myProfile.getNumLayer(); i++){
+  for(size_t i=0; i<myProfile.getNumLayer(); i++){
     cout << myProfile.getLayerBottomPressure(i).get("mb")  << " "
          << myProfile.getLayerPressure(i).get("mb")  << " "
          << myProfile.getLayerTopPressure(i).get("mb")  << " "
@@ -285,9 +289,9 @@ int main()
   mySky_siglefreq.setUserWH2O(new_wh2o0);
 
 
-  for(unsigned int i=0; i<mySky_siglefreq.getNumSpectralWindow(); i++){
+  for(size_t i=0; i<mySky_siglefreq.getNumSpectralWindow(); i++){
 
-    for(unsigned int j=0; j<mySky_siglefreq.getNumChan(i); j++){
+    for(size_t j=0; j<mySky_siglefreq.getNumChan(i); j++){
 
       cout << " SkyStatusTest: Frequency      : " << mySky_siglefreq.getChanFreq(j).get("GHz") << " GHz" << endl;
 
@@ -326,15 +330,15 @@ int main()
   cout << " SkyStatusTest:    =====================================================  " << endl;
   cout << " SkyStatusTest:  " << endl;
 
-  //  unsigned int numchan=4;     /* 400; */      /* 500; */   /* 64; */
-  //  unsigned int refchan=2;     /* 200;  */    /* 250; */    /* 32; */
+  //  size_t numchan=4;     /* 400; */      /* 500; */   /* 64; */
+  //  size_t refchan=2;     /* 200;  */    /* 250; */    /* 32; */
 
   //  Frequency reffreq(899.55,"GHz");
   // Frequency chansep(  0.5,"GHz");
 
 
-  unsigned int numchan=399;   /* 5; */    /* 399; */      /* 500; */   /* 64; */
-  unsigned int refchan=200;   /* 3; */     /* 200;  */    /* 250; */    /* 32; */
+  size_t numchan=399;   /* 5; */    /* 399; */      /* 500; */   /* 64; */
+  size_t refchan=200;   /* 3; */     /* 200;  */    /* 250; */    /* 32; */
 
   Frequency reffreq(650.00,"GHz");
   Frequency chansep(  0.10,"GHz");
@@ -348,7 +352,7 @@ int main()
   cout << " SkyStatusTest: water vapor column: " << mySky_1band_8channels.getUserWH2O().get("mm") << " mm" << endl;
   cout << " SkyStatusTest: Air mass          : " << mySky_1band_8channels.getAirMass() << endl;
   cout << " " << endl;
-  for(unsigned int i=0; i<mySky_1band_8channels.getNumChan(0); i++){
+  for(size_t i=0; i<mySky_1band_8channels.getNumChan(0); i++){
 
     cout << " SkyStatusTest: Freq: " <<  mySky_1band_8channels.getChanFreq(i).get("GHz") << " GHz  /  T_EBB=" << mySky_1band_8channels.getTebbSky(i).get("K")  << " K " <<endl;
 
@@ -363,7 +367,7 @@ int main()
   cout << " SkyStatusTest: Air mass          : " << mySky_1band_8channels.getAirMass() << endl;
   cout << " " << endl;
 
-  for(unsigned int i=0; i<mySky_1band_8channels.getNumChan(0); i++){
+  for(size_t i=0; i<mySky_1band_8channels.getNumChan(0); i++){
 
     cout << " SkyStatusTest: Freq: " <<  mySky_1band_8channels.getChanFreq(i).get("GHz") << " GHz  /  T_EBB=" << mySky_1band_8channels.getTebbSky(i).get("K")  << " Dry opacity: " << mySky_1band_8channels.getDryOpacity(i).get ("np") << " np "
 	 << " Wet opacity: " << mySky_1band_8channels.getWetOpacity(i).get ("np") << " np "
@@ -373,7 +377,7 @@ int main()
   }
 
 
-  for(unsigned int i=0; i<mySky_1band_8channels.getNumChan(0); i++){
+  for(size_t i=0; i<mySky_1band_8channels.getNumChan(0); i++){
 
     //    cout << " SkyStatusTest: Freq: " <<  mySky_1band_8channels.getChanFreq(i).get("GHz") << " GHz  /  T_EBB=" << mySky_1band_8channels.getTebbSky(i).get("K")  << " K " <<endl;
     /*  cout << mySky_1band_8channels.getChanFreq(i).get("GHz") << " " << mySky_1band_8channels.getTebbSky(i).get("K")  << " " <<

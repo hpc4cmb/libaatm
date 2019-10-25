@@ -70,10 +70,12 @@ public:
   MassDensity operator*(float scf) { return MassDensity(valueIS_ * (double) scf); }
   MassDensity operator*(int scf) { return MassDensity(valueIS_ * (double) scf); }
   MassDensity operator*(unsigned int scf) { return MassDensity(valueIS_ * (double) scf); }
+  MassDensity operator*(size_t scf) { return MassDensity(valueIS_ * (double) scf); }
   MassDensity operator/(double scf) { return MassDensity(valueIS_ / scf); }
   MassDensity operator/(float scf) { return MassDensity(valueIS_ / (double) scf); }
   MassDensity operator/(int scf) { return MassDensity(valueIS_ / (double) scf); }
   MassDensity operator/(unsigned int scf) { return MassDensity(valueIS_ / (double) scf); }
+  MassDensity operator/(size_t scf) { return MassDensity(valueIS_ / (double) scf); }
   bool operator<(const MassDensity & rhs) const { return (valueIS_ < rhs.get()); }
   bool operator>(const MassDensity & rhs) const { return (valueIS_ > rhs.get()); }
   bool operator<=(const MassDensity & rhs) const { return (valueIS_ <= rhs.get()); }

@@ -83,8 +83,8 @@ public:
    * @post  the spectral window has been defined; it is taken as a spectral window
    *        with no sideband. Its spectral window identifier spwId is 0.
    */
-  SpectralGrid(unsigned int numChan,
-               unsigned int refChan,
+  SpectralGrid(size_t numChan,
+               size_t refChan,
                const Frequency &refFreq,
                const Frequency &chanSep);
 
@@ -101,7 +101,7 @@ public:
    * @post  the spectral window has been defined; it is taken as a spectral window
    *        with no sideband. Its spectral window identifier spwId is 0.
    */
-  SpectralGrid(unsigned int numChan,
+  SpectralGrid(size_t numChan,
                double refFreq,
                double* chanFreq,
                const std::string &freqUnits);
@@ -126,8 +126,8 @@ public:
    *        Their spectral window identifiers are 0 and 1. The identifier is 0 and 1 for the lower
    *        and upper sidebands if the input netSideband is 0, 1, 3 or 5 else it is 1 and 0 respectively.
    */
-  SpectralGrid(unsigned int numChan,
-               unsigned int refChan,
+  SpectralGrid(size_t numChan,
+               size_t refChan,
                const Frequency &refFreq,
                const Frequency &chanSep,
                const Frequency &intermediateFreq,
@@ -149,8 +149,8 @@ public:
    * @post  the spectral window has been defined; it is taken as a spectral window
    *        with no sideband. Its spectral window identifier spwId is 0.
    */
-  SpectralGrid(unsigned int numChan,
-               unsigned int refChan,
+  SpectralGrid(size_t numChan,
+               size_t refChan,
                double* chanFreq,
                const std::string &freqUnits);
 
@@ -170,8 +170,8 @@ public:
    * @post  the spectral window has been defined and appended to the set of spectral windows;
    *        this new spectral window is taken as one with no sideband.
    */
-  unsigned int add(unsigned int numChan,
-                   unsigned int refChan,
+  size_t add(size_t numChan,
+                   size_t refChan,
                    const Frequency &refFreq,
                    const Frequency &chanSep);
 
@@ -185,8 +185,8 @@ public:
    * @post  the spectral window has been defined and appended to the set of spectral windows;
    *        this new spectral window is taken as one with no sideband.
    */
-  unsigned int add(unsigned int numChan,
-                   unsigned int refChan,
+  size_t add(size_t numChan,
+                   size_t refChan,
                    double* chanFreq,
                    const std::string &freqUnits);
 
@@ -200,19 +200,19 @@ public:
    * @post  the spectral window has been defined and appended to the set of spectral windows;
    *        this new spectral window is taken as one with no sideband.
    */
-  unsigned int add(unsigned int numChan,
+  size_t add(size_t numChan,
                    double refFreq,
                    double* chanFreq,
                    const std::string &freqUnits);
-  unsigned int add(unsigned int numChan,
+  size_t add(size_t numChan,
                    double refFreq,
                    const std::vector<double> &chanFreq,
                    const std::string &freqUnits);
-  unsigned int add(const std::vector<Frequency> &chanFreq)
+  size_t add(const std::vector<Frequency> &chanFreq)
   {
-    unsigned int spwid;
+    size_t spwid;
     std::vector<double> v;
-    for(unsigned int i = 0; i < chanFreq.size(); i++) {
+    for(size_t i = 0; i < chanFreq.size(); i++) {
       v.push_back(chanFreq[i].get("GHz"));
     }
     spwid = add(chanFreq.size(), chanFreq[0].get("GHz"), v, "GHz");
@@ -232,8 +232,8 @@ public:
    *       the frequency for the middle of that sideband. For DSB refFreq may be in between the two sideband.
 
    */
-  void add(unsigned int numChan,
-           unsigned int refChan,
+  void add(size_t numChan,
+           size_t refChan,
            const Frequency &refFreq,
            const Frequency &chanSep,
            const Frequency &intermediateFreq,
@@ -244,17 +244,17 @@ public:
   /** Accessor to the number of spectral wondows
    * @return number of spectral windows
    */
-  unsigned int getNumSpectralWindow() const;
+  size_t getNumSpectralWindow() const;
 
   /** Accessor to the number of frequency points for the first spectral window
    * @return number of frequency channels
    */
-  unsigned int getNumChan() const;
+  size_t getNumChan() const;
   /** Accessor to the number of frequency points for a given spectral window
    * @param spwId spectral window identifier (0-based)
    * @return number of frequency channels
    */
-  unsigned int getNumChan(unsigned int spwId) const;
+  size_t getNumChan(size_t spwId) const;
 
   /** Accessor to the reference channel of the first spectral window
    * @return the reference channel
@@ -262,12 +262,12 @@ public:
    *       there is no way to determine the reference channel if the grid is not regularily sampled! would that be
    *       the case, the returned value is 0.
    */
-  unsigned int getRefChan() const;
+  size_t getRefChan() const;
   /** Accessor to the reference channel for a given spectral window
    * @param spwId spectral window identifier (0-based)
    * @return the reference channel
    */
-  unsigned int getRefChan(unsigned int spwId) const;
+  size_t getRefChan(size_t spwId) const;
 
   // Frequency getRefFreq();
   /** Accessor to the reference frequency (Hz) for the first spectral window
@@ -279,7 +279,7 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the frequency at the reference channel position
    */
-  Frequency getRefFreq(unsigned int spwId) const;
+  Frequency getRefFreq(size_t spwId) const;
 
   /** Accessor to the channel separation for regularily spaced grids (for the first spectral window)
    * @return the channel separation (Hz)
@@ -290,22 +290,22 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the channel separation (Hz)
    */
-  Frequency getChanSep(unsigned int spwId) const;
+  Frequency getChanSep(size_t spwId) const;
 
   /** Accessor to the frequency (Hz) for a given grid point (for the first spectral window)
    * @param chanNum    the channel number (grid units)
    * @ return the frequency (Hz) corresponding to the center of the channel
    */
-  Frequency getChanFreq(unsigned int chanNum) const;
-  Frequency getChanWidth(unsigned int chanNum) const;
+  Frequency getChanFreq(size_t chanNum) const;
+  Frequency getChanWidth(size_t chanNum) const;
 
   /** Accessor to the frequency (Hz) for a given grid point for the specified spectral window
    * @param spwId     spectral window identifier (0-based)
    * @param chanNum   the channel number (grid units)
    * @ return the frequency (Hz) corresponding to the center of the channel
    */
-  Frequency getChanFreq(unsigned int spwId, unsigned int chanNum) const;
-  Frequency getChanWidth(unsigned int spwId, unsigned int chanNum) const;
+  Frequency getChanFreq(size_t spwId, size_t chanNum) const;
+  Frequency getChanWidth(size_t spwId, size_t chanNum) const;
 
 
   /** Accessor to the frequencies in the specified units for a given channel index (0-based) for the
@@ -316,15 +316,15 @@ public:
    * @return  the frequencies corresponding to the center of the channel in the specified units for
    *          the input spectral window and for the corresponding channel in the other sideband
    */
-  std::vector<double> getSbChanFreq(unsigned int spwId,
-                               unsigned int chanNum,
+  std::vector<double> getSbChanFreq(size_t spwId,
+                               size_t chanNum,
                                const std::string &freqUnits) const;
 
   /** Accessor to retrieve the spectral grid of a spectral window
    * @param spwId     spectral window identifier (0-based)
    * @return a std::vector of numChan frequencies (Hz)
    */
-  std::vector<double> getSpectralWindow(unsigned int spwId) const;
+  std::vector<double> getSpectralWindow(size_t spwId) const;
 
   /** Method to get the grid position for a given frequency specified in Hz (the first spectral window)
    * @return the grid position
@@ -335,7 +335,7 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the grid position
    */
-  double getChanNum(unsigned int spwId, double freq) const;
+  double getChanNum(size_t spwId, double freq) const;
 
   /** Method to get the frequency range encompassing the list of frequency grid points (for the first spectral window)
    * \note In case of irregular sampling the return value is the difference between the frequencies of the channels
@@ -352,7 +352,7 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the frequency bandwidth (Hz)
    */
-  Frequency getBandwidth(unsigned int spwId) const;
+  Frequency getBandwidth(size_t spwId) const;
 
   /** Method to get the frequency (Hz) for the point at the lowest frequency (for the first spectral window)
    * @return the frequency of the channel at the lowest frequency
@@ -364,7 +364,7 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the frequency (Hz) of the channel at the lowest frequency
    */
-  Frequency getMinFreq(unsigned int spwId) const;
+  Frequency getMinFreq(size_t spwId) const;
 
   /** Method to get the frequency (Hz) for the point at the largest frequency (for the first spectral window)
    * @return the frequency (Hz) of the channel at the highest frequency
@@ -375,7 +375,7 @@ public:
    * @param  units the requested units
    * @return the frequency (Hz) of the channel at the highest frequency
    */
-  Frequency getMaxFreq(unsigned int spwId) const;
+  Frequency getMaxFreq(size_t spwId) const;
 
   /** Method to know if the spectral grid is regular or not (the first spectral window)
    * @return true if uniformly sampled, else false
@@ -385,14 +385,14 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return true if uniformly sampled, else false
    */
-  bool isRegular(unsigned int spwId) const;
+  bool isRegular(size_t spwId) const;
 
   /** Accessor for the side of the sideband
    * @param spwId spectral window identifier (0-based)
    * @return the side of the sideband
    * \note Possible result is no sideband (NoSB) or lower sideband (LSB) or upper sideband (USB)
    */
-  std::string getSidebandSide(unsigned int spwId) const;
+  std::string getSidebandSide(size_t spwId) const;
 
   /** Accessor to the nature(s) of the associated spectral window(s)
    * @pre the spectral window must have an associated sideband. Would that not be the
@@ -400,7 +400,7 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the associated nature(s) of the associated spectral windows
    */
-  std::vector<std::string> getAssocNature(unsigned int spwId) const;
+  std::vector<std::string> getAssocNature(size_t spwId) const;
 
   /** Accessor to the identifier of the associated spectral window(s)
    * @pre the spectral window must have an associated spectral window. Would that not be the
@@ -408,9 +408,9 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the identifiers of the its associated spectral windows
    */
-  std::vector<unsigned int> getAssocSpwId(unsigned int spwId) const;
+  std::vector<size_t> getAssocSpwId(size_t spwId) const;
 
-  std::vector<unsigned int> getAssocSpwIds(const std::vector<unsigned int> &spwIds) const;
+  std::vector<size_t> getAssocSpwIds(const std::vector<size_t> &spwIds) const;
 
   /** Accessor for the type of  sideband
    * @pre the spectral window must have an associated spectral window. Would that not be the
@@ -420,7 +420,7 @@ public:
    * \note Possible result is double sideband (DSB) or single sideband (SSB) or two sidebands (2SB).
    * 2SB implies sideband separation which is possible only in the interferometric case
    */
-  std::string getSidebandType(unsigned int spwId) const;
+  std::string getSidebandType(size_t spwId) const;
 
   /** Accessor for the side of the sideband and its type
    * @pre the spectral window must have a sideband side and a sideband type. Would that not be the
@@ -428,10 +428,10 @@ public:
    * @param spwId spectral window identifier (0-based)
    * @return the side and the type of the sideband
    */
-  std::string getSideband(unsigned int spwId) const;
+  std::string getSideband(size_t spwId) const;
 
   double getLoFrequency() const;
-  double getLoFrequency(unsigned int spwId) const;
+  double getLoFrequency(size_t spwId) const;
 
   //@}
 
@@ -441,8 +441,8 @@ protected:
   std::string freqUnits_; //!< The frequency inits (always Hz)
   std::vector<double> v_chanFreq_; //!< Channel frequencies of ALL the channels (i.e. all spectral window appended)
 
-  std::vector<unsigned int> v_numChan_; //!< number of channels for every spectral window
-  std::vector<unsigned int> v_refChan_; //!< reference channel for every spectral window
+  std::vector<size_t> v_numChan_; //!< number of channels for every spectral window
+  std::vector<size_t> v_refChan_; //!< reference channel for every spectral window
   std::vector<double> v_refFreq_; //!< frequency at reference channel for every spectral window
   std::vector<double> v_chanSep_; //!< channel separation for every spectral window
   std::vector<double> v_maxFreq_; //!< frequency maximum for every spectral window
@@ -452,16 +452,16 @@ protected:
 
   std::vector<SidebandSide> v_sidebandSide_; //<!  NOSB=0, LSB=1, USB=2
   std::vector<SidebandType> v_sidebandType_; //<!  DSB=0, SSB=1, TWOSB=2
-  std::vector<std::vector<unsigned int> > vv_assocSpwId_; //<!  associated spectral window Id(s)
+  std::vector<std::vector<size_t> > vv_assocSpwId_; //<!  associated spectral window Id(s)
   std::vector<std::vector<std::string> > vv_assocNature_; //<!  corresponding associated nature
 
-  std::vector<unsigned int> v_transfertId_;
+  std::vector<size_t> v_transfertId_;
 
 private:
 
-  void appendChanFreq(unsigned int numChan, double* chanFreq);
-  void appendChanFreq(unsigned int numChan, const std::vector<double> &chanFreq);
-  bool wrongSpwId(unsigned int spwId) const;
+  void appendChanFreq(size_t numChan, double* chanFreq);
+  void appendChanFreq(size_t numChan, const std::vector<double> &chanFreq);
+  bool wrongSpwId(size_t spwId) const;
 };
 
 inline bool SpectralGrid::operator ==(const SpectralGrid & a) const

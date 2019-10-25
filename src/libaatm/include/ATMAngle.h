@@ -76,6 +76,8 @@ class Angle
   Angle operator*(int scf) { return Angle(valueIS_*(double)scf); } // rhs scale factor
   /** Operator "multiplication of a angle by an unsigned int" */
   Angle operator*(unsigned int scf) { return Angle(valueIS_*(double)scf); } // rhs scale factor
+  /** Operator "multiplication of a angle by an size_t" */
+  Angle operator*(size_t scf) { return Angle(valueIS_*(double)scf); } // rhs scale factor
   /** Operator "division of a angle by a double" */
   Angle operator/(double scf) { return Angle(valueIS_/scf); }
   /** Operator "division of a angle by a float" */
@@ -84,6 +86,8 @@ class Angle
   Angle operator/(int scf) { return Angle(valueIS_/(double)scf); }
   /** Operator "division of a angle by an unsigned int" */
   Angle operator/(unsigned int scf) { return Angle(valueIS_/(double)scf); }
+  /** Operator "division of a angle by an size_t" */
+  Angle operator/(size_t scf) { return Angle(valueIS_/(double)scf); }
   /** Operator "comparator < for two angles" */
   bool operator<(const Angle & rhs) const  { return (valueIS_<rhs.get()); }
   /** Operator "comparator > for two angles" */

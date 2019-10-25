@@ -78,6 +78,8 @@ public:
   inline Opacity operator*(int scf) { return Opacity(valueIS_ * (double) scf); }
   /** Operator "multiplication of an opacity by an unsigned int" */
   inline Opacity operator*(unsigned int scf) { return Opacity(valueIS_ * (double) scf); }
+  /** Operator "multiplication of an opacity by a size_t" */
+  inline Opacity operator*(size_t scf) { return Opacity(valueIS_ * (double) scf); }
   /** Operator "division of a opacity by an int" */
   inline Opacity operator/(double scf) { return Opacity(valueIS_ / scf); }
   /** Operator "division of a opacity by a float" */
@@ -86,6 +88,8 @@ public:
   inline Opacity operator/(int scf) { return Opacity(valueIS_ / (double) scf); }
   /** Operator "division of a opacity by an unsigned int" */
   inline Opacity operator/(unsigned int scf) { return Opacity(valueIS_ / (double) scf); }
+  /** Operator "division of a opacity by a size_t" */
+  inline Opacity operator/(size_t scf) { return Opacity(valueIS_ / (double) scf); }
   /** Operator "comparator < for two opacities" */
   inline bool operator<(const Opacity &rhs) const { return (valueIS_ < rhs.get()); }
   /** Operator "comparator > for two opacities" */
