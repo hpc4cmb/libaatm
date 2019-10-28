@@ -54,7 +54,10 @@ using namespace atm;
 
 int main()
 {
-
+  #ifdef HAVE_WINDOWS
+  fprintf(stdout, "Skipping test under Windows.\n");
+  return 0;
+  #endif
   Frequency rff;
   Frequency if1;
   Frequency chansep;

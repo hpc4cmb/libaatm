@@ -70,7 +70,10 @@ using namespace atm;
    */
 int main()
 {
-
+  #ifdef HAVE_WINDOWS
+  fprintf(stdout, "Skipping test under Windows.\n");
+  return 0;
+  #endif
   cout << " AbInitioTest: STEP 1: CREATES REFERENCE ATMOSPHERIC PROFILE CORRESTONDING TO ATMOSPHERIC CONDITIONS AT THE GROUND:" << endl;
   cout << " AbInitioTest: Atmosphere Type: TROPICAL" << endl;
   cout << " AbInitioTest: Site Altitude: 4100 m above sea level" << endl;

@@ -167,6 +167,10 @@ using namespace atm;
 
 int main()
 {
+  #ifdef HAVE_WINDOWS
+  fprintf(stdout, "Skipping test under Windows.\n");
+  return 0;
+  #endif
   //  double h_div_k=0.04799274551;        // plank/boltz in un of K/GHz
 
   vector<Temperature> v_ProfileTemperatureLevels;
