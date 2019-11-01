@@ -1507,7 +1507,7 @@ double AtmProfile::poli2(double ha,
   b = b / (x2 - x1);
   a = y1 - c * x1 * x1 - b * x1;
 
-  return a + b * ha + c * pow(ha, 2);
+  return a + b * ha + c * pow(ha, (int)2);
 }
 
 size_t AtmProfile::mkAtmProfile()
@@ -1670,7 +1670,7 @@ size_t AtmProfile::mkAtmProfile()
 
     //    std::cout << "layer: " << i << " " << v_layerPressure[i - 1] - dp * pow(dp1, i - 1) << " " << prLimit << std::endl;
 
-    if( (v_layerPressure[i - 1] - dp * pow(dp1, i - 1) <= prLimit ) ) { //&& (v_layerTemperature[i - 1] <= tx[typeAtm_ - 1][0]) ) {  //  &&(fabs(prLimit-v_layerPressure[i - 1]-dp*pow(dp1,i-1))>=20.0) ) {
+    if( (v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)) <= prLimit ) ) { //&& (v_layerTemperature[i - 1] <= tx[typeAtm_ - 1][0]) ) {  //  &&(fabs(prLimit-v_layerPressure[i - 1]-dp*pow(dp1,i-1))>=20.0) ) {
 
       if(control) {
 
@@ -1695,15 +1695,15 @@ size_t AtmProfile::mkAtmProfile()
 
 	for(k = 0; k < 20; k++) {
 
-	  if( (fabs(v_layerPressure[i - 1] - dp * pow(dp1, i - 1) > 1.05*px[typeAtm_ - 1][k])) &&
-	      (fabs(v_layerPressure[i - 1] - dp * pow(dp1, i - 1) - px[typeAtm_ - 1][k])) <= minmin ) {
+	  if( (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)) > 1.05*px[typeAtm_ - 1][k])) &&
+	      (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)) - px[typeAtm_ - 1][k])) <= minmin ) {
 
 	    j = k;
 
 	    /*	    std::cout << "P=" << v_layerPressure[i - 1] - dp * pow(dp1, i - 1)
 		      << " prLimit=" << prLimit << " px[" << typeAtm_ - 1 << "][" << k << "]="
 		      << px[typeAtm_ - 1][k] << std::endl; */
-	    minmin = fabs(v_layerPressure[i - 1] - dp * pow(dp1, i - 1) - px[typeAtm_ - 1][k]);
+	    minmin = fabs(v_layerPressure[i - 1] - dp * pow(dp1, int(i - 1)) - px[typeAtm_ - 1][k]);
 	    /* std::cout << " minmin=" << minmin << std::endl; */
 
 	  }
@@ -1775,10 +1775,10 @@ size_t AtmProfile::mkAtmProfile()
       //      std::cout << "i,j,v_layerPressure.size()-1=" << i << "," << j << "," << v_layerPressure.size() - 1 << std::endl;
 
       if(i > v_layerPressure.size() - 1) {
-        v_layerPressure.push_back(v_layerPressure[i - 1] - dp * pow(dp1, i - 1));
+        v_layerPressure.push_back(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)));
 
         www = v_layerWaterVapor[i - 1] / 1000.0; // in kg/m**3
-        g = g0 * pow(1. + ((v_layerThickness[i - 1] / 1000.0)) / rt, -2); // gravity corrected for the height
+        g = g0 * pow(1. + ((v_layerThickness[i - 1] / 1000.0)) / rt, (int)(-2)); // gravity corrected for the height
         dh = 288.6948 * v_layerTemperature[i - 1] * (1.0 + 0.61 * www / 1000.0)
             * log(v_layerPressure[i - 1] / v_layerPressure[i]) / g;
         v_layerThickness.push_back(v_layerThickness[i - 1] + dh);
@@ -1786,9 +1786,9 @@ size_t AtmProfile::mkAtmProfile()
         v_layerTemperature.push_back(v_layerTemperature[i - 1] + dt * dh / 1000.0);
         v_layerWaterVapor.push_back(wgr0 * exp(-v_layerThickness[i] / (1000.0 * h0))); //r[i] in kgr/(m**2*1000m) [gr/m**3]
       } else {
-        v_layerPressure[i] = v_layerPressure[i - 1] - dp * pow(dp1, i - 1);
+        v_layerPressure[i] = v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1));
         www = v_layerWaterVapor[i - 1] / 1000.0; // in kg/m**3
-        g = g0 * pow(1. + ((v_layerThickness[i - 1] / 1000.0)) / rt, -2); // gravity corrected for the height
+        g = g0 * pow(1. + ((v_layerThickness[i - 1] / 1000.0)) / rt, (int)(-2)); // gravity corrected for the height
         dh = 288.6948 * v_layerTemperature[i - 1] * (1.0 + 0.61 * www / 1000.0)
             * log(v_layerPressure[i - 1] / v_layerPressure[i]) / g;
         v_layerThickness[i] = v_layerThickness[i - 1] + dh;
