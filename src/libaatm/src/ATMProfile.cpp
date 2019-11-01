@@ -1694,9 +1694,10 @@ size_t AtmProfile::mkAtmProfile()
 	minmin = 20000.0;
 
 	for(k = 0; k < 20; k++) {
-
-	  if( (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)) > 1.05*px[typeAtm_ - 1][k])) &&
-	      (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1)) - px[typeAtm_ - 1][k])) <= minmin ) {
+        if(
+            (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1) ) ) > 1.05*px[typeAtm_ - 1][k] ) &&
+	        (fabs(v_layerPressure[i - 1] - dp * pow(dp1, (int)(i - 1) ) - px[typeAtm_ - 1][k]) <= minmin)
+        ) {
 
 	    j = k;
 
