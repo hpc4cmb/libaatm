@@ -1,7 +1,7 @@
 
 # Add the library target
 
-add_library(aatm
+add_library(aatm SHARED
     src/ATMAngle.cpp
     src/ATMError.cpp
     src/ATMException.cpp
