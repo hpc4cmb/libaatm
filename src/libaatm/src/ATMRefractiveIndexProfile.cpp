@@ -374,14 +374,14 @@ void RefractiveIndexProfile::mkRefractiveIndexProfile()
     if (v_chanFreq_.size()>1){
       if(nc==0){
 	width = fabs(v_chanFreq_[nc+1]-v_chanFreq_[nc])*1e-9;       // width en GHz para ATM
-	npoints=(size_t)round(width*100);                     // One point every 10 MHz
+	npoints=(size_t)atm_round(width*100);                     // One point every 10 MHz
       }else{
 	if(nc==v_chanFreq_.size()-1){
 	  width = fabs(v_chanFreq_[nc]-v_chanFreq_[nc-1])*1e-9;     // width en GHz para ATM
-	  npoints=(size_t)round(width*100);                   // One point every 10 MHz
+	  npoints=(size_t)atm_round(width*100);                   // One point every 10 MHz
 	}else{
 	  width = fabs((v_chanFreq_[nc+1]-v_chanFreq_[nc-1])/2.0)*1e-9;    // width en GHz para ATM
-	  npoints=(size_t)round(width*100);                          // One point every 10 MHz
+	  npoints=(size_t)atm_round(width*100);                          // One point every 10 MHz
 	}
       }
     }else{

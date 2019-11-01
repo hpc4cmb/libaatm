@@ -39,4 +39,12 @@
 #define ATM_NAMESPACE atm
 #endif
 
+#include <cmath>
+
+ATM_NAMESPACE_BEGIN
+
+    double atm_round(double number);
+
+ATM_NAMESPACE_END
+
 #endif /*!_ATM_COMMON_H_*/

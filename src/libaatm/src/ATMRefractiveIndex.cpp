@@ -36,6 +36,11 @@ using std::cout;
 
 ATM_NAMESPACE_BEGIN
 
+  // round function
+  double atm_round(double number) {
+      return number < 0.0 ? ceil(number - 0.5) : floor(number + 0.5);
+  }
+
   // Constructors
 
 
@@ -176,7 +181,7 @@ ATM_NAMESPACE_BEGIN
     if(nu<1.0){
       vp=0;
     }else{
-      vp = (int) round((nu+1.0)/2.0);
+      vp = (int) atm_round((nu+1.0)/2.0);
       vp=vp-1;
     }
     return vp;
