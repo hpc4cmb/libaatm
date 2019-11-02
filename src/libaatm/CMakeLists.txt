@@ -39,9 +39,9 @@ target_include_directories(${AATM_LIB} PUBLIC
     PRIVATE src
 )
 
-# Now define rules for the loadable module / shared library
+# Now define rules for the shared library
 
-add_library(${AATM_MOD} MODULE ATM.cpp)
+add_library(${AATM_MOD} SHARED ATM.cpp)
 
 target_link_libraries(${AATM_MOD} PRIVATE ${AATM_LIB})
 
