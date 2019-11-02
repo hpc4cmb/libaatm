@@ -1,4 +1,7 @@
 
+# Name of the internal static library
+set(AATM_LIB aatm_)
+
 #======================================================
 
 add_executable(aatm_test_basic
@@ -14,9 +17,9 @@ target_include_directories(aatm_test_basic PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_basic aatm)
+target_link_libraries(aatm_test_basic ${AATM_LIB})
 
-install(TARGETS aatm_test_basic DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_basic DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_basic COMMAND aatm_test_basic)
 
@@ -35,9 +38,9 @@ target_include_directories(aatm_test_version PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_version aatm)
+target_link_libraries(aatm_test_version ${AATM_LIB})
 
-install(TARGETS aatm_test_version DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_version DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_version COMMAND aatm_test_version)
 
@@ -56,9 +59,9 @@ target_include_directories(aatm_test_abinitio PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_abinitio aatm)
+target_link_libraries(aatm_test_abinitio ${AATM_LIB})
 
-install(TARGETS aatm_test_abinitio DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_abinitio DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_abinitio COMMAND aatm_test_abinitio)
 
@@ -85,9 +88,9 @@ target_include_directories(aatm_test_apex PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_apex aatm)
+target_link_libraries(aatm_test_apex ${AATM_LIB})
 
-install(TARGETS aatm_test_apex DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_apex DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # This executable reliably segfaults...
 # add_test(NAME test_apex COMMAND aatm_test_apex)
@@ -115,9 +118,9 @@ target_include_directories(aatm_test_length PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_length aatm)
+target_link_libraries(aatm_test_length ${AATM_LIB})
 
-install(TARGETS aatm_test_length DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_length DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_length COMMAND aatm_test_length)
 
@@ -136,9 +139,9 @@ target_include_directories(aatm_test_profile PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_profile aatm)
+target_link_libraries(aatm_test_profile ${AATM_LIB})
 
-install(TARGETS aatm_test_profile DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_profile DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_profile COMMAND aatm_test_profile)
 
@@ -157,9 +160,9 @@ target_include_directories(aatm_test_skystatus PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_skystatus aatm)
+target_link_libraries(aatm_test_skystatus ${AATM_LIB})
 
-install(TARGETS aatm_test_skystatus DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_skystatus DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_skystatus COMMAND aatm_test_skystatus)
 
@@ -178,9 +181,9 @@ target_include_directories(aatm_test_skystatusinv PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_skystatusinv aatm)
+target_link_libraries(aatm_test_skystatusinv ${AATM_LIB})
 
-install(TARGETS aatm_test_skystatusinv DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_skystatusinv DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_skystatusinv COMMAND aatm_test_skystatusinv)
 
@@ -207,9 +210,9 @@ target_include_directories(aatm_test_refindex PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_refindex aatm)
+target_link_libraries(aatm_test_refindex ${AATM_LIB})
 
-install(TARGETS aatm_test_refindex DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_refindex DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_refindex COMMAND aatm_test_refindex)
 
@@ -228,9 +231,9 @@ target_include_directories(aatm_test_specgrid PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_specgrid aatm)
+target_link_libraries(aatm_test_specgrid ${AATM_LIB})
 
-install(TARGETS aatm_test_specgrid DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_specgrid DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_specgrid COMMAND aatm_test_specgrid)
 
@@ -249,9 +252,9 @@ target_include_directories(aatm_test_sma PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_sma aatm)
+target_link_libraries(aatm_test_sma ${AATM_LIB})
 
-install(TARGETS aatm_test_sma DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_sma DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_sma COMMAND aatm_test_sma)
 
@@ -278,8 +281,8 @@ target_include_directories(aatm_test_atm651 PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/../libaatm/src"
 )
 
-target_link_libraries(aatm_test_atm651 aatm)
+target_link_libraries(aatm_test_atm651 ${AATM_LIB})
 
-install(TARGETS aatm_test_atm651 DESTINATION ${CMAKE_INSTALL_BINDIR})
+# install(TARGETS aatm_test_atm651 DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 add_test(NAME test_atm651 COMMAND aatm_test_atm651)

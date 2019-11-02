@@ -1,7 +1,12 @@
 
-# Add the library target
+# Name of the internal static library
+set(AATM_LIB aatm_)
 
-add_library(aatm SHARED
+# Name of loadable module / shared library
+set(AATM_MOD aatm)
+
+# Library sources
+set(AATM_SOURCES
     src/ATMAngle.cpp
     src/ATMError.cpp
     src/ATMException.cpp
@@ -24,14 +29,22 @@ add_library(aatm SHARED
     src/ATMWVRMeasurement.cpp
 )
 
-target_include_directories(aatm PUBLIC
+# Add the internal library target
+
+add_library(${AATM_LIB} STATIC ${AATM_SOURCES})
+
+target_include_directories(${AATM_LIB} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
-    PRIVATE src)
+    PRIVATE src
+)
+
+# Now define rules for the loadable module / shared library
+
+add_library(${AATM_MOD} MODULE ATM.cpp)
+
+target_link_libraries(${AATM_MOD} PRIVATE ${AATM_LIB})
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-# Hardcode this to "lib" for now, since lib32/lib64 is a pain
-# to use on many systems.
-#install(TARGETS aatm DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(TARGETS aatm DESTINATION lib)
+install(TARGETS ${AATM_MOD} DESTINATION ${CMAKE_INSTALL_LIBDIR})
