@@ -41,9 +41,13 @@ target_include_directories(${AATM_LIB} PUBLIC
 
 # Now define rules for the shared library
 
-add_library(${AATM_MOD} SHARED ATM.cpp)
+add_library(${AATM_MOD} SHARED ${AATM_SOURCES})
 
-target_link_libraries(${AATM_MOD} PRIVATE ${AATM_LIB})
+target_include_directories(${AATM_MOD} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    PRIVATE .
+)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
