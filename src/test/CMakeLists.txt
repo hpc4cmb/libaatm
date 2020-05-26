@@ -1,6 +1,6 @@
 
 # Name of the internal static library
-set(AATM_LIB aatm_)
+set(AATM_LIB aatm_static)
 
 #======================================================
 

@@ -1,6 +1,6 @@
 
-# Name of the internal static library
-set(AATM_LIB aatm_)
+# Name of the static library
+set(AATM_STATIC aatm_static)
 
 # Name of loadable module / shared library
 set(AATM_MOD aatm)
@@ -29,11 +29,22 @@ set(AATM_SOURCES
     src/ATMWVRMeasurement.cpp
 )
 
-# Add the internal library target
+# Add the internal object library target
 
-add_library(${AATM_LIB} STATIC ${AATM_SOURCES})
+add_library(aatmobj OBJECT ${AATM_SOURCES})
+set_property(TARGET aatmobj PROPERTY POSITION_INDEPENDENT_CODE 1)
 
-target_include_directories(${AATM_LIB} PUBLIC
+target_include_directories(aatmobj PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    src
+)
+
+# Static library
+
+add_library(${AATM_STATIC} STATIC $<TARGET_OBJECTS:aatmobj>)
+
+target_include_directories(${AATM_STATIC} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
     PRIVATE src
@@ -41,14 +52,19 @@ target_include_directories(${AATM_LIB} PUBLIC
 
 # Now define rules for the shared library
 
-add_library(${AATM_MOD} SHARED ${AATM_SOURCES})
+add_library(${AATM_MOD} SHARED $<TARGET_OBJECTS:aatmobj>)
 
 target_include_directories(${AATM_MOD} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
-    PRIVATE .
+    PRIVATE src
 )
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(TARGETS ${AATM_MOD} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(
+    TARGETS
+    ${AATM_MOD}
+    ${AATM_STATIC}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
