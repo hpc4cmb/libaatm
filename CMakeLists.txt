@@ -1,18 +1,8 @@
 # libaatm
 
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
-# foreach(policy
-#     CMP0048
-#     CMP0074
-#     CMP0077
-#   )
-#   if(POLICY ${policy})
-#     cmake_policy(SET ${policy} NEW)
-#   endif()
-# endforeach()
-
-project(libaatm VERSION 1.0.0 LANGUAGES C CXX)
+project(libaatm VERSION 1.1.0 LANGUAGES C CXX)
 
 # Auxiliary files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
